@@ -185,7 +185,6 @@ public class positionControl extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.oi.mSpinner.rotateMotor(0.0);
         itisFinished = false;
     }
 
