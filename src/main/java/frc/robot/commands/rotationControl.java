@@ -103,11 +103,6 @@ public class rotationControl extends CommandBase {
     String colorString;
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
-    m_colorMatcher.addColorMatch(kBlueTarget);
-    m_colorMatcher.addColorMatch(kGreenTarget);
-    m_colorMatcher.addColorMatch(kRedTarget);
-    m_colorMatcher.addColorMatch(kYellowTarget);
-
     if (match.color == kBlueTarget) {
       colorString = "Blue";
     } else if (match.color == kRedTarget) {
