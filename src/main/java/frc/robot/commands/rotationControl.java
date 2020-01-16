@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
@@ -31,61 +32,59 @@ public class rotationControl extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
 
-  talonMotor motor;
-  talonMotor talon0 = new talonMotor(0, 0, 0);
   boolean isRotationControl;
 
-  public rotationControl(boolean meep) {
-    isRotationControl = meep;
+  public rotationControl() {
+    // isRotationControl = meep;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (isRotationControl == true) {
-      SmartDashboard.putNumber("Rotation Count", 0);
+    // if (isRotationControl == true) {
+    SmartDashboard.putNumber("Rotation Count", 0);
 
-      final I2C.Port i2cPort = I2C.Port.kOnboard;
-      final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
-      final ColorMatch m_colorMatcher = new ColorMatch();
-  
-      final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-      final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-      final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
-      final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
-  
-      m_colorMatcher.addColorMatch(kBlueTarget);
-      m_colorMatcher.addColorMatch(kGreenTarget);
-      m_colorMatcher.addColorMatch(kRedTarget);
-      m_colorMatcher.addColorMatch(kYellowTarget);
-  
-      Color detectedColor = m_colorSensor.getColor();
-      String colorString;
-      ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-  
-      if (match.color == kBlueTarget) {
-        colorString = "Blue";
-      } else if (match.color == kRedTarget) {
-        colorString = "Red";
-      } else if (match.color == kGreenTarget) {
-        colorString = "Green";
-      } else if (match.color == kYellowTarget) {
-        colorString = "Yellow";
-      } else {
-        colorString = "Unknown";
-      }
-  
-      SmartDashboard.putString("Rotation Count Color", colorString);
-    }else{
-      System.out.println("OPA");
+    final I2C.Port i2cPort = I2C.Port.kOnboard;
+    final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+    final ColorMatch m_colorMatcher = new ColorMatch();
+
+    final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+    final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
+    final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
+    final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+
+    m_colorMatcher.addColorMatch(kBlueTarget);
+    m_colorMatcher.addColorMatch(kGreenTarget);
+    m_colorMatcher.addColorMatch(kRedTarget);
+    m_colorMatcher.addColorMatch(kYellowTarget);
+
+    Color detectedColor = m_colorSensor.getColor();
+    String colorString;
+    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+
+    if (match.color == kBlueTarget) {
+      colorString = "Blue";
+    } else if (match.color == kRedTarget) {
+      colorString = "Red";
+    } else if (match.color == kGreenTarget) {
+      colorString = "Green";
+    } else if (match.color == kYellowTarget) {
+      colorString = "Yellow";
+    } else {
+      colorString = "Unknown";
     }
-    
+
+    SmartDashboard.putString("Rotation Count Color", colorString);
+    // }else{
+    // System.out.println("OPA");
+    // }
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (isRotationControl == true) {
+    // if (isRotationControl == true) {
     final I2C.Port i2cPort = I2C.Port.kOnboard;
     final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
     final ColorMatch m_colorMatcher = new ColorMatch();
@@ -108,8 +107,6 @@ public class rotationControl extends CommandBase {
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
     m_colorMatcher.addColorMatch(kYellowTarget);
-
-    motor = talon0;
 
     if (match.color == kBlueTarget) {
       colorString = "Blue";
@@ -192,19 +189,21 @@ public class rotationControl extends CommandBase {
     /////////////////////////////////////////////////////////
 
     if (SmartDashboard.getNumber("Rotation Count", 0) < 8) {
-      motor.rotateMotor(0.8);
+      Robot.oi.mSpinner.rotateMotor(0.8);
     } else {
-      motor.rotateMotor(0);
+      Robot.oi.mSpinner.rotateMotor(0);
     }
-  }else{
-    
-  }
+    // }else
+
+    // {
+
+    // }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    Robot.oi.mSpinner.rotateMotor(0.0);
   }
 
   // Returns true when the command should end.
@@ -215,7 +214,7 @@ public class rotationControl extends CommandBase {
     } else {
       return false;
     }
-    
+
   }
 
 }

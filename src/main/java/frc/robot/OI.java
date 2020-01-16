@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.commands.*;
+import frc.robot.subsystems.motors.*;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
@@ -23,6 +24,7 @@ public class OI {
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
 
+	public talonMotor mSpinner = new talonMotor(0, 0.5, 0.5);
 	private static final int LEFT_HORIZ_AXIS = 0;
 	private static final int LEFT_VERT_AXIS = 1;
 	private static final int RIGHT_HORIZ_AXIS = 4;
@@ -86,8 +88,8 @@ public class OI {
 		//driverButtonLeftBumper.whenReleased(new DriveStop());
 		//driverButtonRightBumper.whenPressed(new DriveDeliverGear());
 		//driverButtonRightBumper.whenReleased(new DriveStop());
-		driverButtonX.whenPressed(new rotationControl(true));
-		driverButtonB.whenPressed(new rotationControl(false));
+		driverButtonX.whenPressed(new positionControl());
+		driverButtonB.whenPressed(new rotationControl());
 		//driverButtonY.whenPressed(new DriveDistance(0.02));
 
 		//operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());

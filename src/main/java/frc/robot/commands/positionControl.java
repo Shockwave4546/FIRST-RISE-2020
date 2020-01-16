@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
@@ -15,6 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorMatchResult;
+
+import java.util.ArrayList;
+
 import com.revrobotics.ColorMatch;
 //import edu.wpi.first.wpilibj.DriverStation;
 
@@ -26,6 +30,8 @@ import com.revrobotics.ColorMatch;
 public class positionControl extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
+    public boolean itisFinished = false;
+
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
     private final ColorMatch m_colorMatcher = new ColorMatch();
@@ -33,23 +39,69 @@ public class positionControl extends CommandBase {
     private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
     private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
     private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
-    //talonMotor motor;
-    //talonMotor talon0 = new talonMotor(0, 0, 0);
+    private ArrayList<String> colorSequence = new ArrayList<String>(4);
+    private String startColor;
+    private int sequenceIndex;
+    private int targetIndex;
+    private String gameColor;
+    // talonMotor motor;
+    // talonMotor talon0 = new talonMotor(0, 0, 0);
 
     public positionControl() {
+    }
+
+    private void sequencePlusOne() {
+        if (sequenceIndex == 3) {
+            sequenceIndex = 0;
+        } else {
+            sequenceIndex++;
+        }
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        colorSequence.add("Blue");
+        colorSequence.add("Yellow");
+        colorSequence.add("Red");
+        colorSequence.add("Green");
 
+        m_colorMatcher.addColorMatch(kBlueTarget);
+        m_colorMatcher.addColorMatch(kGreenTarget);
+        m_colorMatcher.addColorMatch(kRedTarget);
+        m_colorMatcher.addColorMatch(kYellowTarget);
+
+        Color detectedColor = m_colorSensor.getColor();
+        String colorString;
+        ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+
+        if (match.color == kBlueTarget) {
+            colorString = "Blue";
+        } else if (match.color == kRedTarget) {
+            colorString = "Red";
+        } else if (match.color == kGreenTarget) {
+            colorString = "Green";
+        } else if (match.color == kYellowTarget) {
+            colorString = "Yellow";
+        } else {
+            colorString = "Unknown";
+        }
+        startColor = colorString;
+        if (startColor == "Blue") {
+            sequenceIndex = 0;
+        } else if (startColor == "Yellow") {
+            sequenceIndex = 1;
+        } else if (startColor == "Red") {
+            sequenceIndex = 2;
+        } else if (startColor == "Green") {
+            sequenceIndex = 3;
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        //motor=talon0;
-        
+
         m_colorMatcher.addColorMatch(kBlueTarget);
         m_colorMatcher.addColorMatch(kGreenTarget);
         m_colorMatcher.addColorMatch(kRedTarget);
@@ -88,40 +140,43 @@ public class positionControl extends CommandBase {
         String gameData;
         gameData = DriverStation.getInstance().getGameSpecificMessage();
         if (gameData.length() > 0) {
+            String currentSequence = colorSequence.get(sequenceIndex);
             switch (gameData.charAt(0)) {
-            case 'B':
-                if (colorString == "Red") {
-                    //motor.rotateMotor(0.0);
-                } else {
-                    //motor.rotateMotor(0.3);
-                }
+            case 'R':
+                targetIndex = 0; // Blue
+                gameColor = "Red";
                 break;
             case 'G':
-                if (colorString == "Yellow") {
-                    //motor.rotateMotor(0);
-                } else {
-                    //motor.rotateMotor(0.3);
-
-                }
+                targetIndex = 1; // Yellow
+                gameColor = "Green";
                 break;
-            case 'R':
-                if (colorString == "Blue") {
-                    //motor.rotateMotor(0.0);
-                } else {
-                    //motor.rotateMotor(0.3);
-                }
+            case 'B':
+                targetIndex = 2; // Red
+                gameColor = "Blue";
                 break;
             case 'Y':
-                if (colorString == "Green") {
-                   // motor.rotateMotor(0.0);
-                } else {
-                   // motor.rotateMotor(0.3);
-                }
+                targetIndex = 3; // Green
+                gameColor = "Yellow";
                 break;
-            default:
-                break;
-            // This is corrupt data
             }
+            SmartDashboard.putString("Game Color", gameColor);
+            SmartDashboard.putString("Current Color", colorString);
+            SmartDashboard.putString("Next Color", currentSequence);
+            SmartDashboard.putString("Target Color", colorSequence.get(targetIndex));
+            if ((colorString == colorSequence.get(targetIndex))
+                    && (currentSequence == colorSequence.get(targetIndex))) {
+                Robot.oi.mSpinner.rotateMotor(0.0);
+                itisFinished = true;
+            } else if (colorString == currentSequence) {
+                Robot.oi.mSpinner.rotateMotor(1);
+                sequencePlusOne();
+            } else {
+                Robot.oi.mSpinner.rotateMotor(1);
+            }
+            // break;
+            // default:
+            // break;
+            // This is corrupt data
         } else {
             // Code for no data received yet
         }
@@ -130,11 +185,18 @@ public class positionControl extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        Robot.oi.mSpinner.rotateMotor(0.0);
+        itisFinished = false;
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        if (itisFinished == true) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
