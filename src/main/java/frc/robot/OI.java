@@ -1,5 +1,6 @@
 package frc.robot;
 
+import frc.robot.RobotMap;
 import frc.robot.commands.*;
 import frc.robot.subsystems.motors.*;
 
@@ -24,7 +25,7 @@ public class OI {
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
 
-	public talonMotor mSpinner = new talonMotor(0, 0.5, 0.5);
+	public talonMotor mSpinner = new talonMotor(RobotMap.mSpinPort, RobotMap.mSpinPos, RobotMap.mSpinNeg);
 	private static final int LEFT_HORIZ_AXIS = 0;
 	private static final int LEFT_VERT_AXIS = 1;
 	private static final int RIGHT_HORIZ_AXIS = 4;
@@ -36,7 +37,7 @@ public class OI {
 	private static final double STICK_MAX = 0.97;
 
 	// driver controller setup
-	private Joystick driverController = new Joystick(0);
+	private Joystick driverController = new Joystick(RobotMap.cDriverPort);
 	private Button driverButtonA = new edu.wpi.first.wpilibj2.command.button.JoystickButton(driverController, 1);
 	private Button driverButtonB = new JoystickButton(driverController, 2);
 	private Button driverButtonX = new JoystickButton(driverController, 3);
@@ -49,7 +50,7 @@ public class OI {
 	private Button driverButtonRightAxisPress = new JoystickButton(driverController, 10);
 
 	// operator controller setup
-	private Joystick operatorController = new Joystick(1);
+	private Joystick operatorController = new Joystick(RobotMap.cCoDriverPort);
 	private Button operatorButtonA = new JoystickButton(operatorController, 1);
 	private Button operatorButtonB = new JoystickButton(operatorController, 2);
 	private Button operatorButtonX = new JoystickButton(operatorController, 3);
