@@ -20,4 +20,7 @@ public class RobotMap {
     // Digital //
     public static final int vLimitPort = 8;
     public static final int hLimitPort = 9;
+
+    // Misc //
+    
 }
