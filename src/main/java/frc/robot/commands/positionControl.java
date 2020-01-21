@@ -186,7 +186,6 @@ public class positionControl extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         itisFinished = false;
-        Robot.oi.mSpinner.rotateMotor(0.0);
     }
 
     // Returns true when the command should end.

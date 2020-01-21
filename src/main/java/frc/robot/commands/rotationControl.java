@@ -128,7 +128,7 @@ public class rotationControl extends CommandBase {
     }
 
 
-    if (SmartDashboard.getNumber("Rotation Count", 0) < 29) {
+    if (SmartDashboard.getNumber("Rotation Count", 0) < 24) {
       Robot.oi.mSpinner.rotateMotor(1);
     } else {
       Robot.oi.mSpinner.rotateMotor(0);
@@ -139,13 +139,13 @@ public class rotationControl extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.oi.mSpinner.rotateMotor(0.0);
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (SmartDashboard.getNumber("Rotation Count", 0) >= 29) {
+    if (SmartDashboard.getNumber("Rotation Count", 0) >= 24) {
       return true;
     } else {
       return false;

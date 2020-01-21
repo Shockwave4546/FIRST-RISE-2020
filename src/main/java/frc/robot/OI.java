@@ -24,7 +24,7 @@ public class OI {
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
 
-	public talonMotor mSpinner = new talonMotor(0, .6, .6);
+	public talonMotor mSpinner = new talonMotor(0, 0.5, 0.5);
 	private static final int LEFT_HORIZ_AXIS = 0;
 	private static final int LEFT_VERT_AXIS = 1;
 	private static final int RIGHT_HORIZ_AXIS = 4;
