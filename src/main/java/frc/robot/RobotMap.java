@@ -11,9 +11,7 @@ public class RobotMap {
     public static final double mSpinNeg = 0.6;
 
     public static final int mPivotPort = 1;
-    public static final double mPivotSpeed = 1.0;
-    public static final double mPivotPos = 1.0;
-    public static final double mPivotNeg = 1.0;
+    public static final double mPivotSpeed = 0.5;
 
     // CAN Bus // 
 

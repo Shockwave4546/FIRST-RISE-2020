@@ -91,6 +91,7 @@ public class OI {
 		//driverButtonRightBumper.whenReleased(new DriveStop());
 		driverButtonX.whenPressed(new positionControl());
 		driverButtonB.whenPressed(new rotationControl());
+		driverButtonA.whenPressed(new pivotControl());
 		//driverButtonY.whenPressed(new DriveDistance(0.02));
 
 		//operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
