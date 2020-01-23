@@ -16,8 +16,8 @@ public class RobotMap {
     // CAN Bus // 
 
     // Digital //
-    public static final int vLimitPort = 8;
-    public static final int hLimitPort = 9;
+    public static final int hLimitPort = 0;
+    public static final int vLimitPort = 1;
 
     // Misc //
     

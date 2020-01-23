@@ -24,6 +24,15 @@ public class sparkMax extends Motor {
         kMotorSpeedPos = pos;
         kMotorSpeedNeg = neg;
     }
+    public sparkMax(final int port){
+        super(port, 1, 1);
+        kMotor = new CANSparkMax(port, MotorType.kBrushless);
+        kMotorEncoder = kMotor.getEncoder();
+        kMotorDefaultPos = 1;
+        kMotorDefaultNeg = 1;
+        kMotorSpeedPos = 1;
+        kMotorSpeedNeg = 1;
+    }
 
     public void setMotorSpeeds(final double pos, final double neg){
         kMotorSpeedPos = pos;

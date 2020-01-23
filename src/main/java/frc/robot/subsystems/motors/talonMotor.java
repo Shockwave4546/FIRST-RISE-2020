@@ -12,6 +12,10 @@ public class talonMotor extends Motor{
         super(port, pos, neg);
         kMotor = new Talon(port);
     }
+    public talonMotor(final int port){
+        super(port, 1, 1);
+        kMotor = new Talon(port);
+    }
 
     public void rotateClockwise(final double rotate){
         kMotor.set(rotate * mPos);
