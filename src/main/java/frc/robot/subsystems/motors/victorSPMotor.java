@@ -16,6 +16,14 @@ public class victorSPMotor extends Motor{
         kMotor = new VictorSP(port);
     }
 
+    public victorSPMotor(final int port, final double pos, final double neg, final int chaA, final int chaB){
+        super(port, pos, neg, chaA, chaB);
+        kMotor = new VictorSP(port);
+    }public victorSPMotor(final int port, final int chaA, final int chaB){
+        super(port, 1, 1, chaA, chaB);
+        kMotor = new VictorSP(port);
+    }
+
     public void rotateClockwise(final double rotate){
         kMotor.set(rotate * mPos);
     }
