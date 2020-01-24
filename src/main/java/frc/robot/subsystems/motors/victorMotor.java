@@ -16,6 +16,15 @@ public class victorMotor extends Motor{
         super(port, 1, 1);
         kMotor = new Victor(port);
     }
+    
+    public victorMotor(final int port, final double pos, final double neg, final int chaA, final int chaB){
+        super(port, pos, neg, chaA, chaB);
+        kMotor = new Victor(port);
+    }
+    public victorMotor(final int port, final int chaA, final int chaB){
+        super(port, 1, 1, chaA, chaB);
+        kMotor = new Victor(port);
+    }
 
     public void rotateClockwise(final double rotate){
         kMotor.set(rotate * mPos);
