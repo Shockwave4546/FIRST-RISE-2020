@@ -6,11 +6,30 @@ public class RobotMap {
     public static final int cCoDriverPort = 1;
 
     // PWM //
-    public static final int mSpinPort = 0;
+        // DriveTrain //
+    public static final int mForwardLeftPort = 0;
+    public static final double mForwardLeftPos = 1.0;
+    public static final double mForwardLeftNeg = 1.0;
+
+    public static final int mForwardRightPort = 1;
+    public static final double mForwardRightPos = 1.0;
+    public static final double mForwardRightNeg = 1.0;
+
+    public static final int mBackwardLeftPort = 2;
+    public static final double mBackwardLeftPos = 1.0;
+    public static final double mBackwardLeftNeg = 1.0;
+    
+    public static final int mBackwardRightPort = 3;
+    public static final double mBackwardRightPos = 1.0;
+    public static final double mBackwardRightNeg = 1.0;
+    
+
+
+    public static final int mSpinPort = 4;
     public static final double mSpinPos = 0.6;
     public static final double mSpinNeg = 0.6;
 
-    public static final int mPivotPort = 1;
+    public static final int mPivotPort = 5;
     public static final double mPivotSpeed = 0.5;
 
     // CAN Bus // 
