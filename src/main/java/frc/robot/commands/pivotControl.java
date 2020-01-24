@@ -8,10 +8,8 @@
 package frc.robot.commands;
 
 
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.motors.*;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -36,16 +34,16 @@ public class pivotControl extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        targetPosition = 2;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         hLimitStatus = hLimit.get();
-        SmartDashboard.putBoolean("Horizontal Limit", hLimitStatus);
         vLimitStatus = vLimit.get();
+        SmartDashboard.putBoolean("Horizontal Limit", hLimitStatus);
         SmartDashboard.putBoolean("Vertical Limit", vLimitStatus);
+
         if(targetPosition == 2){
             if(hLimitStatus == true){
                 // Target: go to Vertical
@@ -80,7 +78,6 @@ public class pivotControl extends CommandBase {
         else{
             mPivot.stopMotor();
         }
-        
     }
 
     // Called once the command ends or is interrupted.
