@@ -63,6 +63,10 @@ public class sparkMax extends Motor {
         }
     }
 
+    public double get(){
+        return kMotor.get();
+    }
+
     public double getEncoderPosition(){
         kMotorEncoderValuePos = kMotorEncoder.getPosition();
         return kMotorEncoderValuePos;

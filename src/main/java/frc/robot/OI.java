@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.RobotMap;
 import frc.robot.commands.*;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.motors.*;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -33,8 +34,11 @@ public class OI {
 	private static final int LEFT_Z_AXIS = 3;
 	private static final int RIGHT_Z_AXIS = 2;
 
-	private static final double STICK_DEADZONE = 0.3;
-	private static final double STICK_MAX = 0.97;
+	private static final double STICK_DEADZONE = RobotMap.joystickDeadzone;
+	private static final double STICK_MAX = 1;
+
+	// DriveTrain
+	private DriveTrain driveTrain = new DriveTrain();
 
 	// driver controller setup
 	private Joystick driverController = new Joystick(RobotMap.cDriverPort);
@@ -116,19 +120,39 @@ public class OI {
 	// driver controller
 
 	public double getDriverRightY() {
-		return -driverController.getRawAxis(RIGHT_VERT_AXIS);
+		double rightY = driverController.getRawAxis(RIGHT_VERT_AXIS);
+		if(-STICK_DEADZONE <= rightY && rightY <= STICK_DEADZONE){
+            return 0;
+        }else{
+            return rightY;
+        }
 	}
 
 	public double getDriverRightX() {
-		return driverController.getRawAxis(RIGHT_HORIZ_AXIS);
+		double rightX = driverController.getRawAxis(RIGHT_HORIZ_AXIS);
+		if(-STICK_DEADZONE <= rightX && rightX <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return rightX;
+		}
 	}
 
 	public double getDriverLeftY() {
-		return -driverController.getRawAxis(LEFT_VERT_AXIS);
+		double leftY = driverController.getRawAxis(LEFT_VERT_AXIS);
+		if(-STICK_DEADZONE <= leftY && leftY <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return leftY;
+		}
 	}
 
 	public double getDriverLeftX() {
-		return driverController.getRawAxis(LEFT_HORIZ_AXIS);
+		double leftX = driverController.getRawAxis(LEFT_HORIZ_AXIS);
+		if(-STICK_DEADZONE <= leftX && leftX <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return leftX;
+		}
 	}
 
 	public double getDriverLeftTrigger() {
@@ -161,19 +185,39 @@ public class OI {
 	// operator controller
 
 	public double getOperatorRightY() {
-		return -operatorController.getRawAxis(RIGHT_VERT_AXIS);
+		double rightY = operatorController.getRawAxis(RIGHT_VERT_AXIS);
+		if(-STICK_DEADZONE <= rightY && rightY <= STICK_DEADZONE){
+            return 0;
+        }else{
+            return rightY;
+        }
 	}
 
 	public double getOperatorRightX() {
-		return operatorController.getRawAxis(RIGHT_HORIZ_AXIS);
+		double rightX = operatorController.getRawAxis(RIGHT_HORIZ_AXIS);
+		if(-STICK_DEADZONE <= rightX && rightX <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return rightX;
+		}
 	}
 
 	public double getOperatorLeftY() {
-		return -operatorController.getRawAxis(LEFT_VERT_AXIS);
+		double leftY = operatorController.getRawAxis(LEFT_VERT_AXIS);
+		if(-STICK_DEADZONE <= leftY && leftY <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return leftY;
+		}
 	}
 
 	public double getOperatorLeftX() {
-		return operatorController.getRawAxis(LEFT_HORIZ_AXIS);
+		double leftX = operatorController.getRawAxis(LEFT_HORIZ_AXIS);
+		if(-STICK_DEADZONE <= leftX && leftX <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return leftX;
+		}
 	}
 
 	public double getOperatorLeftTrigger() {
@@ -233,5 +277,10 @@ public class OI {
 		double output;
 		output = (value == 0.0 ? 0.0 : Math.pow(value, 3)/Math.abs(value));
 		return (Math.abs(output) < 0.05 ? 0.0 : output);
+	}
+
+	// Drive train
+	public void Drive(){
+		driveTrain.Drive(getDriverLeftY(), getDriverRightX());
 	}
 }

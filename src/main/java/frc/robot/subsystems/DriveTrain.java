@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.motors.*;
 
@@ -16,18 +17,22 @@ public class DriveTrain{
         //mBackwardLeft = new talonMotor(RobotMap.mBackwardLeftPort);
         //mBackwardRight = new talonMotor(RobotMap.mBackwardRightPort);
     }
-    private void drivebaseControl() {
-        cDriveLeftY = 0.0;
-        cDriveRightX = 0.0;
-        if (cDriveLeftY == 0) {
+    private void drivebaseControl(final double inputY, final double inputX) {
+        cDriveLeftY = inputY;
+        cDriveRightX = inputX;
+        if(cDriveLeftY == 0) {
             mForwardLeft.rotateMotor(cDriveRightX);
+            SmartDashboard.putNumber("mForwardLeft", mForwardLeft.get());
             mForwardRight.rotateMotor(cDriveRightX);
-        } else {
+            SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
+        }else{
             mForwardLeft.rotateMotor(cDriveLeftY + cDriveRightX);
+            SmartDashboard.putNumber("mForwardLeft", mForwardLeft.get());
             mForwardRight.rotateMotor((cDriveLeftY - cDriveRightX) * -1);
+            SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
         }
     }
-    public void Drive(){
-        drivebaseControl();
+    public void Drive(final double inputY, final double inputX){
+        drivebaseControl(inputY, inputX);
     }
 }

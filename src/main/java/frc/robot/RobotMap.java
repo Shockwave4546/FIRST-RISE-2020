@@ -2,6 +2,7 @@ package frc.robot;
 
 public class RobotMap {
     // Controllers //
+    public static final double joystickDeadzone = 0.2;
     public static final int cDriverPort = 0;
     public static final int cCoDriverPort = 1;
 

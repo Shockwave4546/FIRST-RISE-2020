@@ -43,4 +43,8 @@ public class victorSPMotor extends Motor{
             kMotor.set(rotate * mNeg);
         }
     }
+
+    public double get(){
+        return kMotor.get();
+    }
 }

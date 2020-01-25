@@ -37,4 +37,5 @@ public abstract class Motor{
     // Call to rotate motor, use this for user motor control
     public abstract void rotateMotor(final double rotate);
     
+    public abstract double get();
 }

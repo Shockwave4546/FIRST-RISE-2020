@@ -45,4 +45,8 @@ public class talonMotor extends Motor{
             kMotor.set(rotate * mNeg);
         }
     }
+
+    public double get(){
+        return kMotor.get();
+    }
 }
