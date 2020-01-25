@@ -10,9 +10,16 @@ package frc.robot;
 import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 //import frc.robot.commands.moveMotor;
+import edu.wpi.first.networktables.NetworkTableEntry;
+
+import java.util.Map;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -23,6 +30,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static OI oi;
+  public Servo servo1;
+  public ShuffleboardTab tab = Shuffleboard.getTab("Test Tab");
+  public NetworkTableEntry speed;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -33,6 +43,11 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     oi = new OI();
+    servo1 = new Servo(2);
+    speed = tab.add("Rotate Speed", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+
+    //NetworkTableEntry speed = tab.add("Rotate Speed", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+
   }
 
   /**
@@ -83,6 +98,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -98,6 +114,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    //double speed = Shuffleboard.getTab("Totate Speed").getEntry().getDouble(0);
+    servo1.set(speed.getDouble(0));
   }
 
   @Override

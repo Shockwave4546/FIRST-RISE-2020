@@ -89,9 +89,11 @@ public class OI {
 		//driverButtonLeftBumper.whenReleased(new DriveStop());
 		//driverButtonRightBumper.whenPressed(new DriveDeliverGear());
 		//driverButtonRightBumper.whenReleased(new DriveStop());
-		driverButtonX.whenPressed(new positionControl());
-		driverButtonB.whenPressed(new rotationControl());
-		driverButtonY.whenPressed(new servoControl());
+		//------------// import shit below v
+		//driverButtonX.whenPressed(new positionControl());
+		//driverButtonB.whenPressed(new rotationControl());
+		//driverButtonY.whenPressed(new servoControl());
+		//------------//
 		//driverButtonY.whenPressed(new DriveDistance(0.02));
 
 		//operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
