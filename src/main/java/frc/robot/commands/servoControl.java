@@ -38,7 +38,8 @@ public class servoControl extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        /*if(servo1.get() == 1.0){
+        /*
+        if(servo1.get() == 1.0){
             servo1.set(0.0);
         }
         else if(servo1.get() == 0.0){
@@ -47,7 +48,10 @@ public class servoControl extends CommandBase {
         else{
             servo1.set(0.0);
         }
-        itisFinished = true;*/
+        SmartDashboard.putNumber("Current Servo Value", servo1.get());
+        itisFinished = true;
+        */
+        ///*
         if(servo1.getAngle() == 180.0){
             servo1.setAngle(0.0);
         }
@@ -59,6 +63,7 @@ public class servoControl extends CommandBase {
         }
         SmartDashboard.putNumber("Current Servo Angle", servo1.getAngle());
         itisFinished = true;
+        //*/
     }
 
     // Called once the command ends or is interrupted.
