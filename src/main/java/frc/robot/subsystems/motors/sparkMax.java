@@ -11,66 +11,53 @@ public class sparkMax extends Motor {
     private CANEncoder kMotorEncoder;
     private double kMotorEncoderValuePos;
     private double kMotorEncoderValueVel;
-    private double kMotorSpeedPos;
-    private double kMotorSpeedNeg;
-    private double kMotorDefaultPos;
-    private double kMotorDefaultNeg;
-    public sparkMax(final int port, final double pos, final double neg){
-        super(port, pos, neg);
-        kMotor = new CANSparkMax(port, MotorType.kBrushless);
-        kMotorEncoder = kMotor.getEncoder();
-        kMotorDefaultPos = pos;
-        kMotorDefaultNeg = neg;
-        kMotorSpeedPos = pos;
-        kMotorSpeedNeg = neg;
-    }
+    // Initialization with default positive/negative scaling
     public sparkMax(final int port){
         super(port, 1, 1);
         kMotor = new CANSparkMax(port, MotorType.kBrushless);
         kMotorEncoder = kMotor.getEncoder();
-        kMotorDefaultPos = 1;
-        kMotorDefaultNeg = 1;
-        kMotorSpeedPos = 1;
-        kMotorSpeedNeg = 1;
+    }
+    // Initialization with specified positive/negative scaling
+    public sparkMax(final int port, final double pos, final double neg){
+        super(port, pos, neg);
+        kMotor = new CANSparkMax(port, MotorType.kBrushless);
+        kMotorEncoder = kMotor.getEncoder();
     }
 
-    public void setMotorSpeeds(final double pos, final double neg){
-        kMotorSpeedPos = pos;
-        kMotorSpeedNeg = neg;
-    }
-    public void resetMotorSpeeds(){
-        kMotorSpeedPos = kMotorDefaultPos;
-        kMotorSpeedNeg = kMotorDefaultNeg;
-    }
 
+    // Rotates motor clockwise(positive), use for non user input
     public void rotateClockwise(final double rotate){
-        kMotor.set(rotate * kMotorSpeedPos);
+        kMotor.set(rotate * mPos);
     }
-
+    // Rotates motor counterclockwise(negative), use for non user input
     public void rotateCounterClockwise(final double rotate){
-        kMotor.set(rotate * -kMotorSpeedNeg);
+        kMotor.set(rotate * -mNeg);
     }
-
+    // Stops motor
     public void stopMotor(){
         kMotor.set(0);
     }
-    
+    // Rotates motor based on (user)input, asigns proper scale variables automatically
     public void rotateMotor(final double rotate){
         if(rotate > 0){
-            kMotor.set(rotate * kMotorSpeedNeg);
+            kMotor.set(rotate * mPos);
         }else{
-            kMotor.set(rotate * kMotorSpeedNeg);
+            kMotor.set(rotate * mNeg);
         }
     }
 
+
+    // Returns most recent set value of motor
     public double get(){
         return kMotor.get();
     }
 
+    // Returns current encoder position
     public double getEncoderPosition(){
         kMotorEncoderValuePos = kMotorEncoder.getPosition();
         return kMotorEncoderValuePos;
     }
+    // Returns current encoder velocity
     public double getEncoderVelocity(){
         kMotorEncoderValueVel = kMotorEncoder.getVelocity();
         return kMotorEncoderValueVel;
