@@ -25,8 +25,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static OI oi;
   // ENCODER DETAILS: 134.4 ppr, 537.6 cpr
-  public talonMotor encoderMotor = new talonMotor(14, 8, 9);
-  public Encoder enc = new Encoder(encoderMotor.getAChannel(), encoderMotor.getBChannel());
+  public talonMotor encoderMotor;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -37,8 +36,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     oi = new OI();
-    enc.reset();
-    enc.setDistancePerPulse(1/134.4);
+    encoderMotor = new talonMotor(0, 8, 9);
+    encoderMotor.sEncoder.reset();
+    encoderMotor.sEncoder.setDistancePerPulse(134.4/360);
   }
 
   /**
@@ -104,13 +104,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    if(enc.getDistance() < 45){
+    if(encoderMotor.sEncoder.getDistance() < 33.6){
       encoderMotor.rotateMotor(0.3);
     }
     else{
       encoderMotor.stopMotor();
     }
-
   }
   @Override
   public void testInit() {

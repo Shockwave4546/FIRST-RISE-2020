@@ -6,7 +6,7 @@ public class RobotMap {
     public static final int cCoDriverPort = 1;
 
     // PWM //
-    public static final int mSpinPort = 0;
+    public static final int mSpinPort = 2;
     public static final double mSpinPos = 0.6;
     public static final double mSpinNeg = 0.6;
 

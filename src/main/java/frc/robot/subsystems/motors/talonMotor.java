@@ -33,14 +33,6 @@ public class talonMotor extends Motor{
         channelB = chaB;
     }
 
-    public int getAChannel(){
-        return channelA;
-    }
-
-    public int getBChannel(){
-        return channelB;
-    }
-
     public void rotateClockwise(final double rotate){
         kMotor.set(rotate * mPos);
     }
