@@ -63,7 +63,7 @@ public class pivotControl extends CommandBase {
                 SmartDashboard.putString("Pivot Position", "Vertical");
                 itisFinished = true;
             }else{
-                mPivot.rotateCounterClockwise(RobotMap.mPivotSpeed);
+                mPivot.rotateClockwise(RobotMap.mPivotSpeed);
             }
         }
         else if(targetPosition == 1){
@@ -72,7 +72,7 @@ public class pivotControl extends CommandBase {
                 SmartDashboard.putString("Pivot Position", "Horizontal");
                 itisFinished = true;
             }else{
-                mPivot.rotateClockwise(RobotMap.mPivotSpeed);
+                mPivot.rotateCounterClockwise(RobotMap.mPivotSpeed);
             }
         }
         else{
