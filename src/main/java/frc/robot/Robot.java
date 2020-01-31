@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   // ENCODER DETAILS: 134.4 ppr, 537.6 cpr
   public talonMotor encoderMotor;
+  public double encoderValue;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -38,7 +39,7 @@ public class Robot extends TimedRobot {
     oi = new OI();
     encoderMotor = new talonMotor(0, 8, 9);
     encoderMotor.sEncoder.reset();
-    encoderMotor.sEncoder.setDistancePerPulse(134.4/360);
+    encoderMotor.sEncoder.setDistancePerPulse(360/134.4);
   }
 
   /**
@@ -104,10 +105,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    if(encoderMotor.sEncoder.getDistance() < 33.6){
-      encoderMotor.rotateMotor(0.3);
+    encoderValue = encoderMotor.sEncoder.getDistance();
+    System.out.println(encoderValue);
+    if(encoderMotor.sEncoder.getDistance() < 16.8){
+      System.out.println("forward");
+      encoderMotor.rotateMotor(-0.3);
     }
     else{
+      System.out.println("stop");
       encoderMotor.stopMotor();
     }
   }
