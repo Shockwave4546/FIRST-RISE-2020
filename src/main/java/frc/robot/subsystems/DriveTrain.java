@@ -11,12 +11,14 @@ public class DriveTrain{
     //private talonMotor mBackwardRight;
     private double cDriveLeftY;
     private double cDriveRightX;
+    // Initializes all 4 drivetrain motors
     public DriveTrain(){
         mForwardLeft = new talonMotor(RobotMap.mForwardLeftPort);
         mForwardRight = new talonMotor(RobotMap.mForwardRightPort);
         //mBackwardLeft = new talonMotor(RobotMap.mBackwardLeftPort);
         //mBackwardRight = new talonMotor(RobotMap.mBackwardRightPort);
     }
+    // Takes controller axis inputs to drive a tank based drivetrain
     private void drivebaseControl(final double inputY, final double inputX) {
         cDriveLeftY = inputY;
         cDriveRightX = inputX;
@@ -32,7 +34,7 @@ public class DriveTrain{
             SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
         }
     }
-    public void Drive(final double inputY, final double inputX){
+    public void userDrive(final double inputY, final double inputX){
         drivebaseControl(inputY, inputX);
     }
 }

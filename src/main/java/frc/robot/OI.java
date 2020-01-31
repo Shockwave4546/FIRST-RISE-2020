@@ -281,6 +281,6 @@ public class OI {
 
 	// Drive train
 	public void Drive(){
-		driveTrain.Drive(getDriverLeftY(), getDriverRightX());
+		driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
 	}
 }
