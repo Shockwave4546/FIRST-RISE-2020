@@ -27,6 +27,8 @@ public class OI {
 	// commands the same as any other Button.
 
 	public talonMotor mSpinner = new talonMotor(RobotMap.mSpinPort, RobotMap.mSpinPos, RobotMap.mSpinNeg);
+	public talonMotor mleftMotor = new talonMotor(8, .1, .1);
+	public talonMotor mrightMotor = new talonMotor(9, .1, .1);
 	private static final int LEFT_HORIZ_AXIS = 0;
 	private static final int LEFT_VERT_AXIS = 1;
 	private static final int RIGHT_HORIZ_AXIS = 4;
@@ -279,8 +281,14 @@ public class OI {
 		return (Math.abs(output) < 0.05 ? 0.0 : output);
 	}
 
-	// Drive train
+	// Drive train command 
 	public void Drive(){
 		driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
+	}
+
+	public void motorPairTest(){
+		double cAxisInput = getDriverRightY();
+		mleftMotor.rotateMotor(cAxisInput);
+		mrightMotor.rotateMotor(cAxisInput);
 	}
 }
