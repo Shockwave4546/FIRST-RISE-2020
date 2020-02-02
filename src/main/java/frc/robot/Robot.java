@@ -43,6 +43,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     oi = new OI();
+
+    // initialize a servo and allow angle modification via Shuffleboard
     servo1 = new Servo(2);
     speed = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
 

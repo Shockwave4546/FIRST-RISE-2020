@@ -39,6 +39,7 @@ public class servoControl extends CommandBase {
     @Override
     public void execute() {
         /*
+        // Using angle values for the servo (0 is full left, 1 is full right)
         if(servo1.get() == 1.0){
             servo1.set(0.0);
         }
@@ -52,6 +53,7 @@ public class servoControl extends CommandBase {
         itisFinished = true;
         */
         ///*
+        // Using angle numbers for the servo
         if(servo1.getAngle() == 180.0){
             servo1.setAngle(0.0);
         }
