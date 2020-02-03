@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.Encoder;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static OI oi;
-  // ENCODER DETAILS: 134.4 ppr, 537.6 cpr
+  // ENCODER DETAILS: 134.4 ppr
   public talonMotor encoderMotor;
   public double encoderValue;
 
@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
     oi = new OI();
     encoderMotor = new talonMotor(0, 8, 9);
     encoderMotor.sEncoder.reset();
-    encoderMotor.sEncoder.setDistancePerPulse(360/134.4);
+    encoderMotor.sEncoder.setDistancePerPulse(360/134.4); //1 pulse = 2.68 degrees
   }
 
   /**
@@ -107,7 +107,8 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     encoderValue = encoderMotor.sEncoder.getDistance();
     System.out.println(encoderValue);
-    if(encoderMotor.sEncoder.getDistance() < 16.8){
+    // TO GET VALUE, DIVIDE ANGLE WANTED BY 2.68
+    if(encoderMotor.sEncoder.getDistance() < 4.2){ //NOTE: DIVIDE VALUE BY 4 TO GET PROPER VALUE
       System.out.println("forward");
       encoderMotor.rotateMotor(-0.3);
     }
