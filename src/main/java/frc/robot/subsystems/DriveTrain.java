@@ -21,7 +21,7 @@ public class DriveTrain{
     // Takes controller axis inputs to drive a tank based drivetrain
     private void drivebaseControl(final double inputY, final double inputX) {
         cDriveLeftY = inputY;
-        cDriveRightX = inputX;
+        cDriveRightX = -inputX;
         if(cDriveLeftY == 0) {
             mForwardLeft.rotateMotor(cDriveRightX);
             SmartDashboard.putNumber("mForwardLeft", mForwardLeft.get());
@@ -40,11 +40,11 @@ public class DriveTrain{
 
     public void visionDrive(final double[] visionTarget){
         if(visionTarget[1] > 0.01){
-            mForwardLeft.rotateClockwise(0.125);
-            mForwardRight.rotateClockwise(0.125);
-        }else if(visionTarget[1] < -0.01){
             mForwardLeft.rotateCounterClockwise(0.125);
             mForwardRight.rotateCounterClockwise(0.125);
+        }else if(visionTarget[1] < -0.01){
+            mForwardLeft.rotateClockwise(0.125);
+            mForwardRight.rotateClockwise(0.125);
         }else{
             mForwardLeft.stopMotor();
             mForwardRight.stopMotor();
