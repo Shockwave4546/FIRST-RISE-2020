@@ -8,11 +8,11 @@
 package frc.robot;
 
 import frc.robot.RobotMap;
-
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-//import frc.robot.commands.moveMotor;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -23,6 +23,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static OI oi;
+  public NetworkTable visiontargettable;
+  double[] visiontargetpos;
+  double[] defaultValue = new double[0];
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -87,7 +90,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-
+    visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -98,7 +101,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    oi.Drive();
+    double[] visiontargetpos = visiontargettable.getEntry("targetPose").getDoubleArray(defaultValue);
+    oi.Drive(visiontargetpos);
   }
 
   @Override

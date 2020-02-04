@@ -42,7 +42,7 @@ public class OI {
 
 	// driver controller setup
 	private Joystick driverController = new Joystick(RobotMap.cDriverPort);
-	private Button driverButtonA = new edu.wpi.first.wpilibj2.command.button.JoystickButton(driverController, 1);
+	private Button driverButtonA = new JoystickButton(driverController, 1);
 	private Button driverButtonB = new JoystickButton(driverController, 2);
 	private Button driverButtonX = new JoystickButton(driverController, 3);
 	private Button driverButtonY = new JoystickButton(driverController, 4);
@@ -280,7 +280,11 @@ public class OI {
 	}
 
 	// Drive train
-	public void Drive(){
-		driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
+	public void Drive(double[] visionTarget){
+		if(driverButtonLeftBumper.get() == false){
+			driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
+		}else if(driverButtonLeftBumper.get() == true){
+			driveTrain.visionDrive(visionTarget);
+		}
 	}
 }
