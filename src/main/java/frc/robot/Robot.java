@@ -128,14 +128,14 @@ public class Robot extends TimedRobot {
     // }
     // System.out.println("Distance: "+visiontargetpos[0]*63.9768597337);
     //System.out.println("Left/Right: " + visiontargetpos[1]);
-    if (visiontargetpos[1] > 0.05) {
+    if (visiontargetpos[1] > 0.01) {
       // Turn Left
-      mForwardLeft.rotateMotor(0.2);
-      mForwardRight.rotateMotor(0.2);
-    } else if (visiontargetpos[1] < -0.05) {
+      mForwardLeft.rotateMotor(0.125);
+      mForwardRight.rotateMotor(0.125);
+    } else if (visiontargetpos[1] < -0.01) {
       // Turn Right
-      mForwardLeft.rotateMotor(-0.2);
-      mForwardRight.rotateMotor(-0.2);
+      mForwardLeft.rotateMotor(-0.125);
+      mForwardRight.rotateMotor(-0.125);
     } else {
       // Stop Turning
       mForwardLeft.rotateMotor(0);
