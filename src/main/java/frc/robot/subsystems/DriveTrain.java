@@ -5,12 +5,14 @@ import frc.robot.RobotMap;
 import frc.robot.subsystems.motors.*;
 
 public class DriveTrain{
-    private talonMotor mForwardLeft;
-    private talonMotor mForwardRight;
+    private talonMotor mForwardLeft, mForwardRight;
     //private talonMotor mBackwardLeft;
     //private talonMotor mBackwardRight;
-    private double cDriveLeftY;
-    private double cDriveRightX;
+    private double cDriveLeftY, cDriveRightX;
+    private double integral, previousError, setPoint = 0;
+    private double P = 1;
+    private double I, D = 0;
+
     // Initializes all 4 drivetrain motors
     public DriveTrain(){
         mForwardLeft = new talonMotor(RobotMap.mForwardLeftPort);
@@ -38,16 +40,29 @@ public class DriveTrain{
         drivebaseControl(inputY, inputX);
     }
 
-    public void visionDrive(final double[] visionTarget){
-        if(visionTarget[1] > 0.01){
-            mForwardLeft.rotateCounterClockwise(0.125);
-            mForwardRight.rotateCounterClockwise(0.125);
-        }else if(visionTarget[1] < -0.01){
-            mForwardLeft.rotateClockwise(0.125);
-            mForwardRight.rotateClockwise(0.125);
+
+    private void setSetPoint(final double visionTarget){
+        if(visionTarget > 0.01){
+            setPoint = 0.125;
+        }else if(visionTarget < -0.01){
+            setPoint = -0.125;
         }else{
-            mForwardLeft.stopMotor();
-            mForwardRight.stopMotor();
+            setPoint = 0;
         }
+    }
+
+    private double PID(double number){
+        double error = setPoint - number; // Error = Target - Actual
+        this.integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+        double derivative = (error - previousError) / .02;
+        return (P*error + I*integral + D*derivative) * .7;
+    }
+
+    public void visionDrive(final double[] visionTarget){
+        setSetPoint(visionTarget[1]);
+        double temp = PID(visionTarget[1]);
+        mForwardLeft.rotateMotor(temp);
+        SmartDashboard.putNumber("visionMotor", temp);
+        mForwardRight.rotateMotor(temp);
     }
 }

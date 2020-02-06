@@ -59,6 +59,10 @@ public class talonMotor extends Motor{
     }
 
     
+    public double getPWMSpeed(){
+        return kMotor.getSpeed();
+    }
+    
     // Returns most recent set value of motor
     public double get(){
         return kMotor.get();
