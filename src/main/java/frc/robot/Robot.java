@@ -108,7 +108,7 @@ public class Robot extends TimedRobot {
     encoderValue = encoderMotor.sEncoder.getDistance();
     System.out.println(encoderValue);
     // TO GET VALUE, DIVIDE ANGLE WANTED BY 2.68
-    if(encoderMotor.sEncoder.getDistance() < 4.2){ //NOTE: DIVIDE VALUE BY 4 TO GET PROPER VALUE
+    if(encoderMotor.sEncoder.getDistance() < 4.2){ //NOTE: DIVIDE CALCULATED VALUE BY 4 TO GET PROPER VALUE
       System.out.println("forward");
       encoderMotor.rotateMotor(-0.3);
     }
