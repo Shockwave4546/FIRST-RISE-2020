@@ -12,6 +12,9 @@ public class DriveTrain{
     private double integral, previousError, setPoint = 0;
     private double P = 1;
     private double I, D = 0;
+    private double actualtemp = 0;
+    private double straightSpeedL = 0.0;
+    private double straightSpeedR = 0.0;
 
     // Initializes all 4 drivetrain motors
     public DriveTrain(){
@@ -42,9 +45,9 @@ public class DriveTrain{
 
 
     private void setSetPoint(final double visionTarget){
-        if(visionTarget > 0.01){
+        if(visionTarget > 0.005){
             setPoint = 0.125;
-        }else if(visionTarget < -0.01){
+        }else if(visionTarget < -0.005){
             setPoint = -0.125;
         }else{
             setPoint = 0;
@@ -55,14 +58,35 @@ public class DriveTrain{
         double error = setPoint - number; // Error = Target - Actual
         this.integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
         double derivative = (error - previousError) / .02;
+        //System.out.println(integral);
         return (P*error + I*integral + D*derivative) * .7;
+
     }
 
-    public void visionDrive(final double[] visionTarget){
+    public void visionDrive(final double[] visionTarget, double distance){
         setSetPoint(visionTarget[1]);
-        double temp = PID(visionTarget[1]);
-        mForwardLeft.rotateMotor(temp);
+        //System.out.println(visionTarget[1]);
+        double temp = (PID(visionTarget[1]));
+        if (distance > 63){
+            straightSpeedL = 0.25;
+            straightSpeedR = -0.25;
+
+        }else if ((distance < 57) && (distance > 5)){
+            straightSpeedL = -0.25;
+            straightSpeedR = 0.25;
+        }else if (distance <= 5.0){
+            straightSpeedL = 0.0;
+            straightSpeedR = 0.0;
+        }else{
+            straightSpeedL = 0.0;
+            straightSpeedR = 0.0; 
+        }
+        System.out.println(straightSpeedL);
+        //System.out.println(actualtemp);
+        mForwardLeft.rotateMotor(temp+straightSpeedL);
         SmartDashboard.putNumber("visionMotor", temp);
-        mForwardRight.rotateMotor(temp);
+        mForwardRight.rotateMotor(temp+straightSpeedR);
+
+        //System.out.println(temp);
     }
 }

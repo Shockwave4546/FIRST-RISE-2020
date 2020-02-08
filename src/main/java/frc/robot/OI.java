@@ -284,11 +284,11 @@ public class OI {
 	}
 
 	// Drive train
-	public void Drive(double[] visionTarget){
+	public void Drive(double[] visionTarget, double distance){
 		if(driverButtonLeftBumper.get() == false){
 			driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
 		}else if(driverButtonLeftBumper.get() == true){
-			driveTrain.visionDrive(visionTarget);
+			driveTrain.visionDrive(visionTarget, distance);
 		}
 	}
 }

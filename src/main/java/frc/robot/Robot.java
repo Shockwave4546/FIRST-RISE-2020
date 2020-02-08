@@ -102,7 +102,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     double[] visiontargetpos = visiontargettable.getEntry("targetPose").getDoubleArray(defaultValue);
-    oi.Drive(visiontargetpos);
+    double targetwidth = visiontargettable.getEntry("targetBoundingWidth").getDouble(0.0);
+    oi.Drive(visiontargetpos,((38*516.315789)/targetwidth));
+ 
+    System.out.println((38*516.315789)/targetwidth);
   }
 
   @Override
