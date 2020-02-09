@@ -10,8 +10,19 @@ package frc.robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.motors.talonMotor;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.lang.*;
+
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Encoder;
 //import frc.robot.commands.moveMotor;
 
@@ -25,8 +36,21 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static OI oi;
   // ENCODER DETAILS: 134.4 ppr
-  public talonMotor encoderMotor;
+  public Encoder encoder;
   public double encoderValue;
+  public static talonMotor motor1;
+  public static talonMotor motor2;
+  public ShuffleboardTab tab;
+  public NetworkTableEntry speed;
+
+  public static talonMotor encoderMotor1;
+  public static talonMotor encoderMotor2;
+
+  public static List<Double> averageRPMArr = new ArrayList<Double>();
+  public static double averageRPM = 0;
+  public static double RPM;
+  public static double total;
+  public static int i;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -37,9 +61,14 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     oi = new OI();
-    encoderMotor = new talonMotor(0, 8, 9);
-    encoderMotor.sEncoder.reset();
-    encoderMotor.sEncoder.setDistancePerPulse(360/134.4); //1 pulse = 2.68 degrees
+
+    encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+    //encoder.setDistancePerPulse(360/2048);
+    encoder.setMinRate(1);
+    motor1 = new talonMotor(0);
+    motor2 = new talonMotor(1);
+    tab = Shuffleboard.getTab("Smartdashboard");
+    speed = tab.add("Rotate Speed", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1)).getEntry();
   }
 
   /**
@@ -56,6 +85,20 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    RPM = ((encoder.getRate()/2048)*-60);
+    averageRPMArr.add(RPM);
+    total = total + averageRPMArr.get(i);
+    averageRPM = (total / averageRPMArr.size());
+    SmartDashboard.putNumber("RPM", averageRPM);
+    if(i < 100){
+      i++;
+    }
+    else{
+      i = 0;
+      averageRPMArr.clear();
+      total = 0;
+    }
   }
 
   /**
@@ -105,17 +148,24 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    encoderValue = encoderMotor.sEncoder.getDistance();
-    System.out.println(encoderValue);
+    motor1.rotateMotor(speed.getDouble(0.0));
+    motor2.rotateMotor(speed.getDouble(0.0));
+
+    /*
+    //encoderValue = encoderMotor.sEncoder.getDistance();
+    //System.out.println(encoderValue);
     // TO GET VALUE, DIVIDE ANGLE WANTED BY 2.68
-    if(encoderMotor.sEncoder.getDistance() < 4.2){ //NOTE: DIVIDE CALCULATED VALUE BY 4 TO GET PROPER VALUE
+    if(encoderValue < 0.175){ //NOTE: DIVIDE CALCULATED VALUE BY 4 TO GET PROPER VALUE
       System.out.println("forward");
-      encoderMotor.rotateMotor(-0.3);
+      motor1.rotateMotor(-0.3);
+      motor2.rotateMotor(-0.3);
     }
     else{
       System.out.println("stop");
-      encoderMotor.stopMotor();
+      motor1.stopMotor();
+      motor1.stopMotor();
     }
+    */
   }
   @Override
   public void testInit() {
