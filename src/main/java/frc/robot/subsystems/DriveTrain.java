@@ -44,14 +44,8 @@ public class DriveTrain{
     }
 
 
-    private void setSetPoint(final double visionTarget){
-        if(visionTarget > 0.005){
-            setPoint = 0.125;
-        }else if(visionTarget < -0.005){
-            setPoint = -0.125;
-        }else{
+    private void setSetPoint(final double visionTarget){     
             setPoint = 0;
-        }
     }
 
     private double PID(double number){
