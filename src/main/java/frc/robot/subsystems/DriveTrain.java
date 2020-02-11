@@ -77,12 +77,12 @@ public class DriveTrain{
         //System.out.println(visionTarget[1]);
         double temp = (PID(visionTarget[1]));
         if (distance > 63){
-            straightSpeedL = 0.5;
-            straightSpeedR = -0.5;
+            straightSpeedL = 0.25;
+            straightSpeedR = -0.25;
 
         }else if ((distance < 57) && (distance > 5)){
-            straightSpeedL = -0.5;
-            straightSpeedR = 0.5;
+            straightSpeedL = -0.25;
+            straightSpeedR = 0.25;
         }else if (distance <= 5.0){
             straightSpeedL = 0.0;
             straightSpeedR = 0.0;
