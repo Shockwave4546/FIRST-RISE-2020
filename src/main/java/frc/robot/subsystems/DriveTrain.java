@@ -25,7 +25,8 @@ public class DriveTrain{
         //mBackwardRight = new talonMotor(RobotMap.mBackwardRightPort);
         visionDrivePID = new PID(1, 0, 0, .02, .1);
     }
-    // Takes controller axis inputs to drive a tank based drivetrain
+
+    // Takes controller axis inputs to drive (tank based drivetrain)
     private void drivebaseControl(final double inputY, final double inputX) {
         cDriveLeftY = inputY;
         cDriveRightX = -inputX;
@@ -41,6 +42,8 @@ public class DriveTrain{
             SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
         }
     }
+
+    // Called from OI for user drive control
     public void userDrive(final double inputY, final double inputX){
         drivebaseControl(inputY, inputX);
     }
@@ -55,7 +58,7 @@ public class DriveTrain{
         System.out.println(P*error + I*integral + D*derivative);
         return (P*error + I*integral + D*derivative);
         
-        MOVED TO PID.java
+        ******MOVED TO PID.java******
 
         //PID LOOP USING YAW DIFFERENCE
         visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
@@ -69,6 +72,7 @@ public class DriveTrain{
     }
     */
 
+    // Called from OI for software(vision) control
     public void visionDrive(final double visionTarget, double distance){
         double motorPIDinput = (visionDrivePID.getCalculation(visionTarget));
         //System.out.println(visionTarget);
