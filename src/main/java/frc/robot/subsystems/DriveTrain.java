@@ -18,11 +18,13 @@ public class DriveTrain{
     private double straightSpeedL = 0.0;
     private double straightSpeedR = 0.0;
     public NetworkTable visiontargettable;
+    private PID visionDrivePID;
 
     // Initializes all 4 drivetrain motors
     public DriveTrain(){
         mForwardLeft = new talonMotor(RobotMap.mForwardLeftPort);
         mForwardRight = new talonMotor(RobotMap.mForwardRightPort);
+        visionDrivePID = new PID(1, 0, 0, .02, .1);
         //mBackwardLeft = new talonMotor(RobotMap.mBackwardLeftPort);
         //mBackwardRight = new talonMotor(RobotMap.mBackwardRightPort);
     }
@@ -47,10 +49,6 @@ public class DriveTrain{
     }
 
 
-    private void setSetPoint(final double visionTarget){     
-            setPoint = 0;
-    }
-
     private double PID(double number){
         //PID LOOP USING PIXEL DIFFERENCE
         /*
@@ -73,9 +71,8 @@ public class DriveTrain{
     }
 
     public void visionDrive(final double[] visionTarget, double distance){
-        setSetPoint(visionTarget[1]);
         //System.out.println(visionTarget[1]);
-        double temp = (PID(visionTarget[1]));
+        double temp = (visionDrivePID.getCalculation(visionTarget[1]));
         if (distance > 63){
             straightSpeedL = 0.25;
             straightSpeedR = -0.25;
