@@ -25,8 +25,10 @@ public class PID{
     public double getCalculation(double errorActual){
         // Error = Target - Actual
         double error = (setPoint - errorActual) * E;
+
         // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
         integral += (error * .005);
+
         double derivative = (error - previousError) / d;
         previousError = error;
         //System.out.println(P*error + I*integral + D*derivative);
