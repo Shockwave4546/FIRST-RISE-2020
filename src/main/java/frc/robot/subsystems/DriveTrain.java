@@ -7,9 +7,7 @@ import frc.robot.RobotMap;
 import frc.robot.subsystems.motors.*;
 
 public class DriveTrain{
-    private talonMotor mForwardLeft, mForwardRight;
-    //private talonMotor mBackwardLeft;
-    //private talonMotor mBackwardRight;
+    private talonMotor mForwardLeft, mForwardRight, mBackwardLeft, mBackwardRight;
     private double cDriveLeftY, cDriveRightX;
     /*private double integral, previousError, setPoint = 0;
     private double P = 1;
@@ -17,16 +15,15 @@ public class DriveTrain{
     private double actualtemp = 0;*/
     private double straightSpeedL = 0.0;
     private double straightSpeedR = 0.0;
-    public NetworkTable visiontargettable;
     private PID visionDrivePID;
 
-    // Initializes all 4 drivetrain motors
+    // Initializes all 4 drivetrain motors and PID class for vision drive
     public DriveTrain(){
         mForwardLeft = new talonMotor(RobotMap.mForwardLeftPort);
         mForwardRight = new talonMotor(RobotMap.mForwardRightPort);
-        visionDrivePID = new PID(1, 0, 0, .02, .1);
         //mBackwardLeft = new talonMotor(RobotMap.mBackwardLeftPort);
         //mBackwardRight = new talonMotor(RobotMap.mBackwardRightPort);
+        visionDrivePID = new PID(1, 0, 0, .02, .1);
     }
     // Takes controller axis inputs to drive a tank based drivetrain
     private void drivebaseControl(final double inputY, final double inputX) {

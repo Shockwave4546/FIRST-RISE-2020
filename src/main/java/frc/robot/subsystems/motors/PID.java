@@ -3,6 +3,13 @@ package frc.robot.subsystems.motors;
 public class PID{
     private double P, I, D, E, d;
     private double integral, previousError, setPoint = 0;
+    public PID(){
+        P = 1;
+        I = 1;
+        D = 1;
+        E = .25;
+        d = .5;
+    }
     public PID(double proportion, double integral, double derivative, double errorScale, double derivativeScale){
         P = proportion;
         I = integral;
@@ -14,6 +21,7 @@ public class PID{
     public void setSetPoint(double input){
         setPoint = input;
     }
+
     public double getCalculation(double errorActual){
         // Error = Target - Actual
         double error = (setPoint - errorActual) * E;
