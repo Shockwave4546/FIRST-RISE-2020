@@ -16,6 +16,7 @@ public class DriveTrain{
     private double straightSpeedL = 0.0;
     private double straightSpeedR = 0.0;
     private PID visionDrivePID;
+    private double motorPIDinput;
 
     // Initializes all 4 drivetrain motors and PID class for vision drive
     public DriveTrain(){
@@ -73,8 +74,8 @@ public class DriveTrain{
     */
 
     // Called from OI for software(vision) control
-    public void visionDrive(final double visionTarget, double distance){
-        double motorPIDinput = (visionDrivePID.getCalculation(visionTarget));
+    public void visionDrive(double visionTarget, double distance){
+        motorPIDinput = -(visionDrivePID.getCalculation(visionTarget));
         //System.out.println(visionTarget);
         if (distance > 63){
             straightSpeedL = 0.25;

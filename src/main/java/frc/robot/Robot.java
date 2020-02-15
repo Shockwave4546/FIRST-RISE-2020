@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
+    //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -103,6 +103,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
     //double[] visiontargetpos = visiontargettable.getEntry("targetPose").getDoubleArray(defaultValue);
     double targetwidth = visiontargettable.getEntry("targetBoundingWidth").getDouble(0.0);
     double tarNumber = visiontargettable.getEntry("targetYaw").getDouble(0.0);

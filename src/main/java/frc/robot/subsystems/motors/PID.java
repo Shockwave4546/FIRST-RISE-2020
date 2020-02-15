@@ -24,14 +24,14 @@ public class PID{
 
     public double getCalculation(double errorActual){
         // Error = Target - Actual
-        double error = (setPoint - errorActual) * E;
+        double error = (setPoint - errorActual) * this.E;
 
         // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
-        integral += (error * .005);
+        this.integral += (error * .005);
 
-        double derivative = (error - previousError) / d;
-        previousError = error;
+        double derivative = (error - previousError) / this.d;
+        //previousError = error;
         //System.out.println(P*error + I*integral + D*derivative);
-        return (P * error) + (I * integral) + (D * derivative);
+        return (this.P * error) + (this.I * this.integral) + (this.D * derivative);
     }
 }
