@@ -92,10 +92,14 @@ public class OI {
 		//driverButtonLeftBumper.whenPressed(new DriveRetrieveGear());
 		//driverButtonLeftBumper.whenReleased(new DriveStop());
 		//driverButtonRightBumper.whenPressed(new DriveDeliverGear());
+		
 		//driverButtonRightBumper.whenReleased(new DriveStop());
-		driverButtonX.whenPressed(new positionControl());
-		driverButtonB.whenPressed(new rotationControl());
-		driverButtonA.whenPressed(new pivotControl());
+		
+		//driverButtonX.whenPressed(new positionControl());
+		//driverButtonB.whenPressed(new rotationControl());
+		//driverButtonA.whenPressed(new pivotControl());
+		
+		
 		//driverButtonY.whenPressed(new DriveDistance(0.02));
 
 		//operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
@@ -133,7 +137,7 @@ public class OI {
 		if(-STICK_DEADZONE <= rightX && rightX <= STICK_DEADZONE){
 			return 0;
 		}else{
-			return rightX;
+			return -rightX;
 		}
 	}
 
@@ -142,7 +146,7 @@ public class OI {
 		if(-STICK_DEADZONE <= leftY && leftY <= STICK_DEADZONE){
 			return 0;
 		}else{
-			return leftY;
+			return -leftY;
 		}
 	}
 
@@ -280,11 +284,11 @@ public class OI {
 	}
 
 	// Drive train
-	public void Drive(double[] visionTarget){
+	public void Drive(double visionTarget, double distance){
 		if(driverButtonLeftBumper.get() == false){
 			driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
 		}else if(driverButtonLeftBumper.get() == true){
-			driveTrain.visionDrive(visionTarget);
+			driveTrain.visionDrive(visionTarget, distance);
 		}
 	}
 }
