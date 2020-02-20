@@ -6,39 +6,94 @@ public class RobotMap {
     public static final int cDriverPort = 0;
     public static final int cCoDriverPort = 1;
 
-    // PWM //
+    // PWM // ------------------------------------------ //
         // DriveTrain //
-    public static final int mForwardLeftPort = 0;
-    public static final double mForwardLeftPos = 1.0;
-    public static final double mForwardLeftNeg = 1.0;
+    public static final int mDriveLeftOnePort = 0;          // Motor Controller  1 - Red
+    public static final double mDriveLeftOnePos = 1.0;
+    public static final double mDriveLeftOneNeg = 1.0;
 
-    public static final int mForwardRightPort = 1;
-    public static final double mForwardRightPos = 1.0;
-    public static final double mForwardRightNeg = 1.0;
+    public static final int mDriveLeftTwoPort = 1;          // Motor Controller  2 - Red
+    public static final double mDriveLeftTwoPos = 1.0;
+    public static final double mDriveLeftTwoNeg = 1.0;
 
-    public static final int mBackwardLeftPort = 2;
-    public static final double mBackwardLeftPos = 1.0;
-    public static final double mBackwardLeftNeg = 1.0;
+    public static final int mDriveRightOnePort = 2;         // Motor Controller  3 - Red w/ stripes
+    public static final double mDriveRightOnePos = 1.0;
+    public static final double mDriveRightOneNeg = 1.0;
     
-    public static final int mBackwardRightPort = 3;
-    public static final double mBackwardRightPos = 1.0;
-    public static final double mBackwardRightNeg = 1.0;
+    public static final int mDriveRightTwoPort = 3;         // Motor Controller  4 - Red w/ stripes
+    public static final double mDriveRightTwoPos = 1.0;
+    public static final double mDriveRightTwoNeg = 1.0;
         // ---------- //
 
+        // Shooter Servo //
+    public static final int smShooterPort = 4;
+        // ---------- //
 
-    public static final int mSpinPort = 4;
-    public static final double mSpinPos = 0.6;
-    public static final double mSpinNeg = 0.6;
+        // Camera Servos //
+    public static final int smCamPan = 5;
+    public static final int smCamTilt = 6;
+        // ---------- //
+    // PWM // ------------------------------------------ //
 
-    public static final int mPivotPort = 5;
-    public static final double mPivotSpeed = 0.5;
 
-    // CAN Bus // 
+    // CAN Bus // ------------------------------------------ //
+        // Wheel Of Fortune //
+    public static final int mWheelOfFortunePort = 10;       // Motor Controller  5 - Yellow
+    public static final double mWheelOfFortunePos = 0.6;
+    public static final double mWheelOfFortuneNeg = 0.6;
+        // ---------- //
 
-    // Digital //
-    public static final int hLimitPort = 0;
-    public static final int vLimitPort = 1;
+        // Intake Rollers //
+    public static final int mIntakeRollerPort = 11;         // Motor Controller  6 - Green
+    public static final double mIntakeRollerPos = 1.0;
+    public static final double mIntakeRollerNeg = 1.0;
 
-    // Misc //
-    
+    public static final int mIntakePivotPort = 12;          // Motor Controller  7 - Green
+    public static final double mIntakePivotPos = 1.0;
+    public static final double mIntakePivotNeg = 1.0;
+        // ---------- //
+
+        // Flywheel (Ball Shooter) //
+    public static final int mFlywheelShooterOnePort = 13;   // Motor Controller  8 - Purple
+    public static final double mFlywheelShooterOnePos = 1.0;
+    public static final double mFlywheelShooterOneNeg = 1.0;
+
+    public static final int mFlywheelShooterTwoPort = 14;   // Motor Controller  9 - Purple
+    public static final double mFlywheelShooterTwoPos = 1.0;
+    public static final double mFlywheelShooterTwoNeg = 1.0;
+
+    public static final int mFlywheelFeederPort = 15;       // Motor Controller 10 - Purple w/ stripes
+    public static final double mFlywheelFeederPos = 1.0;
+    public static final double mFlywheelFeederNeg = 1.0;
+        // ---------- //
+
+        // Climb //
+    public static final int mClimbPort = 16;                // Motor Controller 11 - Blue
+    public static final double mClimbPos = 1.0;
+    public static final double mClimbNeg = 1.0;
+        // ---------- //
+    // CAN Bus // ------------------------------------------ //
+
+
+    // DIO // ------------------------------------------ //
+        // Flywheel Encoder //
+    public static final int eFlywheelEncoderPortOne = 0;
+    public static final int eFlywheelEncoderPortTwo = 1;
+        // ---------- //
+
+        // Intake Pivot //
+    public static final int lsIntakeVerticalPort = 2;
+    public static final int lsIntakeHorizontalPort = 3;
+        // ---------- //
+
+        // Vision LimeLight //
+    public static final int rLimeLightPort = 4;
+        // ---------- //
+    // DIO // ------------------------------------------ //
+
+
+    // Misc // ------------------------------------------ //
+        // //
+        // ---------- //
+    // Misc // ------------------------------------------ //
 }

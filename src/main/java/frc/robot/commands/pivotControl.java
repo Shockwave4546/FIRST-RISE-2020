@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 /**
  * An example command that uses an example subsystem.
  */
+/*
 public class pivotControl extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
@@ -98,3 +99,4 @@ public class pivotControl extends CommandBase {
 
     }
 }
+*/

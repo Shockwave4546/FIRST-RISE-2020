@@ -26,7 +26,7 @@ public class OI {
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
 
-	public talonMotor mSpinner = new talonMotor(RobotMap.mSpinPort, RobotMap.mSpinPos, RobotMap.mSpinNeg);
+	public victorSPXMotor mWheelOfFortune = new victorSPXMotor(RobotMap.mWheelOfFortunePort, RobotMap.mWheelOfFortunePos, RobotMap.mWheelOfFortuneNeg);
 	private static final int LEFT_HORIZ_AXIS = 0;
 	private static final int LEFT_VERT_AXIS = 1;
 	private static final int RIGHT_HORIZ_AXIS = 4;
@@ -95,8 +95,8 @@ public class OI {
 		
 		//driverButtonRightBumper.whenReleased(new DriveStop());
 		
-		//driverButtonX.whenPressed(new positionControl());
-		//driverButtonB.whenPressed(new rotationControl());
+		driverButtonX.whenPressed(new positionControl());
+		driverButtonB.whenPressed(new rotationControl());
 		//driverButtonA.whenPressed(new pivotControl());
 		
 		
