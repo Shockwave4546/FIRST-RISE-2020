@@ -86,7 +86,7 @@ public class OI {
 		// Add these commands here
 
 		// Driver Buttons // ------------------------------------------ //
-		//driverButtonA.whenPressed();
+		driverButtonA.whenPressed(new pivotIntakeControl());
 		//driverButtonA.whenReleased();
 		//driverButtonA.whileHeld();
 
