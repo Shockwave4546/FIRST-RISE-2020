@@ -4,7 +4,7 @@ public class RobotMap {
     // Controllers //
     public static final double joystickDeadzone = 0.2;
     public static final int cDriverPort = 0;
-    public static final int cCoDriverPort = 1;
+    public static final int cOperatorPort = 1;
 
     // PWM // ------------------------------------------ //
         // DriveTrain //
@@ -43,14 +43,14 @@ public class RobotMap {
     public static final double mWheelOfFortuneNeg = 0.6;
         // ---------- //
 
-        // Intake Rollers //
+        // Intake //
     public static final int mIntakeRollerPort = 11;         // Motor Controller  6 - Green
     public static final double mIntakeRollerPos = 1.0;
     public static final double mIntakeRollerNeg = 1.0;
 
     public static final int mIntakePivotPort = 12;          // Motor Controller  7 - Green
-    public static final double mIntakePivotPos = 1.0;
-    public static final double mIntakePivotNeg = 1.0;
+    public static final double mIntakePivotPos = 0.6;
+    public static final double mIntakePivotNeg = 0.6;
         // ---------- //
 
         // Flywheel (Ball Shooter) //

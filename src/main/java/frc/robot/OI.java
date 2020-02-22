@@ -54,7 +54,7 @@ public class OI {
 	private Button driverButtonRightAxisPress = new JoystickButton(driverController, 10);
 
 	// operator controller setup
-	private Joystick operatorController = new Joystick(RobotMap.cCoDriverPort);
+	private Joystick operatorController = new Joystick(RobotMap.cOperatorPort);
 	private Button operatorButtonA = new JoystickButton(operatorController, 1);
 	private Button operatorButtonB = new JoystickButton(operatorController, 2);
 	private Button operatorButtonX = new JoystickButton(operatorController, 3);
@@ -84,37 +84,92 @@ public class OI {
 		//    until it is finished as determined by it's isFinished method.
 
 		// Add these commands here
-		//driverButtonA.whenPressed(new DriveRotateToBoiler());
-		//driverButtonA.whenReleased(new DriveStop());
-		//driverButtonB.whenPressed(new DriveToggleAutoShift());
-		//driverButtonX.whenPressed(new DriveToggleFront());
 
-		//driverButtonLeftBumper.whenPressed(new DriveRetrieveGear());
-		//driverButtonLeftBumper.whenReleased(new DriveStop());
-		//driverButtonRightBumper.whenPressed(new DriveDeliverGear());
-		
-		//driverButtonRightBumper.whenReleased(new DriveStop());
-		
-		driverButtonX.whenPressed(new positionControl());
-		driverButtonB.whenPressed(new rotationControl());
-		//driverButtonA.whenPressed(new pivotControl());
-		
-		
-		//driverButtonY.whenPressed(new DriveDistance(0.02));
+		// Driver Buttons // ------------------------------------------ //
+		//driverButtonA.whenPressed();
+		//driverButtonA.whenReleased();
+		//driverButtonA.whileHeld();
 
-		//operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
-		//operatorButtonRightBumper.whenPressed(new ShooterStartAgitatorAndFeeder());
-		//operatorButtonRightBumper.whenReleased(new ShooterStopAgitatorAndFeeder());
+		//driverButtonB.whenPressed();
+		//driverButtonB.whenReleased();
+		//driverButtonB.whileHeld();
 
-		//operatorButtonB.whenPressed(new FuelFlapOut());
-		//operatorButtonStart.whenPressed(new ShooterStopAll());
-		//operatorButtonBack.whenPressed(new HangerOverride(true));
-		//operatorButtonBack.whenReleased(new HangerOverride(false));
+		//driverButtonX.whenPressed();
+		//driverButtonX.whenReleased();
+		//driverButtonX.whileHeld();
 
-		//operatorButtonY.whenPressed(new GearPusherOut());
-		//operatorButtonY.whenReleased(new GearPusherIn());
-		//operatorButtonX.whenPressed(new GearReceiverIn());
-		//operatorButtonX.whenReleased(new GearReceiverOut());
+		//driverButtonY.whenPressed();
+		//driverButtonY.whenReleased();
+		//driverButtonY.whileHeld();
+
+		//driverButtonLeftBumper.whenPressed();  // Used as vision drive toggle in Drive()
+		//driverButtonLeftBumper.whenReleased();
+		//driverButtonLeftBumper.whileHeld();
+
+		//driverButtonRightBumper.whenPressed();
+		//driverButtonRightBumper.whenReleased();
+		//driverButtonRightBumper.whileHeld();
+
+		//driverButtonBack.whenPressed();
+		//driverButtonBack.whenReleased();
+		//driverButtonBack.whileHeld();
+
+		//driverButtonStart.whenPressed();
+		//driverButtonStart.whenReleased();
+		//driverButtonStart.whileHeld();
+
+		//driverButtonLeftAxisPress.whenPressed();
+		//driverButtonLeftAxisPress.whenReleased();
+		//driverButtonLeftAxisPress.whileHeld();
+
+		//driverButtonRightAxisPress.whenPressed();
+		//driverButtonRightAxisPress.whenReleased();
+		//driverButtonRightAxisPress.whileHeld();
+		// Driver Buttons // ------------------------------------------ //
+		
+
+		// Operator Buttons // ------------------------------------------ //
+
+		//operatorButtonA.whenPressed();
+		//operatorButtonA.whenReleased();
+		//operatorButtonA.whileHeld();
+
+		operatorButtonB.whenPressed(new rotationControl());
+		//operatorButtonB.whenReleased();
+		//operatorButtonB.whileHeld();
+
+		operatorButtonX.whenPressed(new positionControl());
+		//operatorButtonX.whenReleased();
+		//operatorButtonX.whileHeld();
+
+		//operatorButtonY.whenPressed();
+		//operatorButtonY.whenReleased();
+		//operatorButtonY.whileHeld();
+
+		//operatorButtonLeftBumper.whenPressed();
+		//operatorButtonLeftBumper.whenReleased();
+		//operatorButtonLeftBumper.whileHeld();
+
+		//operatorButtonRightBumper.whenPressed();
+		//operatorButtonRightBumper.whenReleased();
+		//operatorButtonRightBumper.whileHeld();
+
+		//operatorButtonBack.whenPressed();
+		//operatorButtonBack.whenReleased();
+		//operatorButtonBack.whileHeld();
+
+		//operatorButtonStart.whenPressed();
+		//operatorButtonStart.whenReleased();
+		//operatorButtonStart.whileHeld();
+
+		//operatorButtonLeftAxisPress.whenPressed();
+		//operatorButtonLeftAxisPress.whenReleased();
+		//operatorButtonLeftAxisPress.whileHeld();
+
+		//operatorButtonRightAxisPress.whenPressed();
+		//operatorButtonRightAxisPress.whenReleased();
+		//operatorButtonRightAxisPress.whileHeld();
+		// Operator Buttons // ------------------------------------------ //
 	}
 
 
@@ -123,23 +178,6 @@ public class OI {
 
 	// driver controller
 
-	public double getDriverRightY() {
-		double rightY = driverController.getRawAxis(RIGHT_VERT_AXIS);
-		if(-STICK_DEADZONE <= rightY && rightY <= STICK_DEADZONE){
-            return 0;
-        }else{
-            return rightY;
-        }
-	}
-
-	public double getDriverRightX() {
-		double rightX = driverController.getRawAxis(RIGHT_HORIZ_AXIS);
-		if(-STICK_DEADZONE <= rightX && rightX <= STICK_DEADZONE){
-			return 0;
-		}else{
-			return -rightX;
-		}
-	}
 
 	public double getDriverLeftY() {
 		double leftY = driverController.getRawAxis(LEFT_VERT_AXIS);
@@ -156,6 +194,24 @@ public class OI {
 			return 0;
 		}else{
 			return leftX;
+		}
+	}
+
+	public double getDriverRightY() {
+		double rightY = driverController.getRawAxis(RIGHT_VERT_AXIS);
+		if(-STICK_DEADZONE <= rightY && rightY <= STICK_DEADZONE){
+            return 0;
+        }else{
+            return rightY;
+        }
+	}
+
+	public double getDriverRightX() {
+		double rightX = driverController.getRawAxis(RIGHT_HORIZ_AXIS);
+		if(-STICK_DEADZONE <= rightX && rightX <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return -rightX;
 		}
 	}
 
@@ -188,24 +244,6 @@ public class OI {
 
 	// operator controller
 
-	public double getOperatorRightY() {
-		double rightY = operatorController.getRawAxis(RIGHT_VERT_AXIS);
-		if(-STICK_DEADZONE <= rightY && rightY <= STICK_DEADZONE){
-            return 0;
-        }else{
-            return rightY;
-        }
-	}
-
-	public double getOperatorRightX() {
-		double rightX = operatorController.getRawAxis(RIGHT_HORIZ_AXIS);
-		if(-STICK_DEADZONE <= rightX && rightX <= STICK_DEADZONE){
-			return 0;
-		}else{
-			return rightX;
-		}
-	}
-
 	public double getOperatorLeftY() {
 		double leftY = operatorController.getRawAxis(LEFT_VERT_AXIS);
 		if(-STICK_DEADZONE <= leftY && leftY <= STICK_DEADZONE){
@@ -221,6 +259,24 @@ public class OI {
 			return 0;
 		}else{
 			return leftX;
+		}
+	}
+	
+	public double getOperatorRightY() {
+		double rightY = operatorController.getRawAxis(RIGHT_VERT_AXIS);
+		if(-STICK_DEADZONE <= rightY && rightY <= STICK_DEADZONE){
+            return 0;
+        }else{
+            return rightY;
+        }
+	}
+
+	public double getOperatorRightX() {
+		double rightX = operatorController.getRawAxis(RIGHT_HORIZ_AXIS);
+		if(-STICK_DEADZONE <= rightX && rightX <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return rightX;
 		}
 	}
 

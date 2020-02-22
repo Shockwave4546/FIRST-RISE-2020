@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import frc.robot.Robot;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
@@ -16,13 +17,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorMatchResult;
+import com.revrobotics.ColorMatch;
 
 import java.util.ArrayList;
 
-import com.revrobotics.ColorMatch;
-//import edu.wpi.first.wpilibj.DriverStation;
-
-//import frc.robot.subsystems.motors.talonMotor;
 
 /**
  * An example command that uses an example subsystem.
@@ -44,8 +42,6 @@ public class positionControl extends CommandBase {
     private int sequenceIndex;
     private int targetIndex;
     private String gameColor;
-    // talonMotor motor;
-    // talonMotor talon0 = new talonMotor(0, 0, 0);
 
     public positionControl() {
     }

@@ -17,19 +17,18 @@ import edu.wpi.first.wpilibj.DigitalInput;
 /**
  * An example command that uses an example subsystem.
  */
-/*
-public class pivotControl extends CommandBase {
+
+public class pivotIntakeControl extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
     public boolean itisFinished = false;
-    private talonMotor mPivot = new talonMotor(RobotMap.mPivotPort);
-    private DigitalInput hLimit = new DigitalInput(RobotMap.hLimitPort);
-    private DigitalInput vLimit = new DigitalInput(RobotMap.vLimitPort);
+    private victorSPXMotor mPivot = new victorSPXMotor(RobotMap.mIntakePivotPort, RobotMap.mIntakePivotPos, RobotMap.mIntakePivotNeg);
+    private DigitalInput hLimit = new DigitalInput(RobotMap.lsIntakeHorizontalPort);
+    private DigitalInput vLimit = new DigitalInput(RobotMap.lsIntakeVerticalPort);
     private int targetPosition = 2;
-    boolean hLimitStatus;
-    boolean vLimitStatus;
+    boolean hLimitStatus, vLimitStatus;
 
-    public pivotControl() {
+    public pivotIntakeControl() {
     }
 
     // Called when the command is initially scheduled.
@@ -64,7 +63,7 @@ public class pivotControl extends CommandBase {
                 SmartDashboard.putString("Pivot Position", "Vertical");
                 itisFinished = true;
             }else{
-                mPivot.rotateClockwise(RobotMap.mPivotSpeed);
+                mPivot.rotateClockwise(1);
             }
         }
         else if(targetPosition == 1){
@@ -73,7 +72,7 @@ public class pivotControl extends CommandBase {
                 SmartDashboard.putString("Pivot Position", "Horizontal");
                 itisFinished = true;
             }else{
-                mPivot.rotateCounterClockwise(RobotMap.mPivotSpeed);
+                mPivot.rotateCounterClockwise(1);
             }
         }
         else{
@@ -99,4 +98,3 @@ public class pivotControl extends CommandBase {
 
     }
 }
-*/
