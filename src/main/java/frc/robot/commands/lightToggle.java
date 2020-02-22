@@ -50,6 +50,9 @@ public class lightToggle extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        rLimeLight.set(false);
+        rLimeLightValue = rLimeLight.get();
+        SmartDashboard.putBoolean("LimeLight", rLimeLightValue);
         itisFinished = false;
     }
 

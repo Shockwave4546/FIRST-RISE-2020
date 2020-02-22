@@ -104,7 +104,7 @@ public class OI {
 
 		//driverButtonLeftBumper.whenPressed();  // Used as vision drive toggle in Drive()
 		//driverButtonLeftBumper.whenReleased();
-		//driverButtonLeftBumper.whileHeld();
+		driverButtonLeftBumper.whileHeld(new lightToggle());
 
 		//driverButtonRightBumper.whenPressed();
 		//driverButtonRightBumper.whenReleased();
