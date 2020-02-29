@@ -127,15 +127,15 @@ public class OI {
 		//driverButtonRightAxisPress.whileHeld();
 		// Driver Buttons // ------------------------------------------ //
 		
-		
+
 
 		// Operator Buttons // ------------------------------------------ //
 
-		//operatorButtonA.whenPressed();
+		operatorButtonA.whenPressed(new servoControl());
 		//operatorButtonA.whenReleased();
 		//operatorButtonA.whileHeld();
 
-		operatorButtonB.whenPressed(new rotationControl());
+		//operatorButtonB.whenPressed();
 		//operatorButtonB.whenReleased();
 		//operatorButtonB.whileHeld();
 
@@ -143,7 +143,7 @@ public class OI {
 		//operatorButtonX.whenReleased();
 		//operatorButtonX.whileHeld();
 
-		//operatorButtonY.whenPressed();
+		operatorButtonY.whenPressed(new rotationControl());
 		//operatorButtonY.whenReleased();
 		//operatorButtonY.whileHeld();
 

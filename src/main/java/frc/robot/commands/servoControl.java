@@ -7,14 +7,13 @@
 
 package frc.robot.commands;
 
-import frc.robot.Robot;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Servo;
-//import edu.wpi.first.wpilibj.DriverStation;
+import frc.robot.RobotMap;
 
-//import frc.robot.subsystems.motors.talonMotor;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+import java.util.ArrayList;
 
 /**
  * An example command that uses an example subsystem.
@@ -23,47 +22,39 @@ public class servoControl extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
     public boolean itisFinished = false;
-    Servo servo1 = new Servo(2);
-
+    Servo smShooter = new Servo(RobotMap.smShooterPort);
+    private int targetSequence = 0;
+    private ArrayList<Double> targetAngleSequence = new ArrayList<Double>(RobotMap.smShooterTotalAngles);
     public servoControl() {
 
     }
-
+    private void sequencePlusOne() {
+        if (targetSequence == RobotMap.smShooterTotalAngles) {
+            targetSequence = 0;
+        } else {
+            targetSequence++;
+        }
+    }
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-
+        targetAngleSequence.add(RobotMap.smShooterAngleOne);
+        targetAngleSequence.add(RobotMap.smShooterAngleTwo);
+        targetAngleSequence.add(RobotMap.smShooterAngleThree);
+        targetAngleSequence.add(RobotMap.smShooterAngleFour);
+        smShooter.setAngle(targetAngleSequence.get(targetSequence));
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        /*
-        // Using angle values for the servo (0 is full left, 1 is full right)
-        if(servo1.get() == 1.0){
-            servo1.set(0.0);
+        double currentAngle = smShooter.getAngle();
+        double targetAngle = targetAngleSequence.get(targetSequence);
+        if(currentAngle != targetAngle){
+            smShooter.setAngle(targetAngle);
         }
-        else if(servo1.get() == 0.0){
-            servo1.set(1.0);
-        }
-        else{
-            servo1.set(0.0);
-        }
-        SmartDashboard.putNumber("Current Servo Value", servo1.get());
-        itisFinished = true;
-        */
-        ///*
-        // Using angle numbers for the servo
-        if(servo1.getAngle() == 180.0){
-            servo1.setAngle(0.0);
-        }
-        else if(servo1.getAngle() == 0.0){
-            servo1.setAngle(180.0);
-        }
-        else{
-            servo1.setAngle(0.0);
-        }
-        SmartDashboard.putNumber("Current Servo Angle", servo1.getAngle());
+        sequencePlusOne();
+        SmartDashboard.putNumber("Current Shooter Servo Angle", smShooter.getAngle());
         itisFinished = true;
         //*/
     }

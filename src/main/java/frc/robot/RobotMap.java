@@ -27,6 +27,11 @@ public class RobotMap {
 
         // Shooter Servo //
     public static final int smShooterPort = 4;
+    public static final int smShooterTotalAngles = 4;
+    public static final double smShooterAngleOne = 0;
+    public static final double smShooterAngleTwo = 30;
+    public static final double smShooterAngleThree = 60;
+    public static final double smShooterAngleFour = 90;
         // ---------- //
 
         // Camera Servos //
