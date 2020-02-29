@@ -127,6 +127,7 @@ public class OI {
 		//driverButtonRightAxisPress.whileHeld();
 		// Driver Buttons // ------------------------------------------ //
 		
+		
 
 		// Operator Buttons // ------------------------------------------ //
 
@@ -173,12 +174,9 @@ public class OI {
 	}
 
 
-	// Utility functions
+	// Utility functions //
 
-
-	// driver controller
-
-
+	// Driver Axies // ------------------------------------------ //
 	public double getDriverLeftY() {
 		double leftY = driverController.getRawAxis(LEFT_VERT_AXIS);
 		if(-STICK_DEADZONE <= leftY && leftY <= STICK_DEADZONE){
@@ -226,7 +224,9 @@ public class OI {
 	public double getDriverZ() {
 		return driverController.getRawAxis(LEFT_Z_AXIS) - driverController.getRawAxis(RIGHT_Z_AXIS);
 	}
+	// Driver Axies // ------------------------------------------ //
 
+	// Driver Rumble // ------------------------------------------ //
 	public void rumbleDriver(double rumble) {
 		driverController.setRumble(RumbleType.kLeftRumble, rumble);
 		driverController.setRumble(RumbleType.kRightRumble, rumble);
@@ -239,11 +239,11 @@ public class OI {
 	public void rumbleDriverRight(double rumble) {
 		driverController.setRumble(RumbleType.kRightRumble, rumble);
 	}
+	// Driver Rumble // ------------------------------------------ //
 
 
 
-	// operator controller
-
+	// Operator Axies // ------------------------------------------ //
 	public double getOperatorLeftY() {
 		double leftY = operatorController.getRawAxis(LEFT_VERT_AXIS);
 		if(-STICK_DEADZONE <= leftY && leftY <= STICK_DEADZONE){
@@ -291,7 +291,9 @@ public class OI {
 	public double getOperatorZ() {
 		return operatorController.getRawAxis(LEFT_Z_AXIS) - operatorController.getRawAxis(RIGHT_Z_AXIS);
 	}
+	// Operator Axies // ------------------------------------------ //
 
+	// Operator Rumble // ------------------------------------------ //
 	public void rumbleOperator(double rumble) {
 		operatorController.setRumble(RumbleType.kLeftRumble, rumble);
 		operatorController.setRumble(RumbleType.kRightRumble, rumble);
@@ -304,11 +306,11 @@ public class OI {
 	public void rumbleOperatorRight(double rumble) {
 		operatorController.setRumble(RumbleType.kRightRumble, rumble);
 	}
+	// Operator Rumble // ------------------------------------------ //
 
 
 
-	// Miscellaneous utilities
-
+	// Miscellaneous utilities // ------------------------------------------ //
 	public double applyDeadZone(double value) {
 		if (Math.abs(value) < STICK_DEADZONE) {
 			return 0.0;
@@ -338,8 +340,11 @@ public class OI {
 		output = (value == 0.0 ? 0.0 : Math.pow(value, 3)/Math.abs(value));
 		return (Math.abs(output) < 0.05 ? 0.0 : output);
 	}
+	// Miscellaneous utilities // ------------------------------------------ //
 
-	// Drive train
+
+
+	// Drive train // ------------------------------------------ //
 	public void Drive(double visionTarget, double distance){
 		if(driverButtonLeftBumper.get() == false){
 			driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
@@ -347,4 +352,5 @@ public class OI {
 			driveTrain.visionDrive(visionTarget, distance);
 		}
 	}
+	// Drive train // ------------------------------------------ //
 }
