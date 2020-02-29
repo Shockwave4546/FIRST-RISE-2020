@@ -18,14 +18,14 @@ import java.util.ArrayList;
 /**
  * An example command that uses an example subsystem.
  */
-public class servoControl extends CommandBase {
+public class shooterServoControl extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
     public boolean itisFinished = false;
     Servo smShooter = new Servo(RobotMap.smShooterPort);
     private int targetSequence = 0;
     private ArrayList<Double> targetAngleSequence = new ArrayList<Double>(RobotMap.smShooterTotalAngles);
-    public servoControl() {
+    public shooterServoControl() {
 
     }
     private void sequencePlusOne() {

@@ -131,7 +131,7 @@ public class OI {
 
 		// Operator Buttons // ------------------------------------------ //
 
-		operatorButtonA.whenPressed(new servoControl());
+		operatorButtonA.whenPressed(new shooterServoControl());
 		//operatorButtonA.whenReleased();
 		//operatorButtonA.whileHeld();
 
