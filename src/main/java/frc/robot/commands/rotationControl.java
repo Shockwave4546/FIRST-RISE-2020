@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import frc.robot.Robot;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
@@ -15,8 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorMatchResult;
-import java.util.ArrayList;
 import com.revrobotics.ColorMatch;
+
+import java.util.ArrayList;
 
 /**
  * An example command that uses an example subsystem.
@@ -129,9 +131,9 @@ public class rotationControl extends CommandBase {
 
 
     if (SmartDashboard.getNumber("Rotation Count", 0) < 24) {
-      Robot.oi.mSpinner.rotateMotor(1);
+      Robot.oi.mWheelOfFortune.rotateMotor(1);
     } else {
-      Robot.oi.mSpinner.rotateMotor(0);
+      Robot.oi.mWheelOfFortune.rotateMotor(0);
     }
 
   }

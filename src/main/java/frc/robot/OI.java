@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.RobotMap;
 import frc.robot.commands.*;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.motors.*;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -25,7 +26,7 @@ public class OI {
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
 
-	public talonMotor mSpinner = new talonMotor(RobotMap.mSpinPort, RobotMap.mSpinPos, RobotMap.mSpinNeg);
+	public victorSPXMotor mWheelOfFortune = new victorSPXMotor(RobotMap.mWheelOfFortunePort, RobotMap.mWheelOfFortunePos, RobotMap.mWheelOfFortuneNeg);
 	private static final int LEFT_HORIZ_AXIS = 0;
 	private static final int LEFT_VERT_AXIS = 1;
 	private static final int RIGHT_HORIZ_AXIS = 4;
@@ -33,12 +34,15 @@ public class OI {
 	private static final int LEFT_Z_AXIS = 3;
 	private static final int RIGHT_Z_AXIS = 2;
 
-	private static final double STICK_DEADZONE = 0.3;
-	private static final double STICK_MAX = 0.97;
+	private static final double STICK_DEADZONE = RobotMap.joystickDeadzone;
+	private static final double STICK_MAX = 1;
+
+	// DriveTrain
+	private DriveTrain driveTrain = new DriveTrain();
 
 	// driver controller setup
 	private Joystick driverController = new Joystick(RobotMap.cDriverPort);
-	private Button driverButtonA = new edu.wpi.first.wpilibj2.command.button.JoystickButton(driverController, 1);
+	private Button driverButtonA = new JoystickButton(driverController, 1);
 	private Button driverButtonB = new JoystickButton(driverController, 2);
 	private Button driverButtonX = new JoystickButton(driverController, 3);
 	private Button driverButtonY = new JoystickButton(driverController, 4);
@@ -50,7 +54,7 @@ public class OI {
 	private Button driverButtonRightAxisPress = new JoystickButton(driverController, 10);
 
 	// operator controller setup
-	private Joystick operatorController = new Joystick(RobotMap.cCoDriverPort);
+	private Joystick operatorController = new Joystick(RobotMap.cOperatorPort);
 	private Button operatorButtonA = new JoystickButton(operatorController, 1);
 	private Button operatorButtonB = new JoystickButton(operatorController, 2);
 	private Button operatorButtonX = new JoystickButton(operatorController, 3);
@@ -80,57 +84,133 @@ public class OI {
 		//    until it is finished as determined by it's isFinished method.
 
 		// Add these commands here
-		//driverButtonA.whenPressed(new DriveRotateToBoiler());
-		//driverButtonA.whenReleased(new DriveStop());
-		//driverButtonB.whenPressed(new DriveToggleAutoShift());
-		//driverButtonX.whenPressed(new DriveToggleFront());
 
-		//driverButtonLeftBumper.whenPressed(new DriveRetrieveGear());
-		//driverButtonLeftBumper.whenReleased(new DriveStop());
-		//driverButtonRightBumper.whenPressed(new DriveDeliverGear());
-		//driverButtonRightBumper.whenReleased(new DriveStop());
-		//------------// import shit below v
-		//driverButtonX.whenPressed(new positionControl());
-		//driverButtonB.whenPressed(new rotationControl());
-		//driverButtonY.whenPressed(new servoControl());
-		//------------//
-		//driverButtonY.whenPressed(new DriveDistance(0.02));
+		// Driver Buttons // ------------------------------------------ //
+		driverButtonA.whenPressed(new pivotIntakeControl());
+		//driverButtonA.whenReleased();
+		//driverButtonA.whileHeld();
 
-		//operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
-		//operatorButtonRightBumper.whenPressed(new ShooterStartAgitatorAndFeeder());
-		//operatorButtonRightBumper.whenReleased(new ShooterStopAgitatorAndFeeder());
+		//driverButtonB.whenPressed();
+		//driverButtonB.whenReleased();
+		//driverButtonB.whileHeld();
 
-		//operatorButtonB.whenPressed(new FuelFlapOut());
-		//operatorButtonStart.whenPressed(new ShooterStopAll());
-		//operatorButtonBack.whenPressed(new HangerOverride(true));
-		//operatorButtonBack.whenReleased(new HangerOverride(false));
+		//driverButtonX.whenPressed();
+		//driverButtonX.whenReleased();
+		//driverButtonX.whileHeld();
 
-		//operatorButtonY.whenPressed(new GearPusherOut());
-		//operatorButtonY.whenReleased(new GearPusherIn());
-		//operatorButtonX.whenPressed(new GearReceiverIn());
-		//operatorButtonX.whenReleased(new GearReceiverOut());
+		//driverButtonY.whenPressed();
+		//driverButtonY.whenReleased();
+		//driverButtonY.whileHeld();
+
+		//driverButtonLeftBumper.whenPressed();  // Used as vision drive toggle in Drive()
+		//driverButtonLeftBumper.whenReleased();
+		driverButtonLeftBumper.whileHeld(new lightToggle());
+
+		//driverButtonRightBumper.whenPressed();
+		//driverButtonRightBumper.whenReleased();
+		//driverButtonRightBumper.whileHeld();
+
+		//driverButtonBack.whenPressed();
+		//driverButtonBack.whenReleased();
+		//driverButtonBack.whileHeld();
+
+		//driverButtonStart.whenPressed();
+		//driverButtonStart.whenReleased();
+		//driverButtonStart.whileHeld();
+
+		//driverButtonLeftAxisPress.whenPressed();
+		//driverButtonLeftAxisPress.whenReleased();
+		//driverButtonLeftAxisPress.whileHeld();
+
+		//driverButtonRightAxisPress.whenPressed();
+		//driverButtonRightAxisPress.whenReleased();
+		//driverButtonRightAxisPress.whileHeld();
+		// Driver Buttons // ------------------------------------------ //
+		
+		
+
+		// Operator Buttons // ------------------------------------------ //
+
+		//operatorButtonA.whenPressed();
+		//operatorButtonA.whenReleased();
+		//operatorButtonA.whileHeld();
+
+		operatorButtonB.whenPressed(new rotationControl());
+		//operatorButtonB.whenReleased();
+		//operatorButtonB.whileHeld();
+
+		operatorButtonX.whenPressed(new positionControl());
+		//operatorButtonX.whenReleased();
+		//operatorButtonX.whileHeld();
+
+		//operatorButtonY.whenPressed();
+		//operatorButtonY.whenReleased();
+		//operatorButtonY.whileHeld();
+
+		//operatorButtonLeftBumper.whenPressed();
+		//operatorButtonLeftBumper.whenReleased();
+		//operatorButtonLeftBumper.whileHeld();
+
+		//operatorButtonRightBumper.whenPressed();
+		//operatorButtonRightBumper.whenReleased();
+		//operatorButtonRightBumper.whileHeld();
+
+		//operatorButtonBack.whenPressed();
+		//operatorButtonBack.whenReleased();
+		//operatorButtonBack.whileHeld();
+
+		//operatorButtonStart.whenPressed();
+		//operatorButtonStart.whenReleased();
+		//operatorButtonStart.whileHeld();
+
+		//operatorButtonLeftAxisPress.whenPressed();
+		//operatorButtonLeftAxisPress.whenReleased();
+		//operatorButtonLeftAxisPress.whileHeld();
+
+		//operatorButtonRightAxisPress.whenPressed();
+		//operatorButtonRightAxisPress.whenReleased();
+		//operatorButtonRightAxisPress.whileHeld();
+		// Operator Buttons // ------------------------------------------ //
 	}
 
 
-	// Utility functions
+	// Utility functions //
 
-
-	// driver controller
-
-	public double getDriverRightY() {
-		return -driverController.getRawAxis(RIGHT_VERT_AXIS);
-	}
-
-	public double getDriverRightX() {
-		return driverController.getRawAxis(RIGHT_HORIZ_AXIS);
-	}
-
+	// Driver Axies // ------------------------------------------ //
 	public double getDriverLeftY() {
-		return -driverController.getRawAxis(LEFT_VERT_AXIS);
+		double leftY = driverController.getRawAxis(LEFT_VERT_AXIS);
+		if(-STICK_DEADZONE <= leftY && leftY <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return -leftY;
+		}
 	}
 
 	public double getDriverLeftX() {
-		return driverController.getRawAxis(LEFT_HORIZ_AXIS);
+		double leftX = driverController.getRawAxis(LEFT_HORIZ_AXIS);
+		if(-STICK_DEADZONE <= leftX && leftX <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return leftX;
+		}
+	}
+
+	public double getDriverRightY() {
+		double rightY = driverController.getRawAxis(RIGHT_VERT_AXIS);
+		if(-STICK_DEADZONE <= rightY && rightY <= STICK_DEADZONE){
+            return 0;
+        }else{
+            return rightY;
+        }
+	}
+
+	public double getDriverRightX() {
+		double rightX = driverController.getRawAxis(RIGHT_HORIZ_AXIS);
+		if(-STICK_DEADZONE <= rightX && rightX <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return -rightX;
+		}
 	}
 
 	public double getDriverLeftTrigger() {
@@ -144,7 +224,9 @@ public class OI {
 	public double getDriverZ() {
 		return driverController.getRawAxis(LEFT_Z_AXIS) - driverController.getRawAxis(RIGHT_Z_AXIS);
 	}
+	// Driver Axies // ------------------------------------------ //
 
+	// Driver Rumble // ------------------------------------------ //
 	public void rumbleDriver(double rumble) {
 		driverController.setRumble(RumbleType.kLeftRumble, rumble);
 		driverController.setRumble(RumbleType.kRightRumble, rumble);
@@ -157,25 +239,45 @@ public class OI {
 	public void rumbleDriverRight(double rumble) {
 		driverController.setRumble(RumbleType.kRightRumble, rumble);
 	}
+	// Driver Rumble // ------------------------------------------ //
 
 
 
-	// operator controller
-
-	public double getOperatorRightY() {
-		return -operatorController.getRawAxis(RIGHT_VERT_AXIS);
-	}
-
-	public double getOperatorRightX() {
-		return operatorController.getRawAxis(RIGHT_HORIZ_AXIS);
-	}
-
+	// Operator Axies // ------------------------------------------ //
 	public double getOperatorLeftY() {
-		return -operatorController.getRawAxis(LEFT_VERT_AXIS);
+		double leftY = operatorController.getRawAxis(LEFT_VERT_AXIS);
+		if(-STICK_DEADZONE <= leftY && leftY <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return leftY;
+		}
 	}
 
 	public double getOperatorLeftX() {
-		return operatorController.getRawAxis(LEFT_HORIZ_AXIS);
+		double leftX = operatorController.getRawAxis(LEFT_HORIZ_AXIS);
+		if(-STICK_DEADZONE <= leftX && leftX <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return leftX;
+		}
+	}
+	
+	public double getOperatorRightY() {
+		double rightY = operatorController.getRawAxis(RIGHT_VERT_AXIS);
+		if(-STICK_DEADZONE <= rightY && rightY <= STICK_DEADZONE){
+            return 0;
+        }else{
+            return rightY;
+        }
+	}
+
+	public double getOperatorRightX() {
+		double rightX = operatorController.getRawAxis(RIGHT_HORIZ_AXIS);
+		if(-STICK_DEADZONE <= rightX && rightX <= STICK_DEADZONE){
+			return 0;
+		}else{
+			return rightX;
+		}
 	}
 
 	public double getOperatorLeftTrigger() {
@@ -189,7 +291,9 @@ public class OI {
 	public double getOperatorZ() {
 		return operatorController.getRawAxis(LEFT_Z_AXIS) - operatorController.getRawAxis(RIGHT_Z_AXIS);
 	}
+	// Operator Axies // ------------------------------------------ //
 
+	// Operator Rumble // ------------------------------------------ //
 	public void rumbleOperator(double rumble) {
 		operatorController.setRumble(RumbleType.kLeftRumble, rumble);
 		operatorController.setRumble(RumbleType.kRightRumble, rumble);
@@ -202,11 +306,11 @@ public class OI {
 	public void rumbleOperatorRight(double rumble) {
 		operatorController.setRumble(RumbleType.kRightRumble, rumble);
 	}
+	// Operator Rumble // ------------------------------------------ //
 
 
 
-	// Miscellaneous utilities
-
+	// Miscellaneous utilities // ------------------------------------------ //
 	public double applyDeadZone(double value) {
 		if (Math.abs(value) < STICK_DEADZONE) {
 			return 0.0;
@@ -236,4 +340,17 @@ public class OI {
 		output = (value == 0.0 ? 0.0 : Math.pow(value, 3)/Math.abs(value));
 		return (Math.abs(output) < 0.05 ? 0.0 : output);
 	}
+	// Miscellaneous utilities // ------------------------------------------ //
+
+
+
+	// Drive train // ------------------------------------------ //
+	public void Drive(double visionTarget, double distance){
+		if(driverButtonLeftBumper.get() == false){
+			driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
+		}else if(driverButtonLeftBumper.get() == true){
+			driveTrain.visionDrive(visionTarget, distance);
+		}
+	}
+	// Drive train // ------------------------------------------ //
 }
