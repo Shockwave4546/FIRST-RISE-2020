@@ -41,7 +41,7 @@ public class DriveTrain{
             mDriveRightTwo.rotateMotor((cDriveLeftY - cDriveRightX) * -1);
         }
     }
-
+    
     // Called from OI for user drive control
     public void userDrive(final double inputY, final double inputX){
         drivebaseControl(inputY, inputX);

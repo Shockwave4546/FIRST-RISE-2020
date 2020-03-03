@@ -7,6 +7,7 @@ import frc.robot.subsystems.motors.*;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.button.*;
 
 /**
@@ -36,6 +37,10 @@ public class OI {
 
 	private static final double STICK_DEADZONE = RobotMap.joystickDeadzone;
 	private static final double STICK_MAX = 1;
+
+	// Servos
+	private Servo smCamPan = new Servo(RobotMap.smCamPanPort);
+	private Servo smCamTilt = new Servo(RobotMap.smCamTiltPort);
 
 	// DriveTrain
 	private DriveTrain driveTrain = new DriveTrain();
@@ -209,7 +214,7 @@ public class OI {
 		if(-STICK_DEADZONE <= rightX && rightX <= STICK_DEADZONE){
 			return 0;
 		}else{
-			return -rightX;
+			return rightX;
 		}
 	}
 
@@ -344,10 +349,36 @@ public class OI {
 
 
 
-	// Drive train // ------------------------------------------ //
+	// Drive Methods // ------------------------------------------ //
+	private void cameraControl(){
+		double currentPan = smCamPan.getAngle();
+		double driverPan = getDriverRightX();
+		double operatorPan = getOperatorRightX();
+		double targetPan = currentPan + (driverPan + operatorPan) * RobotMap.servoSensitivity;
+		if(targetPan >= 360){
+			targetPan = 360;
+		}else if(targetPan <= 0){
+			targetPan = 0;
+		}
+
+		double currentTilt = smCamTilt.getAngle();
+		double driverTilt = getDriverRightY();
+		double operatorTilt = getOperatorRightY();
+		double targetTilt = currentTilt + (driverTilt + operatorTilt) * RobotMap.servoSensitivity;
+		if(targetTilt >= 360){
+			targetTilt = 360;
+		}else if(targetTilt <= 0){
+			targetTilt = 0;
+		}
+
+		smCamPan.setAngle(targetPan);
+		smCamTilt.setAngle(targetTilt);
+	}
+
 	public void Drive(double visionTarget, double distance){
 		if(driverButtonLeftBumper.get() == false){
-			driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
+			cameraControl();
+			driveTrain.userDrive(getDriverLeftY(), getDriverLeftX());
 		}else if(driverButtonLeftBumper.get() == true){
 			driveTrain.visionDrive(visionTarget, distance);
 		}

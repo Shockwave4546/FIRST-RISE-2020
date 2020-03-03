@@ -107,8 +107,6 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
     //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
 
-    servo1 = new Servo(9);
-    speed = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -125,10 +123,10 @@ public class Robot extends TimedRobot {
     double tarNumber = visiontargettable.getEntry("targetYaw").getDouble(0.0);
     oi.Drive(tarNumber,((38*516.315789)/targetwidth));
 
-    double vertAngle = visiontargettable.getEntry("targetPitch").getDouble(0.0);
+    /*double vertAngle = visiontargettable.getEntry("targetPitch").getDouble(0.0);
     //System.out.println((38*516.315789)/targetwidth);
     System.out.println((vertAngle/180));
-    servo1.set((vertAngle/180));
+    servo1.set((vertAngle/180));*/
   }
 
   @Override

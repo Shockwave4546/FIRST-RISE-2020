@@ -2,7 +2,7 @@ package frc.robot;
 
 public class RobotMap {
     // Controllers //
-    public static final double joystickDeadzone = 0.2;
+    public static final double joystickDeadzone = 0.3;
     public static final int cDriverPort = 0;
     public static final int cOperatorPort = 1;
 
@@ -26,17 +26,23 @@ public class RobotMap {
         // ---------- //
 
         // Shooter Servo //
-    public static final int smShooterPort = 4;
-    public static final int smShooterTotalAngles = 4;
-    public static final double smShooterAngleOne = 0;
-    public static final double smShooterAngleTwo = 30;
-    public static final double smShooterAngleThree = 60;
-    public static final double smShooterAngleFour = 90;
+    public static final int smShooterPort = 4;              // Right Side Servo
+    public static final int smShooterTotalPositions = 3;
+    public static final double smShooterPositionOne = 0;
+    public static final double smShooterPositionTwo = .5;
+    public static final double smShooterPositionThree = 1;
+
+    public static final int smShooterTwoPort = 5;           // Left Side Servo
+    public static final int smShooterTwoTotalPositions = 3;
+    public static final double smShooterTwoPositionOne = 1;
+    public static final double smShooterTwoPositionTwo = .5;
+    public static final double smShooterTwoPositionThree = 0;
         // ---------- //
 
         // Camera Servos //
-    public static final int smCamPan = 5;
-    public static final int smCamTilt = 6;
+    public static final int smCamPanPort = 6;
+    public static final int smCamTiltPort = 7;
+    public static final double servoSensitivity = 1.0;
         // ---------- //
     // PWM // ------------------------------------------ //
 
