@@ -15,13 +15,18 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import java.util.Map;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Servo;
+
+import frc.robot.subsystems.motors.DualMotorEncoder;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -39,6 +44,14 @@ public class Robot extends TimedRobot {
   public ShuffleboardTab tab = Shuffleboard.getTab("Test Tab");
   public NetworkTableEntry speed;
 
+  PowerDistributionPanel pdp = new PowerDistributionPanel();
+  public static double drivePos;
+  public static double driveNeg;
+  public static double rotation;
+  public NetworkTableEntry motorSpeed;
+  public static DualMotorEncoder motors1 = new DualMotorEncoder(0, 1);
+  
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -49,6 +62,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     oi = new OI();
     CameraServer.getInstance().startAutomaticCapture();
+    speed = tab.add("Rotate Speed", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1)).getEntry();
   }
 
   /**
@@ -65,6 +79,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("Current", pdp.getTotalCurrent());
   }
 
   /**
@@ -127,6 +142,7 @@ public class Robot extends TimedRobot {
     //System.out.println((38*516.315789)/targetwidth);
     System.out.println((vertAngle/180));
     servo1.set((vertAngle/180));
+    motors1.rotateMotors(motorSpeed.getDouble(0.0));
   }
 
   @Override
