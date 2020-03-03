@@ -2,15 +2,15 @@ package frc.robot.subsystems.motors;
 
 import frc.robot.subsystems.motors.Motor;
 
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 
 
 
-public class talonMotor extends Motor{
-    private Talon kMotor;
-    public talonMotor(final int port, final double pos, final double neg){
+public class victorMotor extends Motor{
+    private Victor kMotor;
+    public victorMotor(final int port, final double pos, final double neg){
         super(port, pos, neg);
-        kMotor = new Talon(port);
+        kMotor = new Victor(port);
     }
 
     public void rotateClockwise(final double rotate){

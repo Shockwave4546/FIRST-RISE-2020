@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import frc.robot.Robot;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
@@ -17,10 +16,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorMatch;
 
 import java.util.ArrayList;
 
+import com.revrobotics.ColorMatch;
+//import edu.wpi.first.wpilibj.DriverStation;
+
+//import frc.robot.subsystems.motors.talonMotor;
 
 /**
  * An example command that uses an example subsystem.
@@ -42,6 +44,8 @@ public class positionControl extends CommandBase {
     private int sequenceIndex;
     private int targetIndex;
     private String gameColor;
+    // talonMotor motor;
+    // talonMotor talon0 = new talonMotor(0, 0, 0);
 
     public positionControl() {
     }
@@ -161,13 +165,13 @@ public class positionControl extends CommandBase {
             SmartDashboard.putString("Target Color", colorSequence.get(targetIndex));
             if ((colorString == colorSequence.get(targetIndex))
                     && (currentSequence == colorSequence.get(targetIndex))) {
-                Robot.oi.mWheelOfFortune.rotateMotor(0.0);
+                Robot.oi.mSpinner.rotateMotor(0.0);
                 itisFinished = true;
             } else if (colorString == currentSequence) {
-                Robot.oi.mWheelOfFortune.rotateMotor(1);
+                Robot.oi.mSpinner.rotateMotor(1);
                 sequencePlusOne();
             } else {
-                Robot.oi.mWheelOfFortune.rotateMotor(1);
+                Robot.oi.mSpinner.rotateMotor(1);
             }
             // break;
             // default:

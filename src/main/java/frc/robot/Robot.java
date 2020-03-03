@@ -9,20 +9,17 @@ package frc.robot;
 
 import frc.robot.RobotMap;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.shuffleboard.*;
+//import frc.robot.commands.moveMotor;
+import edu.wpi.first.networktables.NetworkTableEntry;
 
 import java.util.Map;
-
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.Servo;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -33,9 +30,6 @@ import edu.wpi.first.wpilibj.Servo;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static OI oi;
-  public NetworkTable visiontargettable;
-  double[] visiontargetpos;
-  double[] defaultValue = new double[0];
   public Servo servo1;
   public ShuffleboardTab tab = Shuffleboard.getTab("Test Tab");
   public NetworkTableEntry speed;
@@ -49,7 +43,13 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     oi = new OI();
-    CameraServer.getInstance().startAutomaticCapture();
+
+    // initialize a servo and allow angle modification via Shuffleboard
+    servo1 = new Servo(2);
+    speed = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+
+    //NetworkTableEntry speed = tab.add("Rotate Speed", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+
   }
 
   /**
@@ -105,10 +105,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
 
-    servo1 = new Servo(9);
-    speed = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -119,16 +116,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
-    //double[] visiontargetpos = visiontargettable.getEntry("targetPose").getDoubleArray(defaultValue);
-    double targetwidth = visiontargettable.getEntry("targetBoundingWidth").getDouble(0.0);
-    double tarNumber = visiontargettable.getEntry("targetYaw").getDouble(0.0);
-    oi.Drive(tarNumber,((38*516.315789)/targetwidth));
-
-    double vertAngle = visiontargettable.getEntry("targetPitch").getDouble(0.0);
-    //System.out.println((38*516.315789)/targetwidth);
-    System.out.println((vertAngle/180));
-    servo1.set((vertAngle/180));
+    //double speed = Shuffleboard.getTab("Totate Speed").getEntry().getDouble(0);
+    servo1.set(speed.getDouble(0));
   }
 
   @Override
