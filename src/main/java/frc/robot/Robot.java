@@ -37,18 +37,15 @@ import frc.robot.subsystems.motors.DualMotorEncoder;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static OI oi;
-  public NetworkTable visiontargettable;
-  double[] visiontargetpos;
-  double[] defaultValue = new double[0];
   public Servo servo1;
   public ShuffleboardTab tab = Shuffleboard.getTab("Test Tab");
+  public NetworkTableEntry servoAngle;
   public NetworkTableEntry speed;
 
   PowerDistributionPanel pdp = new PowerDistributionPanel();
   public static double drivePos;
   public static double driveNeg;
   public static double rotation;
-  public NetworkTableEntry motorSpeed;
   public static DualMotorEncoder motors1 = new DualMotorEncoder(0, 1);
   
   
@@ -62,7 +59,6 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     oi = new OI();
     CameraServer.getInstance().startAutomaticCapture();
-    speed = tab.add("Rotate Speed", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1)).getEntry();
   }
 
   /**
@@ -119,9 +115,10 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
+    speed = tab.add("Flywheel Speed", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1)).getEntry();
 
     servo1 = new Servo(9);
-    speed = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+    servoAngle = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -132,17 +129,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
-    //double[] visiontargetpos = visiontargettable.getEntry("targetPose").getDoubleArray(defaultValue);
-    double targetwidth = visiontargettable.getEntry("targetBoundingWidth").getDouble(0.0);
-    double tarNumber = visiontargettable.getEntry("targetYaw").getDouble(0.0);
-    oi.Drive(tarNumber,((38*516.315789)/targetwidth));
 
-    double vertAngle = visiontargettable.getEntry("targetPitch").getDouble(0.0);
-    //System.out.println((38*516.315789)/targetwidth);
-    System.out.println((vertAngle/180));
-    servo1.set((vertAngle/180));
-    motors1.rotateMotors(motorSpeed.getDouble(0.0));
+    motors1.rotateMotors(speed.getDouble(0.0));
+
+    //servo1.set(180*(servoAngle.getDouble(0.0)));
   }
 
   @Override
