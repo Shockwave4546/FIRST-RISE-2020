@@ -42,10 +42,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    oi = new OI();
+    //oi = new OI();
 
     // initialize a servo and allow angle modification via Shuffleboard
-    servo1 = new Servo(2);
+    servo1 = new Servo(9);
     speed = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
 
     //NetworkTableEntry speed = tab.add("Rotate Speed", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
@@ -116,8 +116,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //double speed = Shuffleboard.getTab("Totate Speed").getEntry().getDouble(0);
+    //double speed = Shuffleboard.getTab("Rotation Angle").getEntry();
     servo1.set(speed.getDouble(0));
+    //servo1.set(0.5);
   }
 
   @Override
