@@ -8,19 +8,19 @@ public class RobotMap {
 
     // PWM //
         // DriveTrain //
-    public static final int mForwardLeftPort = 0;
+    public static final int mForwardLeftPort = 5;
     public static final double mForwardLeftPos = 1.0;
     public static final double mForwardLeftNeg = 1.0;
 
-    public static final int mForwardRightPort = 1;
+    public static final int mForwardRightPort = 6;
     public static final double mForwardRightPos = 1.0;
     public static final double mForwardRightNeg = 1.0;
 
-    public static final int mBackwardLeftPort = 2;
+    public static final int mBackwardLeftPort = 7;
     public static final double mBackwardLeftPos = 1.0;
     public static final double mBackwardLeftNeg = 1.0;
     
-    public static final int mBackwardRightPort = 3;
+    public static final int mBackwardRightPort = 8;
     public static final double mBackwardRightPos = 1.0;
     public static final double mBackwardRightNeg = 1.0;
         // ---------- //

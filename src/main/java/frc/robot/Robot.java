@@ -20,13 +20,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.lang.*;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Servo;
 
 import frc.robot.subsystems.motors.DualMotorEncoder;
+
+import edu.wpi.first.wpilibj.Encoder;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -41,6 +46,17 @@ public class Robot extends TimedRobot {
   public ShuffleboardTab tab = Shuffleboard.getTab("Test Tab");
   public NetworkTableEntry servoAngle;
   public NetworkTableEntry speed;
+
+  public Encoder encoder;
+  public double encoderValue;
+
+  
+
+  public static List<Double> averageRPMArr = new ArrayList<Double>();
+  public static double averageRPM = 0;
+  public static double RPM;
+  public static double total;
+  public static int i;
 
   PowerDistributionPanel pdp = new PowerDistributionPanel();
   public static double drivePos;
@@ -58,7 +74,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     oi = new OI();
-    CameraServer.getInstance().startAutomaticCapture();
+    encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+    //encoder.setDistancePerPulse(360/2048);
+    encoder.setMinRate(1);
   }
 
   /**
@@ -76,6 +94,20 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("Current", pdp.getTotalCurrent());
+
+    RPM = ((encoder.getRate()/2048)*-60);
+    averageRPMArr.add(RPM);
+    total = total + averageRPMArr.get(i);
+    averageRPM = (total / averageRPMArr.size());
+    SmartDashboard.putNumber("RPM", averageRPM);
+    if(i < 100){
+      i++;
+    }
+    else{
+      i = 0;
+      averageRPMArr.clear();
+      total = 0;
+    }
   }
 
   /**

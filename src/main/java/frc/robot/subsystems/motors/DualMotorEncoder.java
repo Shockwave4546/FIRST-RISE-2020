@@ -3,18 +3,16 @@ package frc.robot.subsystems.motors;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Talon;
 
 public class DualMotorEncoder{
 
-    private VictorSPX kMotor1;
-    private VictorSPX kMotor2;
+    private Talon kMotor1;
+    private Talon kMotor2;
     private Encoder eEncoder;
     private double mPos;
     private double mNeg;
@@ -30,8 +28,8 @@ public class DualMotorEncoder{
     public static int i;
     
     public DualMotorEncoder(final int port1, final int port2, final int ePort1, final int ePort2, final int PPR){
-        kMotor1 = new VictorSPX(port1);
-        kMotor2 = new VictorSPX(port2);
+        kMotor1 = new Talon(port1);
+        kMotor2 = new Talon(port2);
         eEncoder = new Encoder(ePort1, ePort2, false, Encoder.EncodingType.k4X);
         ePPR = PPR;
         mPos = 1;
@@ -39,8 +37,8 @@ public class DualMotorEncoder{
     }
 
     public DualMotorEncoder(final int port1, final int port2, final double pos, final double neg, final int ePort1, final int ePort2, final int PPR){
-        kMotor1 = new VictorSPX(port1);
-        kMotor2 = new VictorSPX(port2);
+        kMotor1 = new Talon(port1);
+        kMotor2 = new Talon(port2);
         eEncoder = new Encoder(ePort1, ePort2, false, Encoder.EncodingType.k4X);
         ePPR = PPR;
         mPos = pos;
@@ -48,42 +46,42 @@ public class DualMotorEncoder{
     }
 
     public DualMotorEncoder(final int port1, final int port2){
-        kMotor1 = new VictorSPX(port1);
-        kMotor2 = new VictorSPX(port2);
+        kMotor1 = new Talon(port1);
+        kMotor2 = new Talon(port2);
         mPos = 1;
         mNeg = 1;
     }
 
     public DualMotorEncoder(final int port1, final int port2, final double pos, final double neg){
-        kMotor1 = new VictorSPX(port1);
-        kMotor2 = new VictorSPX(port2);
+        kMotor1 = new Talon(port1);
+        kMotor2 = new Talon(port2);
         mPos = pos;
         mNeg = neg;
     }
 
     // Rotates motor clockwise(positive), use for non user input
     public void rotateClockwise(final double rotate){
-        kMotor1.set(VictorSPXControlMode.Velocity, rotate * mPos);
-        kMotor2.set(VictorSPXControlMode.Velocity, rotate * mPos);
+        kMotor1.set(rotate * mPos);
+        kMotor2.set(rotate * mPos);
     }
     // Rotates motor counterclockwise(negative), use for non user input
     public void rotateCounterClockwise(final double rotate){
-        kMotor1.set(VictorSPXControlMode.Velocity, rotate * -mNeg);
-        kMotor2.set(VictorSPXControlMode.Velocity, rotate * -mNeg);
+        kMotor1.set(rotate * -mNeg);
+        kMotor2.set(rotate * -mNeg);
     }
     // Stops motor
     public void stopMotors(){
-        kMotor1.set(VictorSPXControlMode.Velocity, 0);
-        kMotor2.set(VictorSPXControlMode.Velocity, 0);
+        kMotor1.set(0);
+        kMotor2.set(0);
     }
     // Rotates motor based on (user)input, asigns proper scale variables automatically
     public void rotateMotors(final double rotate){
         if(rotate > 0){
-            kMotor1.set(VictorSPXControlMode.Velocity, rotate * mPos);
-            kMotor2.set(VictorSPXControlMode.Velocity, rotate * mPos);
+            kMotor1.set(rotate * mPos);
+            kMotor2.set(rotate * mPos);
         }else if(rotate < 0){
-            kMotor1.set(VictorSPXControlMode.Velocity, rotate * mNeg);
-            kMotor2.set(VictorSPXControlMode.Velocity, rotate * mNeg);
+            kMotor1.set(rotate * mNeg);
+            kMotor2.set(rotate * mNeg);
         }else{
             stopMotors();
         }
