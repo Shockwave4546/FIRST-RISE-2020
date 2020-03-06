@@ -43,6 +43,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static OI oi;
   public Servo servo1;
+  public Servo servo2;
   public ShuffleboardTab tab = Shuffleboard.getTab("Test Tab");
   public NetworkTableEntry servoAngle;
   public NetworkTableEntry speed;
@@ -149,7 +150,8 @@ public class Robot extends TimedRobot {
     //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
     speed = tab.add("Flywheel Speed", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1)).getEntry();
 
-    servo1 = new Servo(9);
+    servo1 = new Servo(8);
+    servo2 = new Servo(9);
     servoAngle = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
@@ -164,7 +166,11 @@ public class Robot extends TimedRobot {
 
     motors1.rotateMotors(speed.getDouble(0.0));
 
-    //servo1.set(180*(servoAngle.getDouble(0.0)));
+    servo1.set(180*(servoAngle.getDouble(0.0)));
+    servo2.set(180-(180*(servoAngle.getDouble(0.0))));
+
+    System.out.println(180*(servoAngle.getDouble(0.0)));
+    System.out.println(180-(180*(servoAngle.getDouble(0.0))));
   }
 
   @Override
