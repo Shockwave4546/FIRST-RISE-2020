@@ -5,6 +5,8 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.motors.*;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
@@ -28,6 +30,10 @@ public class OI {
 	// commands the same as any other Button.
 
 	public victorSPXMotor mWheelOfFortune = new victorSPXMotor(RobotMap.mWheelOfFortunePort, RobotMap.mWheelOfFortunePos, RobotMap.mWheelOfFortuneNeg);
+	public victorSPXMotor mIntakeRoller = new victorSPXMotor(RobotMap.mIntakeRollerPort, RobotMap.mIntakeRollerPos, RobotMap.mIntakePivotNeg);
+	public DualMotorEncoder mFlywheelShooter = new DualMotorEncoder(RobotMap.mFlywheelShooterOnePort, RobotMap.mFlywheelShooterTwoPort);
+	public PID mFlywheelPID = new PID();
+	public final DigitalOutput rLimeLight = new DigitalOutput(RobotMap.rLimeLightPort);
 	private static final int LEFT_HORIZ_AXIS = 0;
 	private static final int LEFT_VERT_AXIS = 1;
 	private static final int RIGHT_HORIZ_AXIS = 4;
@@ -107,9 +113,9 @@ public class OI {
 		//driverButtonY.whenReleased();
 		//driverButtonY.whileHeld();
 
-		//driverButtonLeftBumper.whenPressed();  // Used as vision drive toggle in Drive()
-		//driverButtonLeftBumper.whenReleased();
-		driverButtonLeftBumper.whileHeld(new lightToggle());
+		driverButtonLeftBumper.whenPressed(new lightToggle());  // Used as vision drive toggle in Drive()
+		driverButtonLeftBumper.whenReleased(new lightToggle());
+		//driverButtonLeftBumper.whileHeld();
 
 		//driverButtonRightBumper.whenPressed();
 		//driverButtonRightBumper.whenReleased();
@@ -152,19 +158,19 @@ public class OI {
 		//operatorButtonY.whenReleased();
 		//operatorButtonY.whileHeld();
 
-		//operatorButtonLeftBumper.whenPressed();
-		//operatorButtonLeftBumper.whenReleased();
+		operatorButtonLeftBumper.whenPressed(new intakeRollerControl(-1));
+		operatorButtonLeftBumper.whenReleased(new intakeRollerControl(0));
 		//operatorButtonLeftBumper.whileHeld();
 
-		//operatorButtonRightBumper.whenPressed();
-		//operatorButtonRightBumper.whenReleased();
+		operatorButtonRightBumper.whenPressed(new intakeRollerControl(1));
+		operatorButtonRightBumper.whenReleased(new intakeRollerControl(0));
 		//operatorButtonRightBumper.whileHeld();
 
-		//operatorButtonBack.whenPressed();
+		operatorButtonBack.whenPressed(new flywheelControl(RobotMap.mFlywheelShooterLowTarget));
 		//operatorButtonBack.whenReleased();
 		//operatorButtonBack.whileHeld();
 
-		//operatorButtonStart.whenPressed();
+		operatorButtonStart.whenPressed(new flywheelControl(RobotMap.mFlywheelShooterHighTarget));
 		//operatorButtonStart.whenReleased();
 		//operatorButtonStart.whileHeld();
 
@@ -382,6 +388,7 @@ public class OI {
 		}else if(driverButtonLeftBumper.get() == true){
 			driveTrain.visionDrive(visionTarget, distance);
 		}
+		mFlywheelShooter.rotateMotors(mFlywheelPID.getCalculation(mFlywheelShooter.getPercentOutput()));
 	}
-	// Drive train // ------------------------------------------ //
+	// Drive Methods // ------------------------------------------ //
 }

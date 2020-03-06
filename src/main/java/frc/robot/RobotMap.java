@@ -73,6 +73,9 @@ public class RobotMap {
     public static final double mFlywheelShooterTwoPos = 1.0;
     public static final double mFlywheelShooterTwoNeg = 1.0;
 
+    public static final double mFlywheelShooterHighTarget = 1.0; // Flywheel spinning target values
+    public static final double mFlywheelShooterLowTarget = 0.25;
+
     public static final int mFlywheelFeederPort = 15;       // Motor Controller 10 - Purple w/ stripes
     public static final double mFlywheelFeederPos = 1.0;
     public static final double mFlywheelFeederNeg = 1.0;

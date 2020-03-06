@@ -63,30 +63,34 @@ public class DualMotorEncoder{
 
     // Rotates motor clockwise(positive), use for non user input
     public void rotateClockwise(final double rotate){
-        kMotor1.set(VictorSPXControlMode.Velocity, rotate * mPos);
-        kMotor2.set(VictorSPXControlMode.Velocity, rotate * mPos);
+        kMotor1.set(VictorSPXControlMode.PercentOutput, rotate * mPos);
+        kMotor2.set(VictorSPXControlMode.PercentOutput, rotate * mPos);
     }
     // Rotates motor counterclockwise(negative), use for non user input
     public void rotateCounterClockwise(final double rotate){
-        kMotor1.set(VictorSPXControlMode.Velocity, rotate * -mNeg);
-        kMotor2.set(VictorSPXControlMode.Velocity, rotate * -mNeg);
+        kMotor1.set(VictorSPXControlMode.PercentOutput, rotate * -mNeg);
+        kMotor2.set(VictorSPXControlMode.PercentOutput, rotate * -mNeg);
     }
     // Stops motor
     public void stopMotors(){
-        kMotor1.set(VictorSPXControlMode.Velocity, 0);
-        kMotor2.set(VictorSPXControlMode.Velocity, 0);
+        kMotor1.set(VictorSPXControlMode.PercentOutput, 0);
+        kMotor2.set(VictorSPXControlMode.PercentOutput, 0);
     }
     // Rotates motor based on (user)input, asigns proper scale variables automatically
     public void rotateMotors(final double rotate){
         if(rotate > 0){
-            kMotor1.set(VictorSPXControlMode.Velocity, rotate * mPos);
-            kMotor2.set(VictorSPXControlMode.Velocity, rotate * mPos);
+            kMotor1.set(VictorSPXControlMode.PercentOutput, rotate * mPos);
+            kMotor2.set(VictorSPXControlMode.PercentOutput, rotate * mPos);
         }else if(rotate < 0){
-            kMotor1.set(VictorSPXControlMode.Velocity, rotate * mNeg);
-            kMotor2.set(VictorSPXControlMode.Velocity, rotate * mNeg);
+            kMotor1.set(VictorSPXControlMode.PercentOutput, rotate * mNeg);
+            kMotor2.set(VictorSPXControlMode.PercentOutput, rotate * mNeg);
         }else{
             stopMotors();
         }
+    }
+
+    public double getPercentOutput(){
+        return (kMotor1.getMotorOutputPercent() + kMotor2.getMotorOutputPercent()) / 2;
     }
 
     public double getRPM(){

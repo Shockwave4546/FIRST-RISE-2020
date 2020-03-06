@@ -122,11 +122,6 @@ public class Robot extends TimedRobot {
     double targetwidth = visiontargettable.getEntry("targetBoundingWidth").getDouble(0.0);
     double tarNumber = visiontargettable.getEntry("targetYaw").getDouble(0.0);
     oi.Drive(tarNumber,((38*516.315789)/targetwidth));
-
-    /*double vertAngle = visiontargettable.getEntry("targetPitch").getDouble(0.0);
-    //System.out.println((38*516.315789)/targetwidth);
-    System.out.println((vertAngle/180));
-    servo1.set((vertAngle/180));*/
   }
 
   @Override

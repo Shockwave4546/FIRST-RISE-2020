@@ -21,6 +21,9 @@ public class PID{
     public void setSetPoint(double input){
         setPoint = input;
     }
+    public double getSetPoint(){
+        return setPoint;
+    }
 
     public double getCalculation(double errorActual){
         // Error = Target - Actual
