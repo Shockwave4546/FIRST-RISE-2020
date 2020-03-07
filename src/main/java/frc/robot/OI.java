@@ -9,11 +9,14 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.*;
 
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+
+	public talonMotor feedMotor = new talonMotor(2);
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
@@ -105,6 +108,8 @@ public class OI {
 		//operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
 		//operatorButtonRightBumper.whenPressed(new ShooterStartAgitatorAndFeeder());
 		//operatorButtonRightBumper.whenReleased(new ShooterStopAgitatorAndFeeder());
+		driverButtonRightBumper.whenPressed(new feeder());
+		driverButtonRightBumper.whenReleased(new stopfeeder());
 
 		//operatorButtonB.whenPressed(new FuelFlapOut());
 		//operatorButtonStart.whenPressed(new ShooterStopAll());
