@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * An example command that uses an example subsystem.
  */
+/*
 public class lightToggle extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
@@ -64,4 +65,4 @@ public class lightToggle extends CommandBase {
         }
 
     }
-}
+}*/

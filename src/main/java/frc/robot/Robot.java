@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     oi = new OI();
-    CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();
   }
 
   /**
@@ -117,11 +117,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
+    //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
     //double[] visiontargetpos = visiontargettable.getEntry("targetPose").getDoubleArray(defaultValue);
-    double targetwidth = visiontargettable.getEntry("targetBoundingWidth").getDouble(0.0);
-    double tarNumber = visiontargettable.getEntry("targetYaw").getDouble(0.0);
-    oi.Drive(tarNumber,((38*516.315789)/targetwidth));
+    //double targetwidth = visiontargettable.getEntry("targetBoundingWidth").getDouble(0.0);
+    //double tarNumber = visiontargettable.getEntry("targetYaw").getDouble(0.0);
+    //oi.Drive(tarNumber,((38*516.315789)/targetwidth));
+    oi.Drive(0.0, 0.0);
   }
 
   @Override

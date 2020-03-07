@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /**
  * An example command that uses an example subsystem.
  */
-
+/*
 public class flywheelControl extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
@@ -58,4 +58,4 @@ public class flywheelControl extends CommandBase {
         }
 
     }
-}
+}*/

@@ -29,11 +29,11 @@ public class OI {
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
 
-	public victorSPXMotor mWheelOfFortune = new victorSPXMotor(RobotMap.mWheelOfFortunePort, RobotMap.mWheelOfFortunePos, RobotMap.mWheelOfFortuneNeg);
-	public victorSPXMotor mIntakeRoller = new victorSPXMotor(RobotMap.mIntakeRollerPort, RobotMap.mIntakeRollerPos, RobotMap.mIntakePivotNeg);
-	public DualMotorEncoder mFlywheelShooter = new DualMotorEncoder(RobotMap.mFlywheelShooterOnePort, RobotMap.mFlywheelShooterTwoPort);
-	public PID mFlywheelPID = new PID();
-	public final DigitalOutput rLimeLight = new DigitalOutput(RobotMap.rLimeLightPort);
+	//public victorSPXMotor mWheelOfFortune = new victorSPXMotor(RobotMap.mWheelOfFortunePort, RobotMap.mWheelOfFortunePos, RobotMap.mWheelOfFortuneNeg);
+	public talonMotor mIntakeRoller = new talonMotor(0, RobotMap.mIntakeRollerPos, RobotMap.mIntakePivotNeg);
+	//public DualMotorEncoder mFlywheelShooter = new DualMotorEncoder(RobotMap.mFlywheelShooterOnePort, RobotMap.mFlywheelShooterTwoPort);
+	//public PID mFlywheelPID = new PID();
+	//public final DigitalOutput rLimeLight = new DigitalOutput(RobotMap.rLimeLightPort);
 	private static final int LEFT_HORIZ_AXIS = 0;
 	private static final int LEFT_VERT_AXIS = 1;
 	private static final int RIGHT_HORIZ_AXIS = 4;
@@ -45,11 +45,11 @@ public class OI {
 	private static final double STICK_MAX = 1;
 
 	// Servos
-	private Servo smCamPan = new Servo(RobotMap.smCamPanPort);
-	private Servo smCamTilt = new Servo(RobotMap.smCamTiltPort);
+	//private Servo smCamPan = new Servo(RobotMap.smCamPanPort);
+	//private Servo smCamTilt = new Servo(RobotMap.smCamTiltPort);
 
 	// DriveTrain
-	private DriveTrain driveTrain = new DriveTrain();
+	//private DriveTrain driveTrain = new DriveTrain();
 
 	// driver controller setup
 	private Joystick driverController = new Joystick(RobotMap.cDriverPort);
@@ -97,7 +97,7 @@ public class OI {
 		// Add these commands here
 
 		// Driver Buttons // ------------------------------------------ //
-		driverButtonA.whenPressed(new pivotIntakeControl());
+		//driverButtonA.whenPressed(new pivotIntakeControl());
 		//driverButtonA.whenReleased();
 		//driverButtonA.whileHeld();
 
@@ -113,8 +113,8 @@ public class OI {
 		//driverButtonY.whenReleased();
 		//driverButtonY.whileHeld();
 
-		driverButtonLeftBumper.whenPressed(new lightToggle());  // Used as vision drive toggle in Drive()
-		driverButtonLeftBumper.whenReleased(new lightToggle());
+		//driverButtonLeftBumper.whenPressed(new lightToggle());  // Used as vision drive toggle in Drive()
+		//driverButtonLeftBumper.whenReleased(new lightToggle());
 		//driverButtonLeftBumper.whileHeld();
 
 		//driverButtonRightBumper.whenPressed();
@@ -142,7 +142,7 @@ public class OI {
 
 		// Operator Buttons // ------------------------------------------ //
 
-		operatorButtonA.whenPressed(new shooterServoControl());
+		//operatorButtonA.whenPressed(new shooterServoControl());
 		//operatorButtonA.whenReleased();
 		//operatorButtonA.whileHeld();
 
@@ -150,11 +150,11 @@ public class OI {
 		//operatorButtonB.whenReleased();
 		//operatorButtonB.whileHeld();
 
-		operatorButtonX.whenPressed(new positionControl());
+		//operatorButtonX.whenPressed(new positionControl());
 		//operatorButtonX.whenReleased();
 		//operatorButtonX.whileHeld();
 
-		operatorButtonY.whenPressed(new rotationControl());
+		//operatorButtonY.whenPressed(new rotationControl());
 		//operatorButtonY.whenReleased();
 		//operatorButtonY.whileHeld();
 
@@ -166,11 +166,11 @@ public class OI {
 		operatorButtonRightBumper.whenReleased(new intakeRollerControl(0));
 		//operatorButtonRightBumper.whileHeld();
 
-		operatorButtonBack.whenPressed(new flywheelControl(RobotMap.mFlywheelShooterLowTarget));
+		//operatorButtonBack.whenPressed(new flywheelControl(RobotMap.mFlywheelShooterLowTarget));
 		//operatorButtonBack.whenReleased();
 		//operatorButtonBack.whileHeld();
 
-		operatorButtonStart.whenPressed(new flywheelControl(RobotMap.mFlywheelShooterHighTarget));
+		//operatorButtonStart.whenPressed(new flywheelControl(RobotMap.mFlywheelShooterHighTarget));
 		//operatorButtonStart.whenReleased();
 		//operatorButtonStart.whileHeld();
 
@@ -356,7 +356,7 @@ public class OI {
 
 
 	// Drive Methods // ------------------------------------------ //
-	private void cameraControl(){
+	/*private void cameraControl(){
 		double currentPan = smCamPan.getAngle();
 		double driverPan = getDriverRightX();
 		double operatorPan = getOperatorRightX();
@@ -379,16 +379,16 @@ public class OI {
 
 		smCamPan.setAngle(targetPan);
 		smCamTilt.setAngle(targetTilt);
-	}
+	}*/
 
 	public void Drive(double visionTarget, double distance){
 		if(driverButtonLeftBumper.get() == false){
-			cameraControl();
-			driveTrain.userDrive(getDriverLeftY(), getDriverLeftX());
+			//cameraControl();
+			//driveTrain.userDrive(getDriverLeftY(), getDriverLeftX());
 		}else if(driverButtonLeftBumper.get() == true){
-			driveTrain.visionDrive(visionTarget, distance);
+			//driveTrain.visionDrive(visionTarget, distance);
 		}
-		mFlywheelShooter.rotateMotors(mFlywheelPID.getCalculation(mFlywheelShooter.getPercentOutput()));
+		//mFlywheelShooter.rotateMotors(mFlywheelPID.getCalculation(mFlywheelShooter.getPercentOutput()));
 	}
 	// Drive Methods // ------------------------------------------ //
 }
