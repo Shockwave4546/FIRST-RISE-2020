@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Servo;
 
 import frc.robot.subsystems.motors.DualMotorEncoder;
+import frc.robot.subsystems.motors.sparkMax;
 import frc.robot.subsystems.motors.talonMotor;
 import edu.wpi.first.wpilibj.Encoder;
 
@@ -49,6 +50,9 @@ public class Robot extends TimedRobot {
   public NetworkTableEntry flyWheelSpeed;
   public NetworkTableEntry feederSpeed;
   public NetworkTableEntry intakeSpeed;
+  public NetworkTableEntry snowblowerSpeed;
+
+  public static sparkMax snoblowerMotors = new sparkMax(4);
 
   public Encoder encoder;
   public double encoderValue;
@@ -65,7 +69,6 @@ public class Robot extends TimedRobot {
   public static double drivePos;
   public static double driveNeg;
   public static double rotation;
-  public static talonMotor intakeMotor = new talonMotor(3);
   public static DualMotorEncoder motors1 = new DualMotorEncoder(0, 1);
   
   
@@ -81,6 +84,14 @@ public class Robot extends TimedRobot {
     encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
     //encoder.setDistancePerPulse(360/2048);
     encoder.setMinRate(1);
+    servo1 = new Servo(5);
+    servo2 = new Servo(6);
+
+    servoAngle = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+    flyWheelSpeed = tab.add("Flywheel Speed", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1)).getEntry();
+    intakeSpeed = tab.add("Intake Speed", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1)).getEntry();
+    snowblowerSpeed = tab.add("Snowblower Speed", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1)).getEntry();
+
   }
 
   /**
@@ -112,6 +123,7 @@ public class Robot extends TimedRobot {
       averageRPMArr.clear();
       total = 0;
     }
+    
   }
 
   /**
@@ -151,12 +163,6 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
-    flyWheelSpeed = tab.add("Flywheel Speed", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1)).getEntry();
-    intakeSpeed = tab.add("Intake Speed", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1)).getEntry();
-
-    servo1 = new Servo(8);
-    servo2 = new Servo(9);
-    servoAngle = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -169,13 +175,16 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     motors1.rotateMotors(flyWheelSpeed.getDouble(0.0));
-    intakeMotor.rotateMotor(intakeSpeed.getDouble(0.0));
+    //intakeMotor.rotateMotor(intakeSpeed.getDouble(0.0));
 
-    servo1.set(180*(servoAngle.getDouble(0.0)));
-    //servo2.set(180-(180*(servoAngle.getDouble(0.0))));
+    servo1.set(Math.abs(servoAngle.getDouble(0.0)));
+    servo2.set(Math.abs(1-(servoAngle.getDouble(0.0))));
 
-    System.out.println(180*(servoAngle.getDouble(0.0)));
-    //System.out.println(180-(180*(servoAngle.getDouble(0.0))));
+    System.out.println(Math.abs(180*(servoAngle.getDouble(0.0))));
+    System.out.println(Math.abs(180-(180*(servoAngle.getDouble(0.0)))));
+
+    snoblowerMotors.rotateMotor(snowblowerSpeed.getDouble(0.0));
+    //System.out.println(snowblowerSpeed.getDouble(0.0));
   }
 
   @Override

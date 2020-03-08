@@ -6,22 +6,24 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.PWMSparkMax;
+
 public class sparkMax extends Motor {
-    private CANSparkMax kMotor;
-    private CANEncoder kMotorEncoder;
+    private PWMSparkMax kMotor;
+    //private CANEncoder kMotorEncoder;
     private double kMotorEncoderValuePos;
     private double kMotorEncoderValueVel;
     // Initialization with default positive/negative scaling
     public sparkMax(final int port){
         super(port, 1, 1);
-        kMotor = new CANSparkMax(port, MotorType.kBrushless);
-        kMotorEncoder = kMotor.getEncoder();
+        kMotor = new PWMSparkMax(port);
+        //kMotorEncoder = kMotor.getEncoder();
     }
     // Initialization with specified positive/negative scaling
     public sparkMax(final int port, final double pos, final double neg){
         super(port, pos, neg);
-        kMotor = new CANSparkMax(port, MotorType.kBrushless);
-        kMotorEncoder = kMotor.getEncoder();
+        kMotor = new PWMSparkMax(port);
+        //kMotorEncoder = kMotor.getEncoder();
     }
 
 
@@ -56,12 +58,12 @@ public class sparkMax extends Motor {
 
     // Returns current encoder position
     public double getEncoderPosition(){
-        kMotorEncoderValuePos = kMotorEncoder.getPosition();
+        //kMotorEncoderValuePos = kMotorEncoder.getPosition();
         return kMotorEncoderValuePos;
     }
     // Returns current encoder velocity
     public double getEncoderVelocity(){
-        kMotorEncoderValueVel = kMotorEncoder.getVelocity();
+       // kMotorEncoderValueVel = kMotorEncoder.getVelocity();
         return kMotorEncoderValueVel;
     }
 }

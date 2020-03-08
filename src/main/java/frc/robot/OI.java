@@ -2,7 +2,7 @@ package frc.robot;
 
 import frc.robot.RobotMap;
 import frc.robot.commands.*;
-import frc.robot.subsystems.DriveTrain;
+//import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.motors.*;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.*;
 public class OI {
 
 	public talonMotor feedMotor = new talonMotor(2);
+	public talonMotor intakeMotor = new talonMotor(3);
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
@@ -41,7 +42,7 @@ public class OI {
 	private static final double STICK_MAX = 1;
 
 	// DriveTrain
-	private DriveTrain driveTrain = new DriveTrain();
+	//private DriveTrain driveTrain = new DriveTrain();
 
 	// driver controller setup
 	private Joystick driverController = new Joystick(RobotMap.cDriverPort);
@@ -110,6 +111,10 @@ public class OI {
 		//operatorButtonRightBumper.whenReleased(new ShooterStopAgitatorAndFeeder());
 		driverButtonRightBumper.whenPressed(new feeder());
 		driverButtonRightBumper.whenReleased(new stopfeeder());
+		driverButtonLeftBumper.whenPressed(new startintake(1.0));
+		driverButtonY.whenPressed(new startintake(-0.5));
+		driverButtonY.whenReleased(new stopintake());
+		driverButtonLeftBumper.whenReleased(new stopintake());
 
 		//operatorButtonB.whenPressed(new FuelFlapOut());
 		//operatorButtonStart.whenPressed(new ShooterStopAll());
@@ -291,9 +296,9 @@ public class OI {
 	// Drive train
 	public void Drive(double visionTarget, double distance){
 		if(driverButtonLeftBumper.get() == false){
-			driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
+			//driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
 		}else if(driverButtonLeftBumper.get() == true){
-			driveTrain.visionDrive(visionTarget, distance);
+			//driveTrain.visionDrive(visionTarget, distance);
 		}
 	}
 }
