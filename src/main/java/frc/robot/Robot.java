@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+//import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import java.util.Map;
 
@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.Servo;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+  //private Command m_autonomousCommand;
   public static OI oi;
   public NetworkTable visiontargettable;
   double[] visiontargetpos;
@@ -70,23 +70,23 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+    // m_autoSelected = m_chooser.getSelected();
+    // // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
+    // System.out.println("Auto selected: " + m_autoSelected);
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
+    // switch (m_autoSelected) {
+    //   case kCustomAuto:
+    //     // Put custom auto code here
+    //     break;
+    //   case kDefaultAuto:
+    //   default:
+    //     // Put default auto code here
+    //     break;
+    // }
   }
 
   /** This function is called once when teleop is enabled. */
@@ -101,16 +101,16 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
+    //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
     //double[] visiontargetpos = visiontargettable.getEntry("targetPose").getDoubleArray(defaultValue);
-    double targetwidth = visiontargettable.getEntry("targetBoundingWidth").getDouble(0.0);
-    double tarNumber = visiontargettable.getEntry("targetYaw").getDouble(0.0);
-    oi.Drive(tarNumber,((38*516.315789)/targetwidth));
+    //double targetwidth = visiontargettable.getEntry("targetBoundingWidth").getDouble(0.0);
+    //double tarNumber = visiontargettable.getEntry("targetYaw").getDouble(0.0);
+    //oi.Drive(tarNumber,((38*516.315789)/targetwidth));
 
-    double vertAngle = visiontargettable.getEntry("targetPitch").getDouble(0.0);
+    //double vertAngle = visiontargettable.getEntry("targetPitch").getDouble(0.0);
     //System.out.println((38*516.315789)/targetwidth);
-    System.out.println((vertAngle/180));
-    servo1.set((vertAngle/180));
+    //System.out.println((vertAngle/180));
+    //servo1.set((vertAngle/180));
   }
 
   /** This function is called once when the robot is disabled. */
