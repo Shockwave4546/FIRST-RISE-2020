@@ -20,10 +20,10 @@ public class DriveTrain{
 
     // Initializes all 4 drivetrain motors and PID class for vision drive
     public DriveTrain(){
-        mForwardLeft = new talonMotor(RobotMap.mForwardLeftPort);
-        mForwardRight = new talonMotor(RobotMap.mForwardRightPort);
-        //mBackwardLeft = new talonMotor(RobotMap.mBackwardLeftPort);
-        //mBackwardRight = new talonMotor(RobotMap.mBackwardRightPort);
+        mForwardLeft = new talonMotor(RobotMap.mDriveLeftOnePort);
+        mForwardRight = new talonMotor(RobotMap.mDriveRightOnePort);
+        //mBackwardLeft = new talonMotor(RobotMap.mDriveLeftTwoPort);
+        //mBackwardRight = new talonMotor(RobotMap.mDriveRightTwoPort);
         visionDrivePID = new PID(1, 0, 0, .02, .1);
     }
 

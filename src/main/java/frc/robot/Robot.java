@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     oi = new OI();
-    CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();
   }
 
   /**
@@ -111,6 +111,8 @@ public class Robot extends TimedRobot {
     //System.out.println((38*516.315789)/targetwidth);
     //System.out.println((vertAngle/180));
     //servo1.set((vertAngle/180));
+    //oi.Drive(tarNumber,((38*516.315789)/targetwidth));
+    oi.Drive(0.0, 0.0);
   }
 
   /** This function is called once when the robot is disabled. */

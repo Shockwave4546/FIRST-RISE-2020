@@ -5,17 +5,17 @@ import frc.robot.RobotMap;
 import frc.robot.subsystems.motors.talonMotor;
 
 public class colorWheelSpinner extends SubsystemBase {
-    private talonMotor mSpinner;
+    private talonMotor mWheelOfFortune;
 
     public colorWheelSpinner() {
-        mSpinner = new talonMotor(RobotMap.mSpinPort, RobotMap.mSpinPos, RobotMap.mSpinNeg);
+        mWheelOfFortune = new talonMotor(RobotMap.mWheelOfFortunePort, RobotMap.mWheelOfFortunePos, RobotMap.mWheelOfFortuneNeg);
     }
 
     public void spinMotor(final double speed) {
-        mSpinner.rotateMotor(1);
+        mWheelOfFortune.rotateMotor(speed);
     }
 
     public void stopMotor(final double speed) {
-        mSpinner.rotateMotor(0);
+        mWheelOfFortune.rotateMotor(speed);
     }
 }
