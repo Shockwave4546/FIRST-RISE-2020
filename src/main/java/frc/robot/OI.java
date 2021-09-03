@@ -50,7 +50,7 @@ public class OI {
 	//private Servo smCamTilt = new Servo(RobotMap.smCamTiltPort);
 
 	// DriveTrain
-	//private DriveTrain driveTrain = new DriveTrain();
+	private DriveTrain driveTrain = new DriveTrain();
 
 	public colorWheelSpinner colorWheel = new colorWheelSpinner();
 
@@ -383,12 +383,12 @@ public class OI {
 	}*/
 
 	public void Drive(double visionTarget, double distance){
-		if(driverButtonLeftBumper.get() == false){
+		// if(driverButtonLeftBumper.get() == false){
 			//cameraControl();
-			//driveTrain.userDrive(getDriverLeftY(), getDriverLeftX());
-		}else if(driverButtonLeftBumper.get() == true){
+		driveTrain.userDrive(getDriverLeftY(), getDriverLeftX());
+		// }else if(driverButtonLeftBumper.get() == true){
 			//driveTrain.visionDrive(visionTarget, distance);
-		}
+		// }
 		//mFlywheelShooter.rotateMotors(mFlywheelPID.getCalculation(mFlywheelShooter.getPercentOutput()));
 	}
 	// Drive Methods // ------------------------------------------ //
