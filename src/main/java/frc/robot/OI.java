@@ -161,12 +161,12 @@ public class OI {
 		//operatorButtonY.whenReleased();
 		//operatorButtonY.whileHeld();
 
-		operatorButtonLeftBumper.whenPressed(new intakeRollerControl(-1));
-		operatorButtonLeftBumper.whenReleased(new intakeRollerControl(0));
+		//operatorButtonLeftBumper.whenPressed(new intakeRollerControl(-1));
+		//operatorButtonLeftBumper.whenReleased(new intakeRollerControl(0));
 		//operatorButtonLeftBumper.whileHeld();
 
-		operatorButtonRightBumper.whenPressed(new intakeRollerControl(1));
-		operatorButtonRightBumper.whenReleased(new intakeRollerControl(0));
+		//operatorButtonRightBumper.whenPressed(new intakeRollerControl(1));
+		//operatorButtonRightBumper.whenReleased(new intakeRollerControl(0));
 		//operatorButtonRightBumper.whileHeld();
 
 		//operatorButtonBack.whenPressed(new flywheelControl(RobotMap.mFlywheelShooterLowTarget));

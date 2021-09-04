@@ -22,26 +22,31 @@ public class DriveTrain{
     public DriveTrain(){
         mForwardLeft = new talonMotor(RobotMap.mDriveLeftOnePort);
         mForwardRight = new talonMotor(RobotMap.mDriveRightOnePort);
-        //mBackwardLeft = new talonMotor(RobotMap.mDriveLeftTwoPort);
-        //mBackwardRight = new talonMotor(RobotMap.mDriveRightTwoPort);
-        visionDrivePID = new PID(1, 0, 0, .02, .1);
+        mBackwardLeft = new talonMotor(RobotMap.mDriveLeftTwoPort);
+        mBackwardRight = new talonMotor(RobotMap.mDriveRightTwoPort);
+        //visionDrivePID = new PID(1, 0, 0, .02, .1);
     }
 
     // Takes controller axis inputs to drive (tank based drivetrain)
     private void drivebaseControl(final double inputY, final double inputX) {
         cDriveLeftY = inputY;
         cDriveRightX = -inputX;
-        if(cDriveLeftY == 0) {
-            mForwardLeft.rotateMotor(cDriveRightX);
-            SmartDashboard.putNumber("mForwardLeft", mForwardLeft.get());
-            mForwardRight.rotateMotor(cDriveRightX);
-            SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
-        }else{
-            mForwardLeft.rotateMotor(cDriveLeftY + cDriveRightX);
-            SmartDashboard.putNumber("mForwardLeft", mForwardLeft.get());
-            mForwardRight.rotateMotor((cDriveLeftY - cDriveRightX) * -1);
-            SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
-        }
+        // if(cDriveLeftY == 0) {
+        //     mForwardLeft.rotateMotor(cDriveRightX);
+        //     SmartDashboard.putNumber("mForwardLeft", mForwardLeft.get());
+        //     mForwardRight.rotateMotor(cDriveRightX);
+        //     SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
+        // }else{
+        //     mForwardLeft.rotateMotor(cDriveLeftY + cDriveRightX);
+        //     SmartDashboard.putNumber("mForwardLeft", mForwardLeft.get());
+        //     mForwardRight.rotateMotor((cDriveLeftY - cDriveRightX) * -1);
+        //     SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
+        // }
+        mForwardLeft.rotateMotor(cDriveRightX);
+        mForwardRight.rotateMotor(cDriveRightX);
+        mBackwardLeft.rotateMotor(cDriveRightX);
+        mBackwardRight.rotateMotor(cDriveRightX);
+
     }
 
     // Called from OI for user drive control
