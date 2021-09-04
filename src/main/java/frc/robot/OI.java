@@ -59,7 +59,6 @@ public class OI {
 
 	// Misc
 	public colorWheelSpinner colorWheel = new colorWheelSpinner();
-	public shooterServoControl shooterServo = new shooterServoControl();
 
 	// driver controller setup
 	public Joystick driverController = new Joystick(RobotMap.cDriverPort);
