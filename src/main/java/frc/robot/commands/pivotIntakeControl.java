@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.motors.*;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * An example command that uses an example subsystem.
@@ -34,6 +35,24 @@ public class pivotIntakeControl extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        hLimitStatus = hLimit.get();
+        vLimitStatus = vLimit.get();
+        SmartDashboard.putBoolean("Horizontal Limit", hLimitStatus);
+        SmartDashboard.putBoolean("Vertical Limit", vLimitStatus);
+
+        if ((hLimitStatus == false) & (vLimitStatus == false)) {
+            Robot.oi.mIntakePivot.rotateCounterClockwise(0.1);
+        }
+
+        if (hLimitStatus == true) {
+            Robot.oi.mIntakePivot.rotateCounterClockwise(0.1);
+            Timer.delay(0.5);
+        }
+
+        if (vLimitStatus == true) {
+            Robot.oi.mIntakePivot.rotateClockwise(0.1);
+            Timer.delay(0.5);
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -44,47 +63,51 @@ public class pivotIntakeControl extends CommandBase {
         SmartDashboard.putBoolean("Horizontal Limit", hLimitStatus);
         SmartDashboard.putBoolean("Vertical Limit", vLimitStatus);
 
-        if(targetPosition == 2){
-            if(hLimitStatus == true){
-                // Target: go to Vertical
-                targetPosition = 0;
-            }else if(vLimitStatus == true){
-                // Target: go to Horizontal
-                targetPosition = 1;
-            }else{
-                // If no limit switch values are found
-                targetPosition = 2;
-            }
-            SmartDashboard.putNumber("Target Position", targetPosition);
-        }
-        if(targetPosition == 0){
-            if(vLimitStatus == true){
-                Robot.oi.mIntakePivot.stopMotor();
-                SmartDashboard.putString("Pivot Position", "Vertical");
-                itisFinished = true;
-            }else{
-                Robot.oi.mIntakePivot.rotateClockwise(1);
-            }
-        }
-        else if(targetPosition == 1){
-            if(hLimitStatus == true){
-                Robot.oi.mIntakePivot.stopMotor();
-                SmartDashboard.putString("Pivot Position", "Horizontal");
-                itisFinished = true;
-            }else{
-                Robot.oi.mIntakePivot.rotateCounterClockwise(1);
-            }
-        }
-        else{
+        if ((hLimitStatus == true) || (vLimitStatus == true)) {
             Robot.oi.mIntakePivot.stopMotor();
+            itisFinished = true;
         }
+
+        // if(targetPosition == 2){
+        //     if(hLimitStatus == true){
+        //         // Target: go to Vertical
+        //         targetPosition = 0;
+        //     }else if(vLimitStatus == true){
+        //         // Target: go to Horizontal
+        //         targetPosition = 1;
+        //     }else{
+        //         // If no limit switch values are found
+        //         targetPosition = 2;
+        //     }
+        //     SmartDashboard.putNumber("Target Position", targetPosition);
+        // }
+        // if(targetPosition == 0){
+        //     if(vLimitStatus == true){
+        //         Robot.oi.mIntakePivot.stopMotor();
+        //         SmartDashboard.putString("Pivot Position", "Vertical");
+        //         itisFinished = true;
+        //     }else{
+        //         Robot.oi.mIntakePivot.rotateClockwise(0.2);
+        //     }
+        // }
+        // else if(targetPosition == 1){
+        //     if(hLimitStatus == true){
+        //         Robot.oi.mIntakePivot.stopMotor();
+        //         SmartDashboard.putString("Pivot Position", "Horizontal");
+        //         itisFinished = true;
+        //     }else{
+        //         Robot.oi.mIntakePivot.rotateCounterClockwise(0.2);
+        //     }
+        // }
+        // else{
+        //     Robot.oi.mIntakePivot.stopMotor();
+        // }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         itisFinished = false;
-        targetPosition = 2;
     }
 
     // Returns true when the command should end.
