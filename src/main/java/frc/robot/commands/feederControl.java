@@ -20,7 +20,7 @@ public class feederControl extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
     public boolean itisFinished = false;
-    private double targetSpeed = 0.0;
+    public double targetSpeed = 0.0;
 
     public feederControl(double speed) {
         targetSpeed = speed;
@@ -34,12 +34,8 @@ public class feederControl extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(targetSpeed == 0){
-            Robot.oi.mFlywheelFeeder.stopMotor();
-        }else{
-            Robot.oi.mFlywheelFeeder.rotateMotor(targetSpeed);
-        }
-        itisFinished = true;
+        System.out.println(targetSpeed);
+        Robot.oi.mFlywheelFeeder.rotateMotor(targetSpeed);
     }
 
     // Called once the command ends or is interrupted.
@@ -51,11 +47,12 @@ public class feederControl extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (itisFinished == true) {
-            return true;
-        } else {
-            return false;
-        }
+        // if (itisFinished == true) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+        return false;
 
     }
 }

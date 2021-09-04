@@ -79,7 +79,7 @@ public class OI {
 	private Button operatorButtonB = new JoystickButton(operatorController, 2);
 	private Button operatorButtonX = new JoystickButton(operatorController, 3);
 	private Button operatorButtonY = new JoystickButton(operatorController, 4);
-	private Button operatorButtonLeftBumper = new JoystickButton(operatorController, 5);
+	public Button operatorButtonLeftBumper = new JoystickButton(operatorController, 5);
 	private Button operatorButtonRightBumper = new JoystickButton(operatorController, 6);
 	private Button operatorButtonBack = new JoystickButton(operatorController, 7);
 	private Button operatorButtonStart = new JoystickButton(operatorController, 8);
@@ -167,8 +167,8 @@ public class OI {
 		//operatorButtonY.whenReleased();
 		//operatorButtonY.whileHeld();
 
-		operatorButtonLeftBumper.whenPressed(new feederControl(1));
-		operatorButtonLeftBumper.whenReleased(new feederControl(0));
+		operatorButtonLeftBumper.whenHeld(new feederControl(1.0));
+		//operatorButtonLeftBumper.whenReleased(new feederControl(0));
 		//operatorButtonLeftBumper.whileHeld();
 
 		operatorButtonRightBumper.whenPressed(new intakeRollerControl(1));
@@ -179,7 +179,7 @@ public class OI {
 		//operatorButtonBack.whenReleased();
 		//operatorButtonBack.whileHeld();
 
-		operatorButtonStart.whenPressed(new flywheelShooter(1));
+		operatorButtonStart.whenPressed(new flywheelShooter(0));
 		//operatorButtonStart.whenReleased();
 		//operatorButtonStart.whileHeld();
 

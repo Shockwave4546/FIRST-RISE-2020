@@ -43,9 +43,9 @@ public class DriveTrain{
         //     SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
         // }
         mFrontLeft.rotateMotor(cDriveLeftY);
-        mFrontRight.rotateMotor(-cDriveRightY);
+        mFrontRight.rotateMotor(cDriveRightY);
         mBackLeft.rotateMotor(cDriveLeftY);
-        mBackRight.rotateMotor(-cDriveRightY);
+        mBackRight.rotateMotor(cDriveRightY);
 
     }
 

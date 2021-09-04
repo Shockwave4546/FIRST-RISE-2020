@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import java.util.Map;
 
@@ -58,7 +59,9 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -99,8 +102,8 @@ public class Robot extends TimedRobot {
     // servo1 = new Servo(4);
     // servo2 = new Servo(5);
     SmartDashboard.putNumber("Current Shooter Servo Angle", 0.5);
-    Robot.oi.smShooter.setAngle(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));
-    Robot.oi.smShooterTwo.setAngle(-(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5)));
+    Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));
+    Robot.oi.smShooterTwo.set((SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5)));
     
     //servoangle = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 180)).getEntry();
   }
@@ -131,8 +134,8 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) - 0.05);
     }
 
-    Robot.oi.smShooter.setAngle(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));
-    Robot.oi.smShooterTwo.setAngle(-(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5)));
+    Robot.oi.smShooter.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));
+    Robot.oi.smShooterTwo.set(-(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5)));
   }
 
   /** This function is called once when the robot is disabled. */
@@ -145,7 +148,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when test mode is enabled. */
   @Override
-  public void testInit() {}
+  public void testInit() {
+    CommandScheduler.getInstance().cancelAll();
+  }
 
   /** This function is called periodically during test mode. */
   @Override
