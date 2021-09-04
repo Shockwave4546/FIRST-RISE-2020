@@ -29,6 +29,8 @@ public class OI {
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
+	public victorSPXMotor mFlywheelShooterOne = new victorSPXMotor(RobotMap.mFlywheelShooterOnePort, RobotMap.mFlywheelShooterOnePos, RobotMap.mFlywheelShooterOneNeg);
+	public victorSPXMotor mFlywheelShooterTwo = new victorSPXMotor(RobotMap.mFlywheelShooterTwoPort, RobotMap.mFlywheelShooterTwoPos, RobotMap.mFlywheelShooterTwoNeg);
 	public victorSPXMotor mFlywheelFeeder = new victorSPXMotor(RobotMap.mFlywheelFeederPort, RobotMap.mFlywheelFeederPos, RobotMap.mFlywheelFeederNeg);
 	public victorSPXMotor mWheelOfFortune = new victorSPXMotor(RobotMap.mWheelOfFortunePort, RobotMap.mWheelOfFortunePos, RobotMap.mWheelOfFortuneNeg);
 	public victorSPXMotor mIntakeRoller = new victorSPXMotor(RobotMap.mIntakeRollerPort, RobotMap.mIntakeRollerPos, RobotMap.mIntakeRollerNeg);
@@ -60,7 +62,7 @@ public class OI {
 	public shooterServoControl shooterServo = new shooterServoControl();
 
 	// driver controller setup
-	private Joystick driverController = new Joystick(RobotMap.cDriverPort);
+	public Joystick driverController = new Joystick(RobotMap.cDriverPort);
 	private Button driverButtonA = new JoystickButton(driverController, 1);
 	private Button driverButtonB = new JoystickButton(driverController, 2);
 	private Button driverButtonX = new JoystickButton(driverController, 3);
@@ -73,7 +75,7 @@ public class OI {
 	private Button driverButtonRightAxisPress = new JoystickButton(driverController, 10);
 
 	// operator controller setup
-	private Joystick operatorController = new Joystick(RobotMap.cOperatorPort);
+	public Joystick operatorController = new Joystick(RobotMap.cOperatorPort);
 	private Button operatorButtonA = new JoystickButton(operatorController, 1);
 	private Button operatorButtonB = new JoystickButton(operatorController, 2);
 	private Button operatorButtonX = new JoystickButton(operatorController, 3);
@@ -113,11 +115,11 @@ public class OI {
 		//driverButtonB.whenReleased();
 		//driverButtonB.whileHeld();
 
-		//driverButtonX.whenPressed();
+		driverButtonX.whenPressed(new positionControl());
 		//driverButtonX.whenReleased();
 		//driverButtonX.whileHeld();
 
-		//driverButtonY.whenPressed();
+		driverButtonY.whenPressed(new rotationControl());
 		//driverButtonY.whenReleased();
 		//driverButtonY.whileHeld();
 
@@ -166,19 +168,19 @@ public class OI {
 		//operatorButtonY.whenReleased();
 		//operatorButtonY.whileHeld();
 
-		//operatorButtonLeftBumper.whenPressed(new intakeRollerControl(-1));
-		//operatorButtonLeftBumper.whenReleased(new intakeRollerControl(0));
+		operatorButtonLeftBumper.whenPressed(new intakeRollerControl(-1));
+		operatorButtonLeftBumper.whenReleased(new intakeRollerControl(0));
 		//operatorButtonLeftBumper.whileHeld();
 
-		//operatorButtonRightBumper.whenPressed(new intakeRollerControl(1));
-		//operatorButtonRightBumper.whenReleased(new intakeRollerControl(0));
+		operatorButtonRightBumper.whenPressed(new intakeRollerControl(1));
+		operatorButtonRightBumper.whenReleased(new intakeRollerControl(0));
 		//operatorButtonRightBumper.whileHeld();
 
-		//operatorButtonBack.whenPressed(new flywheelControl(RobotMap.mFlywheelShooterLowTarget));
+		operatorButtonBack.whenPressed(new flywheelShooter(0.5));
 		//operatorButtonBack.whenReleased();
 		//operatorButtonBack.whileHeld();
 
-		//operatorButtonStart.whenPressed(new flywheelControl(RobotMap.mFlywheelShooterHighTarget));
+		operatorButtonStart.whenPressed(new flywheelShooter(1));
 		//operatorButtonStart.whenReleased();
 		//operatorButtonStart.whileHeld();
 
@@ -189,7 +191,6 @@ public class OI {
 		//operatorButtonRightAxisPress.whenPressed();
 		//operatorButtonRightAxisPress.whenReleased();
 		//operatorButtonRightAxisPress.whileHeld();
-		// Operator Buttons // ------------------------------------------ //
 	}
 
 

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -32,10 +33,10 @@ public class Robot extends TimedRobot {
   //public NetworkTable visiontargettable;
   //double[] visiontargetpos;
   //double[] defaultValue = new double[0];
-  public Servo servo1;
-  public Servo servo2;
+  // public Servo servo1;
+  // public Servo servo2;
   public ShuffleboardTab tab = Shuffleboard.getTab("Test Tab");
-  public NetworkTableEntry servoangle;
+  // public NetworkTableEntry servoangle;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -97,6 +98,9 @@ public class Robot extends TimedRobot {
 
     // servo1 = new Servo(4);
     // servo2 = new Servo(5);
+    SmartDashboard.putNumber("Current Shooter Servo Angle", 0.5);
+    Robot.oi.smShooter.setAngle(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));
+    Robot.oi.smShooterTwo.setAngle(-(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5)));
     
     //servoangle = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 180)).getEntry();
   }
@@ -116,7 +120,19 @@ public class Robot extends TimedRobot {
     //servo1.set((vertAngle/180));
     //oi.Drive(tarNumber,((38*516.315789)/targetwidth));
     //servo1.set(servoangle/180);
+
     oi.Drive(0.0, 0.0);
+    
+    int direction = Robot.oi.operatorController.getPOV(0);
+
+    if (direction == 0) { // DPAD UP button is pressed
+      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) + 0.05);
+    } else if (direction == 180) { // DPAD DOWN button is pressed
+      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) - 0.05);
+    }
+
+    Robot.oi.smShooter.setAngle(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));
+    Robot.oi.smShooterTwo.setAngle(-(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5)));
   }
 
   /** This function is called once when the robot is disabled. */
