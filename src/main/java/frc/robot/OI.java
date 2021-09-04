@@ -29,9 +29,10 @@ public class OI {
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
-
-	//public victorSPXMotor mWheelOfFortune = new victorSPXMotor(RobotMap.mWheelOfFortunePort, RobotMap.mWheelOfFortunePos, RobotMap.mWheelOfFortuneNeg);
-	public talonMotor mIntakeRoller = new talonMotor(11, RobotMap.mIntakeRollerPos, RobotMap.mIntakePivotNeg);
+	public victorSPXMotor mFlywheelFeeder = new victorSPXMotor(RobotMap.mFlywheelFeederPort, RobotMap.mFlywheelFeederPos, RobotMap.mFlywheelFeederNeg);
+	public victorSPXMotor mWheelOfFortune = new victorSPXMotor(RobotMap.mWheelOfFortunePort, RobotMap.mWheelOfFortunePos, RobotMap.mWheelOfFortuneNeg);
+	public victorSPXMotor mIntakeRoller = new victorSPXMotor(RobotMap.mIntakeRollerPort, RobotMap.mIntakeRollerPos, RobotMap.mIntakeRollerNeg);
+	public victorSPXMotor mIntakePivot = new victorSPXMotor(RobotMap.mIntakePivotPort, RobotMap.mIntakePivotPos, RobotMap.mIntakePivotNeg);
 	//public DualMotorEncoder mFlywheelShooter = new DualMotorEncoder(RobotMap.mFlywheelShooterOnePort, RobotMap.mFlywheelShooterTwoPort);
 	//public PID mFlywheelPID = new PID();
 	//public final DigitalOutput rLimeLight = new DigitalOutput(RobotMap.rLimeLightPort);
@@ -46,13 +47,17 @@ public class OI {
 	private static final double STICK_MAX = 1;
 
 	// Servos
+	public Servo smShooter = new Servo(RobotMap.smShooterPort);
+    public Servo smShooterTwo = new Servo(RobotMap.smShooterTwoPort);
 	//private Servo smCamPan = new Servo(RobotMap.smCamPanPort);
 	//private Servo smCamTilt = new Servo(RobotMap.smCamTiltPort);
 
 	// DriveTrain
 	private DriveTrain driveTrain = new DriveTrain();
 
+	// Misc
 	public colorWheelSpinner colorWheel = new colorWheelSpinner();
+	public shooterServoControl shooterServo = new shooterServoControl();
 
 	// driver controller setup
 	private Joystick driverController = new Joystick(RobotMap.cDriverPort);
@@ -385,7 +390,7 @@ public class OI {
 	public void Drive(double visionTarget, double distance){
 		// if(driverButtonLeftBumper.get() == false){
 			//cameraControl();
-		driveTrain.userDrive(getDriverLeftY(), getDriverLeftX());
+		driveTrain.userDrive(getDriverLeftY(), getDriverRightY());
 		// }else if(driverButtonLeftBumper.get() == true){
 			//driveTrain.visionDrive(visionTarget, distance);
 		// }

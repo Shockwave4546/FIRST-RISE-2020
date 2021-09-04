@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Servo;
@@ -22,8 +23,6 @@ public class shooterServoControl extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
     public boolean itisFinished = false;
-    Servo smShooter = new Servo(RobotMap.smShooterPort);
-    Servo smShooterTwo = new Servo(RobotMap.smShooterTwoPort);
     private int targetSequence = 0;
     private ArrayList<Double> targetPositionSequence = new ArrayList<Double>(RobotMap.smShooterTotalPositions);
     private ArrayList<Double> targetPositionSequenceTwo = new ArrayList<Double>(RobotMap.smShooterTwoTotalPositions);
@@ -46,30 +45,30 @@ public class shooterServoControl extends CommandBase {
         targetPositionSequence.add(RobotMap.smShooterPositionOne);
         targetPositionSequence.add(RobotMap.smShooterPositionTwo);
         targetPositionSequence.add(RobotMap.smShooterPositionThree);
-        smShooter.setAngle(targetPositionSequence.get(targetSequence));
+        Robot.oi.smShooter.setAngle(targetPositionSequence.get(targetSequence));
 
         targetPositionSequenceTwo.add(RobotMap.smShooterTwoPositionOne);
         targetPositionSequenceTwo.add(RobotMap.smShooterTwoPositionTwo);
         targetPositionSequenceTwo.add(RobotMap.smShooterTwoPositionThree);
-        smShooterTwo.setAngle(targetPositionSequenceTwo.get(targetSequence));
+        Robot.oi.smShooterTwo.setAngle(targetPositionSequenceTwo.get(targetSequence));
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double currentAngle = smShooter.getAngle();
+        double currentAngle = Robot.oi.smShooter.getAngle();
         double targetAngle = targetPositionSequence.get(targetSequence);
-        double currentAngleTwo = smShooter.getAngle();
+        double currentAngleTwo = Robot.oi.smShooter.getAngle();
         double targetAngleTwo = targetPositionSequenceTwo.get(targetSequence);
         if(currentAngle != targetAngle){
-            smShooter.setAngle(targetAngle);
+            Robot.oi.smShooter.setAngle(targetAngle);
         }
         if(currentAngleTwo != targetAngleTwo){
-            smShooterTwo.setAngle(targetAngleTwo);
+            Robot.oi.smShooterTwo.setAngle(targetAngleTwo);
         }
         sequencePlusOne();
-        SmartDashboard.putNumber("Current Shooter Servo Angle", smShooter.getAngle());
-        SmartDashboard.putNumber("Current Shooter Servo Two Angle", smShooterTwo.getAngle());
+        SmartDashboard.putNumber("Current Shooter Servo Angle", Robot.oi.smShooter.getAngle());
+        SmartDashboard.putNumber("Current Shooter Servo Two Angle", Robot.oi.smShooterTwo.getAngle());
         itisFinished = true;
         //*/
     }

@@ -7,30 +7,30 @@ import frc.robot.RobotMap;
 import frc.robot.subsystems.motors.*;
 
 public class DriveTrain{
-    private talonMotor mForwardLeft, mForwardRight, mBackwardLeft, mBackwardRight;
-    private double cDriveLeftY, cDriveRightX;
+    private victorSPMotor mFrontLeft, mFrontRight, mBackLeft, mBackRight;
+    private double cDriveLeftY, cDriveRightY;
     /*private double integral, previousError, setPoint = 0;
     private double P = 1;
     private double I, D = 0;
     private double actualtemp = 0;*/
-    private double straightSpeedL = 0.0;
-    private double straightSpeedR = 0.0;
-    private PID visionDrivePID;
-    private double motorPIDinput;
+    //private double straightSpeedL = 0.0;
+    //private double straightSpeedR = 0.0;
+    //private PID visionDrivePID;
+    //private double motorPIDinput;
 
     // Initializes all 4 drivetrain motors and PID class for vision drive
     public DriveTrain(){
-        mForwardLeft = new talonMotor(RobotMap.mDriveLeftOnePort);
-        mForwardRight = new talonMotor(RobotMap.mDriveRightOnePort);
-        mBackwardLeft = new talonMotor(RobotMap.mDriveLeftTwoPort);
-        mBackwardRight = new talonMotor(RobotMap.mDriveRightTwoPort);
+        mFrontLeft = new victorSPMotor(RobotMap.mDriveLeftOnePort);
+        mFrontRight = new victorSPMotor(RobotMap.mDriveRightOnePort);
+        mBackLeft = new victorSPMotor(RobotMap.mDriveLeftTwoPort);
+        mBackRight = new victorSPMotor(RobotMap.mDriveRightTwoPort);
         //visionDrivePID = new PID(1, 0, 0, .02, .1);
     }
 
     // Takes controller axis inputs to drive (tank based drivetrain)
-    private void drivebaseControl(final double inputY, final double inputX) {
-        cDriveLeftY = inputY;
-        cDriveRightX = -inputX;
+    private void drivebaseControl(final double inputLY, final double inputRY) {
+        cDriveLeftY = inputLY;
+        cDriveRightY = inputRY;
         // if(cDriveLeftY == 0) {
         //     mForwardLeft.rotateMotor(cDriveRightX);
         //     SmartDashboard.putNumber("mForwardLeft", mForwardLeft.get());
@@ -42,16 +42,16 @@ public class DriveTrain{
         //     mForwardRight.rotateMotor((cDriveLeftY - cDriveRightX) * -1);
         //     SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
         // }
-        mForwardLeft.rotateMotor(cDriveRightX);
-        mForwardRight.rotateMotor(cDriveRightX);
-        mBackwardLeft.rotateMotor(cDriveRightX);
-        mBackwardRight.rotateMotor(cDriveRightX);
+        mFrontLeft.rotateMotor(cDriveLeftY);
+        mFrontRight.rotateMotor(-cDriveRightY);
+        mBackLeft.rotateMotor(cDriveLeftY);
+        mBackRight.rotateMotor(-cDriveRightY);
 
     }
 
     // Called from OI for user drive control
-    public void userDrive(final double inputY, final double inputX){
-        drivebaseControl(inputY, inputX);
+    public void userDrive(final double inputLY, final double inputRY){
+        drivebaseControl(inputLY, inputRY);
     }
 
 
@@ -78,29 +78,29 @@ public class DriveTrain{
     }
     */
 
-    // Called from OI for software(vision) control
-    public void visionDrive(double visionTarget, double distance){
-        motorPIDinput = -(visionDrivePID.getCalculation(visionTarget));
-        //System.out.println(visionTarget);
-        if (distance > 63){
-            straightSpeedL = 0.25;
-            straightSpeedR = -0.25;
-        }else if ((distance < 57) && (distance > 5)){
-            straightSpeedL = -0.25;
-            straightSpeedR = 0.25;
-        }else if (distance <= 5.0){
-            straightSpeedL = 0.0;
-            straightSpeedR = 0.0;
-        }else{
-            straightSpeedL = 0.0;
-            straightSpeedR = 0.0; 
-        }
-        SmartDashboard.putNumber("visionMotor", motorPIDinput);
+    // // Called from OI for software(vision) control
+    // public void visionDrive(double visionTarget, double distance){
+    //     motorPIDinput = -(visionDrivePID.getCalculation(visionTarget));
+    //     //System.out.println(visionTarget);
+    //     if (distance > 63){
+    //         straightSpeedL = 0.25;
+    //         straightSpeedR = -0.25;
+    //     }else if ((distance < 57) && (distance > 5)){
+    //         straightSpeedL = -0.25;
+    //         straightSpeedR = 0.25;
+    //     }else if (distance <= 5.0){
+    //         straightSpeedL = 0.0;
+    //         straightSpeedR = 0.0;
+    //     }else{
+    //         straightSpeedL = 0.0;
+    //         straightSpeedR = 0.0; 
+    //     }
+    //     SmartDashboard.putNumber("visionMotor", motorPIDinput);
 
-        mForwardLeft.rotateMotor(motorPIDinput + straightSpeedL);
-        SmartDashboard.putNumber("mForwardLeft", mForwardLeft.get());
+    //     mForwardLeft.rotateMotor(motorPIDinput + straightSpeedL);
+    //     SmartDashboard.putNumber("mForwardLeft", mForwardLeft.get());
         
-        mForwardRight.rotateMotor(motorPIDinput + straightSpeedR);
-        SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
-    }
+    //     mForwardRight.rotateMotor(motorPIDinput + straightSpeedR);
+    //     SmartDashboard.putNumber("mForwardRight", mForwardRight.get());
+    // }
 }

@@ -95,8 +95,8 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
 
-    servo1 = new Servo(4);
-    servo2 = new Servo(5);
+    // servo1 = new Servo(4);
+    // servo2 = new Servo(5);
     
     //servoangle = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 180)).getEntry();
   }

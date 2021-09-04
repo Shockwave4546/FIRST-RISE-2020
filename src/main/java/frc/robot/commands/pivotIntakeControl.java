@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,7 +23,6 @@ public class pivotIntakeControl extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
     public boolean itisFinished = false;
-    private victorSPXMotor mPivot = new victorSPXMotor(RobotMap.mIntakePivotPort, RobotMap.mIntakePivotPos, RobotMap.mIntakePivotNeg);
     private DigitalInput hLimit = new DigitalInput(RobotMap.IsIntakeHorizontalPort);
     private DigitalInput vLimit = new DigitalInput(RobotMap.IsIntakeVerticalPort);
     private int targetPosition = 2;
@@ -59,24 +59,24 @@ public class pivotIntakeControl extends CommandBase {
         }
         if(targetPosition == 0){
             if(vLimitStatus == true){
-                mPivot.stopMotor();
+                Robot.oi.mIntakePivot.stopMotor();
                 SmartDashboard.putString("Pivot Position", "Vertical");
                 itisFinished = true;
             }else{
-                mPivot.rotateClockwise(1);
+                Robot.oi.mIntakePivot.rotateClockwise(1);
             }
         }
         else if(targetPosition == 1){
             if(hLimitStatus == true){
-                mPivot.stopMotor();
+                Robot.oi.mIntakePivot.stopMotor();
                 SmartDashboard.putString("Pivot Position", "Horizontal");
                 itisFinished = true;
             }else{
-                mPivot.rotateCounterClockwise(1);
+                Robot.oi.mIntakePivot.rotateCounterClockwise(1);
             }
         }
         else{
-            mPivot.stopMotor();
+            Robot.oi.mIntakePivot.stopMotor();
         }
     }
 
