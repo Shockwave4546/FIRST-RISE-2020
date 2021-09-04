@@ -124,6 +124,8 @@ public class Robot extends TimedRobot {
     //oi.Drive(tarNumber,((38*516.315789)/targetwidth));
     //servo1.set(servoangle/180);
 
+    Robot.oi.mFlywheelFeeder.rotateClockwise(0.2);
+
     oi.Drive(0.0, 0.0);
     
     int direction = Robot.oi.operatorController.getPOV(0);
