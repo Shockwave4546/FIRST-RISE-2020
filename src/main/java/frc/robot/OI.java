@@ -31,7 +31,7 @@ public class OI {
 	// commands the same as any other Button.
 
 	//public victorSPXMotor mWheelOfFortune = new victorSPXMotor(RobotMap.mWheelOfFortunePort, RobotMap.mWheelOfFortunePos, RobotMap.mWheelOfFortuneNeg);
-	public talonMotor mIntakeRoller = new talonMotor(0, RobotMap.mIntakeRollerPos, RobotMap.mIntakePivotNeg);
+	public talonMotor mIntakeRoller = new talonMotor(11, RobotMap.mIntakeRollerPos, RobotMap.mIntakePivotNeg);
 	//public DualMotorEncoder mFlywheelShooter = new DualMotorEncoder(RobotMap.mFlywheelShooterOnePort, RobotMap.mFlywheelShooterTwoPort);
 	//public PID mFlywheelPID = new PID();
 	//public final DigitalOutput rLimeLight = new DigitalOutput(RobotMap.rLimeLightPort);

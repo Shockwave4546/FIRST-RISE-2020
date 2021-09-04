@@ -29,12 +29,13 @@ import edu.wpi.first.wpilibj.Servo;
 public class Robot extends TimedRobot {
   //private Command m_autonomousCommand;
   public static OI oi;
-  public NetworkTable visiontargettable;
-  double[] visiontargetpos;
-  double[] defaultValue = new double[0];
+  //public NetworkTable visiontargettable;
+  //double[] visiontargetpos;
+  //double[] defaultValue = new double[0];
   public Servo servo1;
+  public Servo servo2;
   public ShuffleboardTab tab = Shuffleboard.getTab("Test Tab");
-  public NetworkTableEntry speed;
+  public NetworkTableEntry servoangle;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -45,7 +46,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     oi = new OI();
-    //CameraServer.getInstance().startAutomaticCapture();
+    CameraServer.getInstance().startAutomaticCapture();
   }
 
   /**
@@ -94,8 +95,10 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
 
-    // servo1 = new Servo(9);
-    // speed = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+    servo1 = new Servo(4);
+    servo2 = new Servo(5);
+    
+    //servoangle = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 180)).getEntry();
   }
 
   /** This function is called periodically during operator control. */
@@ -109,9 +112,10 @@ public class Robot extends TimedRobot {
 
     //double vertAngle = visiontargettable.getEntry("targetPitch").getDouble(0.0);
     //System.out.println((38*516.315789)/targetwidth);
-    //System.out.println((vertAngle/180));
+    // System.out.println((vertAngle/180));
     //servo1.set((vertAngle/180));
     //oi.Drive(tarNumber,((38*516.315789)/targetwidth));
+    //servo1.set(servoangle/180);
     oi.Drive(0.0, 0.0);
   }
 
