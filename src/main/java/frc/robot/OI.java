@@ -152,7 +152,7 @@ public class OI {
 
 		// Operator Buttons // ------------------------------------------ //
 
-		//operatorButtonA.whenPressed(new shooterServoControl());
+		operatorButtonA.whenPressed(new pivotIntakeControl());
 		//operatorButtonA.whenReleased();
 		//operatorButtonA.whileHeld();
 
@@ -168,8 +168,8 @@ public class OI {
 		//operatorButtonY.whenReleased();
 		//operatorButtonY.whileHeld();
 
-		operatorButtonLeftBumper.whenPressed(new intakeRollerControl(-1));
-		operatorButtonLeftBumper.whenReleased(new intakeRollerControl(0));
+		operatorButtonLeftBumper.whenPressed(new feederControl(1));
+		operatorButtonLeftBumper.whenReleased(new feederControl(0));
 		//operatorButtonLeftBumper.whileHeld();
 
 		operatorButtonRightBumper.whenPressed(new intakeRollerControl(1));
