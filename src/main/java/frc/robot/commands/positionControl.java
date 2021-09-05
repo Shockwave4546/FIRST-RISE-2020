@@ -165,13 +165,13 @@ public class positionControl extends CommandBase {
             SmartDashboard.putString("Target Color", colorSequence.get(targetIndex));
             if ((colorString == colorSequence.get(targetIndex))
                     && (currentSequence == colorSequence.get(targetIndex))) {
-                Robot.oi.colorWheel.spinMotor(0.0);
+                Robot.oi.mWheelOfFortune.stopMotor();
                 itisFinished = true;
             } else if (colorString == currentSequence) {
-                Robot.oi.colorWheel.spinMotor(1);
+                Robot.oi.mWheelOfFortune.rotateMotor(1);
                 sequencePlusOne();
             } else {
-                Robot.oi.colorWheel.spinMotor(1);
+                Robot.oi.mWheelOfFortune.rotateMotor(1);
             }
             // break;
             // default:

@@ -2,7 +2,6 @@ package frc.robot;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.colorWheelSpinner;
 import frc.robot.subsystems.motors.*;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -55,7 +54,6 @@ public class OI {
 	private DriveTrain driveTrain = new DriveTrain();
 
 	// Misc
-	public colorWheelSpinner colorWheel = new colorWheelSpinner();
 
 	// driver controller setup
 	public Joystick driverController = new Joystick(RobotMap.cDriverPort);

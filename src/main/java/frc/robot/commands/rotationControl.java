@@ -129,9 +129,9 @@ public class rotationControl extends CommandBase {
 
 
     if (SmartDashboard.getNumber("Rotation Count", 0) < 24) {
-      Robot.oi.colorWheel.spinMotor(1);
+      Robot.oi.mWheelOfFortune.rotateMotor(1);
     } else {
-      Robot.oi.colorWheel.spinMotor(0);
+      Robot.oi.mWheelOfFortune.stopMotor();
     }
 
   }
