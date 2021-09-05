@@ -162,7 +162,7 @@ public class OI {
 		//operatorButtonY.whenReleased();
 		//operatorButtonY.whileHeld();
 
-		operatorButtonLeftBumper.whenHeld(new feederControl(1.0));
+		operatorButtonLeftBumper.whenHeld(new feederControl(0.3));
 		//operatorButtonLeftBumper.whenReleased(new feederControl(0));
 		//operatorButtonLeftBumper.whileHeld();
 
