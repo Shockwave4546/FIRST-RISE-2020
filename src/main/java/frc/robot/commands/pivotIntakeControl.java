@@ -12,7 +12,6 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.motors.*;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -26,7 +25,6 @@ public class pivotIntakeControl extends CommandBase {
     public boolean itisFinished = false;
     private DigitalInput hLimit = new DigitalInput(RobotMap.IsIntakeHorizontalPort);
     private DigitalInput vLimit = new DigitalInput(RobotMap.IsIntakeVerticalPort);
-    private int targetPosition = 2;
     boolean hLimitStatus, vLimitStatus;
 
     public pivotIntakeControl() {

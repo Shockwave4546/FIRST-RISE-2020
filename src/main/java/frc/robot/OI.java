@@ -1,13 +1,10 @@
 package frc.robot;
 
-import frc.robot.RobotMap;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.colorWheelSpinner;
 import frc.robot.subsystems.motors.*;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;

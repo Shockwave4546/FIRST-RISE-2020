@@ -1,6 +1,5 @@
 package frc.robot.subsystems.motors;
 
-import frc.robot.subsystems.motors.Motor;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 

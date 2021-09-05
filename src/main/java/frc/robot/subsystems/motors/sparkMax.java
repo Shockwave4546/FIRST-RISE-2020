@@ -1,7 +1,5 @@
 package frc.robot.subsystems.motors;
 
-import frc.robot.subsystems.motors.Motor;
-
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
