@@ -35,24 +35,24 @@ public class pivotIntakeControl extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        // hLimitStatus = hLimit.get();
-        // vLimitStatus = vLimit.get();
-        // SmartDashboard.putBoolean("Horizontal Limit", hLimitStatus);
-        // SmartDashboard.putBoolean("Vertical Limit", vLimitStatus);
+        hLimitStatus = hLimit.get();
+        vLimitStatus = vLimit.get();
+        SmartDashboard.putBoolean("Horizontal Limit", hLimitStatus);
+        SmartDashboard.putBoolean("Vertical Limit", vLimitStatus);
 
-        // if ((hLimitStatus == false) & (vLimitStatus == false)) {
-        //     Robot.oi.mIntakePivot.rotateCounterClockwise(0.1);
-        // }
+        if ((hLimitStatus == false) & (vLimitStatus == false)) {
+            Robot.oi.mIntakePivot.rotateCounterClockwise(1);
+        }
 
-        // if (hLimitStatus == true) {
-        //     Robot.oi.mIntakePivot.rotateCounterClockwise(0.1);
-        //     Timer.delay(0.5);
-        // }
+        if (hLimitStatus == true) {
+            Robot.oi.mIntakePivot.rotateCounterClockwise(1);
+            Timer.delay(0.5);
+        }
 
-        // if (vLimitStatus == true) {
-        //     Robot.oi.mIntakePivot.rotateClockwise(0.1);
-        //     Timer.delay(0.5);
-        // }
+        if (vLimitStatus == true) {
+            Robot.oi.mIntakePivot.rotateClockwise(0.1);
+            Timer.delay(0.5);
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.

@@ -60,8 +60,8 @@ public class RobotMap {
     public static final double mIntakeRollerNeg = 1.0;
 
     public static final int mIntakePivotPort = 12;          // Motor Controller  7 - Green
-    public static final double mIntakePivotPos = 0.6;
-    public static final double mIntakePivotNeg = 0.6;
+    public static final double mIntakePivotPos = 0.3;
+    public static final double mIntakePivotNeg = 0.3;
         // ---------- //
 
         // Flywheel (Ball Shooter) //

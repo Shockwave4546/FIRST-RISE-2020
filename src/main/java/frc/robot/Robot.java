@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
 
     // servo1 = new Servo(4);
     // servo2 = new Servo(5);
-    SmartDashboard.putNumber("Current Shooter Servo Angle", 0.5);
+    SmartDashboard.putNumber("Current Shooter Servo Angle", 0);
     Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));
     Robot.oi.smShooterTwo.set((SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5)));
     
@@ -124,16 +124,14 @@ public class Robot extends TimedRobot {
     //oi.Drive(tarNumber,((38*516.315789)/targetwidth));
     //servo1.set(servoangle/180);
 
-    Robot.oi.mFlywheelFeeder.rotateClockwise(0.2);
-
     oi.Drive(0.0, 0.0);
     
     int direction = Robot.oi.operatorController.getPOV(0);
 
     if (direction == 0) { // DPAD UP button is pressed
-      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) + 0.05);
+      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) + 0.025);
     } else if (direction == 180) { // DPAD DOWN button is pressed
-      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) - 0.05);
+      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) - 0.025);
     }
 
     Robot.oi.smShooter.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));
