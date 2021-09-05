@@ -1,7 +1,7 @@
 package frc.robot;
 
 import frc.robot.commands.*;
-import frc.robot.subsystems.DriveTrain;
+//import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.motors.*;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -51,7 +51,7 @@ public class OI {
 	//private Servo smCamTilt = new Servo(RobotMap.smCamTiltPort);
 
 	// DriveTrain
-	private DriveTrain driveTrain = new DriveTrain();
+	//private DriveTrain driveTrain = new DriveTrain();
 
 	// Misc
 
@@ -162,19 +162,19 @@ public class OI {
 		//operatorButtonY.whenReleased();
 		//operatorButtonY.whileHeld();
 
-		operatorButtonLeftBumper.whenHeld(new feederControl(0.3));
-		//operatorButtonLeftBumper.whenReleased(new feederControl(0));
+		operatorButtonLeftBumper.whenPressed(new feederControl(0.5));
+		operatorButtonLeftBumper.whenReleased(new feederControl(0));
 		//operatorButtonLeftBumper.whileHeld();
 
-		operatorButtonRightBumper.whenHeld(new intakeRollerControl(1));
-		//operatorButtonRightBumper.whenReleased(new intakeRollerControl(0));
+		operatorButtonRightBumper.whenPressed(new intakeRollerControl(1));
+		operatorButtonRightBumper.whenReleased(new intakeRollerControl(0));
 		//operatorButtonRightBumper.whileHeld();
 
-		operatorButtonBack.whenPressed(new flywheelShooter(0.5));
+		operatorButtonBack.whenPressed(new flywheelShooter(0));
 		//operatorButtonBack.whenReleased();
 		//operatorButtonBack.whileHeld();
 
-		operatorButtonStart.whenPressed(new flywheelShooter(0));
+		operatorButtonStart.whenPressed(new flywheelShooter(1));
 		//operatorButtonStart.whenReleased();
 		//operatorButtonStart.whileHeld();
 
@@ -385,7 +385,7 @@ public class OI {
 	public void Drive(double visionTarget, double distance){
 		// if(driverButtonLeftBumper.get() == false){
 			//cameraControl();
-		driveTrain.userDrive(getDriverLeftY(), getDriverRightY());
+		//driveTrain.userDrive(getDriverLeftY(), getDriverRightX());
 		// }else if(driverButtonLeftBumper.get() == true){
 			//driveTrain.visionDrive(visionTarget, distance);
 		// }

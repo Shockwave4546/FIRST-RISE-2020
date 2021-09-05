@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,13 +26,17 @@ import edu.wpi.first.cameraserver.CameraServer;
 public class Robot extends TimedRobot {
   //private Command m_autonomousCommand;
   public static OI oi;
-  //public NetworkTable visiontargettable;
-  //double[] visiontargetpos;
-  //double[] defaultValue = new double[0];
-  // public Servo servo1;
-  // public Servo servo2;
-  public ShuffleboardTab tab = Shuffleboard.getTab("Test Tab");
-  // public NetworkTableEntry servoangle;
+  public ShuffleboardTab tab = Shuffleboard.getTab("Match Tab");
+
+  Talon mFrontLeft = new Talon(RobotMap.mDriveLeftOnePort);
+  Talon mFrontRight = new Talon(RobotMap.mDriveRightOnePort);
+  Talon mBackLeft = new Talon(RobotMap.mDriveLeftTwoPort);
+  Talon mBackRight = new Talon(RobotMap.mDriveRightTwoPort);
+
+  SpeedControllerGroup m_left = new SpeedControllerGroup(mFrontLeft, mBackLeft);
+  SpeedControllerGroup m_right = new SpeedControllerGroup(mFrontRight, mBackRight);
+  //visionDrivePID = new PID(1, 0, 0, .02, .1);
+  DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -41,6 +48,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     oi = new OI();
     CameraServer.getInstance().startAutomaticCapture();
+    m_right.setInverted(true);
   }
 
   /**
@@ -89,41 +97,24 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
-
-    // servo1 = new Servo(4);
-    // servo2 = new Servo(5);
     SmartDashboard.putNumber("Current Shooter Servo Angle", 0);
     Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));
     Robot.oi.smShooterTwo.set((SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5)));
-    
-    //servoangle = tab.add("Rotation Angle", 1).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 180)).getEntry();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    //visiontargettable = NetworkTableInstance.getDefault().getTable("chameleon-vision/USB Camera-B4.09.24.1");
-    //double[] visiontargetpos = visiontargettable.getEntry("targetPose").getDoubleArray(defaultValue);
-    //double targetwidth = visiontargettable.getEntry("targetBoundingWidth").getDouble(0.0);
-    //double tarNumber = visiontargettable.getEntry("targetYaw").getDouble(0.0);
-    //oi.Drive(tarNumber,((38*516.315789)/targetwidth));
+    //oi.Drive(0.0, 0.0);
 
-    //double vertAngle = visiontargettable.getEntry("targetPitch").getDouble(0.0);
-    //System.out.println((38*516.315789)/targetwidth);
-    // System.out.println((vertAngle/180));
-    //servo1.set((vertAngle/180));
-    //oi.Drive(tarNumber,((38*516.315789)/targetwidth));
-    //servo1.set(servoangle/180);
-
-    oi.Drive(0.0, 0.0);
+    m_drive.tankDrive(-Robot.oi.getDriverLeftY()*0.6, -Robot.oi.getDriverRightY()*0.6);
     
     int direction = Robot.oi.operatorController.getPOV(0);
 
     if (direction == 0) { // DPAD UP button is pressed
-      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) + 0.025);
+      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) + 0.01);
     } else if (direction == 180) { // DPAD DOWN button is pressed
-      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) - 0.025);
+      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) - 0.01);
     }
 
     Robot.oi.smShooter.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));

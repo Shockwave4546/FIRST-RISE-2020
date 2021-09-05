@@ -32,7 +32,7 @@ public class victorSPXMotor extends Motor{
     }
     // Stops motor
     public void stopMotor(){
-        //kMotor.set(ControlMode.Velocity, 0);
+        kMotor.set(0);
     }
     // Rotates motor based on (user)input, asigns proper scale variables automatically
     public void rotateMotor(final double rotate){
