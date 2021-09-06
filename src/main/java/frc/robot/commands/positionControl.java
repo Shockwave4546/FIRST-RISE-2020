@@ -32,8 +32,6 @@ public class positionControl extends CommandBase {
 
     public boolean itisFinished = false;
 
-    private final I2C.Port i2cPort = I2C.Port.kOnboard;
-    private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
     private final ColorMatch m_colorMatcher = new ColorMatch();
     private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
     private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
@@ -71,7 +69,7 @@ public class positionControl extends CommandBase {
         m_colorMatcher.addColorMatch(kRedTarget);
         m_colorMatcher.addColorMatch(kYellowTarget);
 
-        Color detectedColor = m_colorSensor.getColor();
+        Color detectedColor = Robot.oi.m_colorSensor.getColor();
         String colorString;
         ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
@@ -107,7 +105,7 @@ public class positionControl extends CommandBase {
         m_colorMatcher.addColorMatch(kRedTarget);
         m_colorMatcher.addColorMatch(kYellowTarget);
 
-        Color detectedColor = m_colorSensor.getColor();
+        Color detectedColor = Robot.oi.m_colorSensor.getColor();
         String colorString;
         ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
@@ -129,11 +127,11 @@ public class positionControl extends CommandBase {
         SmartDashboard.putNumber("Confidence", match.confidence);
         SmartDashboard.putString("Detected Color", colorString);
 
-        double IR = m_colorSensor.getIR();
+        double IR = Robot.oi.m_colorSensor.getIR();
 
         SmartDashboard.putNumber("IR", IR);
 
-        int proximity = m_colorSensor.getProximity();
+        int proximity = Robot.oi.m_colorSensor.getProximity();
 
         SmartDashboard.putNumber("Proximity", proximity);
 

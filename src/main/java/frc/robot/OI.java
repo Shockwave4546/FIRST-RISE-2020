@@ -5,6 +5,10 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.motors.*;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+
+import com.revrobotics.ColorSensorV3;
+
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.button.*;
@@ -25,6 +29,10 @@ public class OI {
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
+
+	private final I2C.Port i2cPort = I2C.Port.kOnboard;
+  	public final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+
 	public victorSPXMotor mFlywheelShooterOne = new victorSPXMotor(RobotMap.mFlywheelShooterOnePort, RobotMap.mFlywheelShooterOnePos, RobotMap.mFlywheelShooterOneNeg);
 	public victorSPXMotor mFlywheelShooterTwo = new victorSPXMotor(RobotMap.mFlywheelShooterTwoPort, RobotMap.mFlywheelShooterTwoPos, RobotMap.mFlywheelShooterTwoNeg);
 	public victorSPXMotor mFlywheelFeeder = new victorSPXMotor(RobotMap.mFlywheelFeederPort, RobotMap.mFlywheelFeederPos, RobotMap.mFlywheelFeederNeg);
@@ -109,11 +117,11 @@ public class OI {
 		//driverButtonB.whenReleased();
 		//driverButtonB.whileHeld();
 
-		driverButtonX.whenPressed(new positionControl());
+		//driverButtonX.whenPressed(new positionControl());
 		//driverButtonX.whenReleased();
 		//driverButtonX.whileHeld();
 
-		driverButtonY.whenPressed(new rotationControl());
+		//driverButtonY.whenPressed(new rotationControl());
 		//driverButtonY.whenReleased();
 		//driverButtonY.whileHeld();
 
@@ -150,8 +158,8 @@ public class OI {
 		//operatorButtonA.whenReleased();
 		//operatorButtonA.whileHeld();
 
-		//operatorButtonB.whenPressed();
-		//operatorButtonB.whenReleased();
+		operatorButtonB.whenPressed(new intakeRollerControl(-0.75));
+		operatorButtonB.whenReleased(new intakeRollerControl(0));
 		//operatorButtonB.whileHeld();
 
 		//operatorButtonX.whenPressed(new positionControl());
@@ -162,7 +170,7 @@ public class OI {
 		//operatorButtonY.whenReleased();
 		//operatorButtonY.whileHeld();
 
-		operatorButtonLeftBumper.whenPressed(new feederControl(0.5));
+		operatorButtonLeftBumper.whenPressed(new feederControl(0.2));
 		operatorButtonLeftBumper.whenReleased(new feederControl(0));
 		//operatorButtonLeftBumper.whileHeld();
 

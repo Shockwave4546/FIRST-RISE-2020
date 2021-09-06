@@ -13,7 +13,12 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.positionControl;
+import frc.robot.commands.rotationControl;
+import edu.wpi.first.wpilibj.util.Color;
 
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
 
 import edu.wpi.first.cameraserver.CameraServer;
 
@@ -37,6 +42,14 @@ public class Robot extends TimedRobot {
   SpeedControllerGroup m_right = new SpeedControllerGroup(mFrontRight, mBackRight);
   //visionDrivePID = new PID(1, 0, 0, .02, .1);
   DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
+
+  private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+  private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
+  private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
+  private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+
+  private double leftDriveValue;
+  private double rightDriveValue;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -97,9 +110,21 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    SmartDashboard.putNumber("Current Shooter Servo Angle", 0);
-    Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));
-    Robot.oi.smShooterTwo.set((SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5)));
+    SmartDashboard.putNumber("Current Shooter Servo Angle", 0.01);
+    Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
+    Robot.oi.smShooterTwo.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
+
+    SmartDashboard.putData("Position - Wheel of Fortune", new positionControl());
+
+    SmartDashboard.putData("Rotation - Wheel of Fortune", new rotationControl());
+
+    ShuffleboardTab drivetrain = Shuffleboard.getTab("Match Tab");
+
+    SmartDashboard.putNumber("Left Forward Constant", 0.85);
+    SmartDashboard.putNumber("Right Forward Constant", 0.8);
+
+    SmartDashboard.putNumber("Left Backward Constant", 0.8);
+    SmartDashboard.putNumber("Right Backward Constant", 0.82);
   }
 
   /** This function is called periodically during operator control. */
@@ -107,18 +132,74 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //oi.Drive(0.0, 0.0);
 
-    m_drive.tankDrive(-Robot.oi.getDriverLeftY()*0.6, -Robot.oi.getDriverRightY()*0.6);
+    ShuffleboardTab drivetrainTab = Shuffleboard.getTab("Drivetrain");
+
+    SmartDashboard.getNumber("Left Forward Constant", 1);
+    SmartDashboard.getNumber("Right Forward Constant", 0.95);
+
+    SmartDashboard.getNumber("Left Backward Constant", 1);
+    SmartDashboard.getNumber("Right Backward Constant", 0.95);
+
+    if (Robot.oi.getDriverLeftY() > 0) {
+      leftDriveValue = (Robot.oi.getDriverLeftY() * SmartDashboard.getNumber("Left Forward Constant", 1));
+    } else if (Robot.oi.getDriverLeftY() < 0) {
+      leftDriveValue = (Robot.oi.getDriverLeftY() * SmartDashboard.getNumber("Left Backward Constant", 1));
+    } else {
+      leftDriveValue = 0;
+    }
+
+    if (Robot.oi.getDriverRightY() > 0) {
+      rightDriveValue = (Robot.oi.getDriverRightY() * SmartDashboard.getNumber("Right Backward Constant", 1));
+    } else if (Robot.oi.getDriverRightY() < 0) {
+      rightDriveValue = (Robot.oi.getDriverRightY() * SmartDashboard.getNumber("Right Forward Constant", 1));
+    } else {
+      rightDriveValue = 0;
+    }
+
+    m_drive.tankDrive(-leftDriveValue, -rightDriveValue);
     
     int direction = Robot.oi.operatorController.getPOV(0);
 
     if (direction == 0) { // DPAD UP button is pressed
-      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) + 0.01);
+      if ((SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) + 0.01) <= 0.3) {
+        SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0) + 0.01);
+      }
     } else if (direction == 180) { // DPAD DOWN button is pressed
-      SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) - 0.01);
+      if ((SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) - 0.01) >= 0.01) {
+        SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0) - 0.01);
+      }
     }
 
-    Robot.oi.smShooter.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5));
-    Robot.oi.smShooterTwo.set(-(SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5)));
+    Robot.oi.smShooter.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
+    Robot.oi.smShooterTwo.set(-(SmartDashboard.getNumber("Current Shooter Servo Angle", 0)));
+    
+    final ColorMatch m_colorMatcher = new ColorMatch();
+    m_colorMatcher.addColorMatch(kBlueTarget);
+    m_colorMatcher.addColorMatch(kGreenTarget);
+    m_colorMatcher.addColorMatch(kRedTarget);
+    m_colorMatcher.addColorMatch(kYellowTarget);
+
+    Color detectedColor = Robot.oi.m_colorSensor.getColor();
+    String colorString;
+    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+
+    if (match.color == kBlueTarget) {
+      colorString = "Blue";
+    } else if (match.color == kRedTarget) {
+        colorString = "Red";
+    } else if (match.color == kGreenTarget) {
+        colorString = "Green";
+    } else if (match.color == kYellowTarget) {
+        colorString = "Yellow";
+    } else {
+        colorString = "Unknown";
+    }
+
+    SmartDashboard.putString("Current Color Sensor Color", colorString);
+
+    SmartDashboard.putNumber("Red", Robot.oi.m_colorSensor.getRed());
+    SmartDashboard.putNumber("Green", Robot.oi.m_colorSensor.getGreen());
+    SmartDashboard.putNumber("Blue", Robot.oi.m_colorSensor.getBlue());
   }
 
   /** This function is called once when the robot is disabled. */
