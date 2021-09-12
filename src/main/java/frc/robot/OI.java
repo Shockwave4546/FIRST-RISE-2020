@@ -113,11 +113,11 @@ public class OI {
 		//driverButtonA.whenReleased();
 		//driverButtonA.whileHeld();
 
-		//driverButtonB.whenPressed();
+		driverButtonB.whenPressed(new flywheelShooter(0));
 		//driverButtonB.whenReleased();
 		//driverButtonB.whileHeld();
 
-		//driverButtonX.whenPressed(new positionControl());
+		driverButtonX.whenPressed(new flywheelShooter(1));
 		//driverButtonX.whenReleased();
 		//driverButtonX.whileHeld();
 
@@ -182,7 +182,7 @@ public class OI {
 		//operatorButtonBack.whenReleased();
 		//operatorButtonBack.whileHeld();
 
-		operatorButtonStart.whenPressed(new flywheelShooter(1));
+		operatorButtonStart.whenPressed(new flywheelShooter(0.6));
 		//operatorButtonStart.whenReleased();
 		//operatorButtonStart.whileHeld();
 

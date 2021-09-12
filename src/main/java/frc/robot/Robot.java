@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.pivotIntakeControl;
 import frc.robot.commands.positionControl;
 import frc.robot.commands.rotationControl;
 import edu.wpi.first.wpilibj.util.Color;

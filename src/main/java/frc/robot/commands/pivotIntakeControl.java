@@ -62,7 +62,7 @@ public class pivotIntakeControl extends CommandBase {
         SmartDashboard.putBoolean("Vertical Limit", vLimitStatus);
 
         if (startingPosition == "Middle") {
-            Robot.oi.mIntakePivot.rotateMotor(0.75);
+            Robot.oi.mIntakePivot.rotateMotor(0.9);
             if ((hLimitStatus == true) || (vLimitStatus == true)) {
                 Robot.oi.mIntakePivot.stopMotor();
                 itisFinished = true;
@@ -70,7 +70,7 @@ public class pivotIntakeControl extends CommandBase {
         }
 
         if (startingPosition == "Horizontal") {
-            Robot.oi.mIntakePivot.rotateMotor(-0.75);
+            Robot.oi.mIntakePivot.rotateMotor(-0.9);
             if (vLimitStatus == true) {
                 Robot.oi.mIntakePivot.stopMotor();
                 itisFinished = true;
@@ -79,7 +79,7 @@ public class pivotIntakeControl extends CommandBase {
 
         if (startingPosition == "Vertical") {
             System.out.println("Rotating motor down...");
-            Robot.oi.mIntakePivot.rotateMotor(0.75);
+            Robot.oi.mIntakePivot.rotateMotor(0.9);
             if (hLimitStatus == true) {
                 Robot.oi.mIntakePivot.stopMotor();
                 itisFinished = true;
