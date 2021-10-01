@@ -41,8 +41,7 @@ public class Robot extends TimedRobot {
 
   SpeedControllerGroup m_left = new SpeedControllerGroup(mFrontLeft, mBackLeft);
   SpeedControllerGroup m_right = new SpeedControllerGroup(mFrontRight, mBackRight);
-  //visionDrivePID = new PID(1, 0, 0, .02, .1);
-  DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
+  //DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 
   private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
   private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
@@ -112,14 +111,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     SmartDashboard.putNumber("Current Shooter Servo Angle", 0.01);
+    SmartDashboard.putNumber("Flywheel Speed", 0.5);
     Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
     Robot.oi.smShooterTwo.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
 
     SmartDashboard.putData("Position - Wheel of Fortune", new positionControl());
 
     SmartDashboard.putData("Rotation - Wheel of Fortune", new rotationControl());
-
-    ShuffleboardTab drivetrain = Shuffleboard.getTab("Match Tab");
 
     SmartDashboard.putNumber("Left Forward Constant", 0.85);
     SmartDashboard.putNumber("Right Forward Constant", 0.8);
@@ -132,8 +130,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //oi.Drive(0.0, 0.0);
-
-    ShuffleboardTab drivetrainTab = Shuffleboard.getTab("Drivetrain");
 
     SmartDashboard.getNumber("Left Forward Constant", 1);
     SmartDashboard.getNumber("Right Forward Constant", 0.95);
@@ -157,7 +153,7 @@ public class Robot extends TimedRobot {
       rightDriveValue = 0;
     }
 
-    m_drive.tankDrive(-leftDriveValue, -rightDriveValue);
+    //m_drive.tankDrive(-leftDriveValue, -rightDriveValue);
     
     int direction = Robot.oi.operatorController.getPOV(0);
 

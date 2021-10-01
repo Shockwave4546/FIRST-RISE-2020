@@ -5,6 +5,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.motors.*;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.ColorSensorV3;
 
@@ -182,7 +183,7 @@ public class OI {
 		//operatorButtonBack.whenReleased();
 		//operatorButtonBack.whileHeld();
 
-		operatorButtonStart.whenPressed(new flywheelShooter(0.6));
+		operatorButtonStart.whenPressed(new flywheelShooter(SmartDashboard.getNumber("Flywheel Speed", 0))); //Default 0.6
 		//operatorButtonStart.whenReleased();
 		//operatorButtonStart.whileHeld();
 
