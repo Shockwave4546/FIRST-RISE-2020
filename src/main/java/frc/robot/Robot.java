@@ -11,9 +11,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.pivotIntakeControl;
+// import frc.robot.commands.pivotIntakeControl;
 import frc.robot.commands.positionControl;
 import frc.robot.commands.rotationControl;
 import edu.wpi.first.wpilibj.util.Color;
@@ -30,7 +29,6 @@ import edu.wpi.first.cameraserver.CameraServer;
  * project.
  */
 public class Robot extends TimedRobot {
-  //private Command m_autonomousCommand;
   public static OI oi;
   public ShuffleboardTab tab = Shuffleboard.getTab("Match Tab");
 
@@ -41,7 +39,7 @@ public class Robot extends TimedRobot {
 
   SpeedControllerGroup m_left = new SpeedControllerGroup(mFrontLeft, mBackLeft);
   SpeedControllerGroup m_right = new SpeedControllerGroup(mFrontRight, mBackRight);
-  //DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
+  DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 
   private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
   private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
@@ -62,6 +60,21 @@ public class Robot extends TimedRobot {
     oi = new OI();
     CameraServer.getInstance().startAutomaticCapture();
     m_right.setInverted(true);
+
+    SmartDashboard.putNumber("Current Shooter Servo Angle", 0.01);
+    SmartDashboard.putNumber("Flywheel Speed", 0.5);
+    // Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
+    // Robot.oi.smShooterTwo.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
+
+    SmartDashboard.putData("Position - Wheel of Fortune", new positionControl());
+
+    SmartDashboard.putData("Rotation - Wheel of Fortune", new rotationControl());
+
+    SmartDashboard.putNumber("Left Forward Constant", 0.85);
+    SmartDashboard.putNumber("Right Forward Constant", 0.8);
+
+    SmartDashboard.putNumber("Left Backward Constant", 0.8);
+    SmartDashboard.putNumber("Right Backward Constant", 0.82);
   }
 
   /**
@@ -110,20 +123,20 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    SmartDashboard.putNumber("Current Shooter Servo Angle", 0.01);
-    SmartDashboard.putNumber("Flywheel Speed", 0.5);
-    Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
-    Robot.oi.smShooterTwo.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
+    // SmartDashboard.putNumber("Current Shooter Servo Angle", 0.01);
+    // SmartDashboard.putNumber("Flywheel Speed", 0.5);
+    // // Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
+    // // Robot.oi.smShooterTwo.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
 
-    SmartDashboard.putData("Position - Wheel of Fortune", new positionControl());
+    // SmartDashboard.putData("Position - Wheel of Fortune", new positionControl());
 
-    SmartDashboard.putData("Rotation - Wheel of Fortune", new rotationControl());
+    // SmartDashboard.putData("Rotation - Wheel of Fortune", new rotationControl());
 
-    SmartDashboard.putNumber("Left Forward Constant", 0.85);
-    SmartDashboard.putNumber("Right Forward Constant", 0.8);
+    // SmartDashboard.putNumber("Left Forward Constant", 0.85);
+    // SmartDashboard.putNumber("Right Forward Constant", 0.8);
 
-    SmartDashboard.putNumber("Left Backward Constant", 0.8);
-    SmartDashboard.putNumber("Right Backward Constant", 0.82);
+    // SmartDashboard.putNumber("Left Backward Constant", 0.8);
+    // SmartDashboard.putNumber("Right Backward Constant", 0.82);
   }
 
   /** This function is called periodically during operator control. */
@@ -153,19 +166,19 @@ public class Robot extends TimedRobot {
       rightDriveValue = 0;
     }
 
-    //m_drive.tankDrive(-leftDriveValue, -rightDriveValue);
+    m_drive.tankDrive(-leftDriveValue, -rightDriveValue);
     
-    int direction = Robot.oi.operatorController.getPOV(0);
+    // int direction = Robot.oi.operatorController.getPOV(0);
 
-    if (direction == 0) { // DPAD UP button is pressed
-      if ((SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) + 0.01) <= 0.3) {
-        SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0) + 0.01);
-      }
-    } else if (direction == 180) { // DPAD DOWN button is pressed
-      if ((SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) - 0.01) >= 0.01) {
-        SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0) - 0.01);
-      }
-    }
+    // if (direction == 0) { // DPAD UP button is pressed
+    //   if ((SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) + 0.01) <= 0.3) {
+    //     SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0) + 0.01);
+    //   }
+    // } else if (direction == 180) { // DPAD DOWN button is pressed
+    //   if ((SmartDashboard.getNumber("Current Shooter Servo Angle", 0.5) - 0.01) >= 0.01) {
+    //     SmartDashboard.putNumber("Current Shooter Servo Angle", SmartDashboard.getNumber("Current Shooter Servo Angle", 0) - 0.01);
+    //   }
+    // }
 
     Robot.oi.smShooter.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
     Robot.oi.smShooterTwo.set(-(SmartDashboard.getNumber("Current Shooter Servo Angle", 0)));
