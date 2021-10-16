@@ -86,7 +86,7 @@ public class OI {
 	public Button operatorButtonLeftBumper = new JoystickButton(operatorController, 5);
 	private Button operatorButtonRightBumper = new JoystickButton(operatorController, 6);
 	private Button operatorButtonBack = new JoystickButton(operatorController, 7);
-	private Button operatorButtonStart = new JoystickButton(operatorController, 8);
+	public Button operatorButtonStart = new JoystickButton(operatorController, 8);
 	private Button operatorButtonLeftAxisPress = new JoystickButton(operatorController, 9);
 	private Button operatorButtonRightAxisPress = new JoystickButton(operatorController, 10);
 

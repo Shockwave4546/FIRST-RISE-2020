@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.flywheelShooter;
 // import frc.robot.commands.pivotIntakeControl;
 import frc.robot.commands.positionControl;
 import frc.robot.commands.rotationControl;
@@ -60,21 +61,6 @@ public class Robot extends TimedRobot {
     oi = new OI();
     CameraServer.getInstance().startAutomaticCapture();
     m_right.setInverted(true);
-
-    // SmartDashboard.putNumber("Current Shooter Servo Angle", 0.01);
-    SmartDashboard.putNumber("Flywheel Speed", 0.5);
-    // Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
-    // Robot.oi.smShooterTwo.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
-
-    SmartDashboard.putData("Position - Wheel of Fortune", new positionControl());
-
-    SmartDashboard.putData("Rotation - Wheel of Fortune", new rotationControl());
-
-    SmartDashboard.putNumber("Left Forward Constant", 0.85);
-    SmartDashboard.putNumber("Right Forward Constant", 0.8);
-
-    SmartDashboard.putNumber("Left Backward Constant", 0.8);
-    SmartDashboard.putNumber("Right Backward Constant", 0.82);
   }
 
   /**
@@ -149,6 +135,7 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.getNumber("Left Backward Constant", 1);
     SmartDashboard.getNumber("Right Backward Constant", 0.95);
+    oi.operatorButtonStart.whenPressed(new flywheelShooter(SmartDashboard.getNumber("Flywheel Speed", 0)));
 
     if (Robot.oi.getDriverLeftY() > 0) {
       leftDriveValue = (Robot.oi.getDriverLeftY() * SmartDashboard.getNumber("Left Forward Constant", 1));
@@ -180,8 +167,8 @@ public class Robot extends TimedRobot {
     //   }
     // }
 
-    Robot.oi.smShooter.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
-    Robot.oi.smShooterTwo.set(-(SmartDashboard.getNumber("Current Shooter Servo Angle", 0)));
+    // Robot.oi.smShooter.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
+    // Robot.oi.smShooterTwo.set(-(SmartDashboard.getNumber("Current Shooter Servo Angle", 0)));
     
     final ColorMatch m_colorMatcher = new ColorMatch();
     m_colorMatcher.addColorMatch(kBlueTarget);
