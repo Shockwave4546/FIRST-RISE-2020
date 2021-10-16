@@ -61,7 +61,7 @@ public class Robot extends TimedRobot {
     CameraServer.getInstance().startAutomaticCapture();
     m_right.setInverted(true);
 
-    SmartDashboard.putNumber("Current Shooter Servo Angle", 0.01);
+    // SmartDashboard.putNumber("Current Shooter Servo Angle", 0.01);
     SmartDashboard.putNumber("Flywheel Speed", 0.5);
     // Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
     // Robot.oi.smShooterTwo.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
@@ -124,19 +124,19 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // SmartDashboard.putNumber("Current Shooter Servo Angle", 0.01);
-    // SmartDashboard.putNumber("Flywheel Speed", 0.5);
+    SmartDashboard.putNumber("Flywheel Speed", 0.5);
     // // Robot.oi.smShooter.set(-SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
     // // Robot.oi.smShooterTwo.set(SmartDashboard.getNumber("Current Shooter Servo Angle", 0));
 
-    // SmartDashboard.putData("Position - Wheel of Fortune", new positionControl());
+    SmartDashboard.putData("Position - Wheel of Fortune", new positionControl());
 
-    // SmartDashboard.putData("Rotation - Wheel of Fortune", new rotationControl());
+    SmartDashboard.putData("Rotation - Wheel of Fortune", new rotationControl());
 
-    // SmartDashboard.putNumber("Left Forward Constant", 0.85);
-    // SmartDashboard.putNumber("Right Forward Constant", 0.8);
+    SmartDashboard.putNumber("Left Forward Constant", 0.85);
+    SmartDashboard.putNumber("Right Forward Constant", 0.8);
 
-    // SmartDashboard.putNumber("Left Backward Constant", 0.8);
-    // SmartDashboard.putNumber("Right Backward Constant", 0.82);
+    SmartDashboard.putNumber("Left Backward Constant", 0.8);
+    SmartDashboard.putNumber("Right Backward Constant", 0.82);
   }
 
   /** This function is called periodically during operator control. */
